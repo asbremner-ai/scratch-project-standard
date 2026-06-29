@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<!-- version:v4.9 · 2026-06-16 · 27_six_month_plan.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6-Month Plan — Months 1–6</title><style>
+/* Self-hosted fonts — no external requests, GDPR compliant */
+@font-face{font-family:'Inter';font-style:normal;font-weight:300;font-display:swap;src:url('fonts/inter-latin-300-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/inter-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/inter-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-italic.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:900;font-display:swap;src:url('fonts/playfair-display-latin-900-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:300;font-display:swap;src:url('fonts/dm-mono-latin-300-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/dm-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/dm-mono-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:300;font-display:swap;src:url('fonts/dm-sans-latin-300-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/dm-sans-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/dm-sans-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/dm-sans-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/ibm-plex-mono-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/ibm-plex-mono-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Libre Baskerville';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/libre-baskerville-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Libre Baskerville';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/libre-baskerville-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'Libre Baskerville';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/libre-baskerville-latin-700-normal.woff2') format('woff2')}
+
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;
+  --border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);
+  --lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);
+  --gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);
+  --teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);
+  --rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);
+  --white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);
+  --good:#5fc8a0;--warn:#e0b840;--bad:#e05030;
+  --r:12px;--r-sm:8px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+
+
+/* HERO */
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
+.hero-lines{display:none;}
+.hero-overline{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;display:block;}
+.hero-overline::before,.hero-overline::after{display:none;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 .ruled{display:block;font-family:'Inter',sans-serif;font-style:normal;font-weight:300;font-size:0.42em;color:var(--muted);letter-spacing:0.05em;margin-top:8px;}
+.hero-deck{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-topics{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.hero-topic{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+
+/* NAV */
+.nav-tabs{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav-tabs::-webkit-scrollbar{display:none;}
+.tab-btn{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab-btn:hover{color:var(--lime-hi);}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* SECTIONS */
+.section{display:block;height:0;overflow:hidden;padding:0;max-width:720px;margin:0 auto;position:relative;z-index:1;}
+.section.active{height:auto;overflow:visible;padding:28px 16px 60px;animation:appear .3s ease;}
+@keyframes appear{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.section-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.section-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.section-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
+
+/* CARDS */
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);pointer-events:none;z-index:0;}
+.card.teal-card{border-color:rgba(72,176,168,.2);}
+.card.teal-card::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card.gold-card{border-color:rgba(224,184,64,.2);}
+.card.gold-card::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card.lime-card{border-color:rgba(160,200,80,.2);}
+.card-kicker{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card.teal-card .card-kicker{color:var(--teal-hi);}
+.card.gold-card .card-kicker{color:var(--gold-hi);}
+.card.lime-card .card-kicker{color:var(--lime-hi);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+
+/* STEPS */
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:14px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.sn{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;font-weight:700;}
+.sn.tl{color:var(--teal-hi);background:var(--teal-dim);}
+.sn.gd{color:var(--gold-hi);background:var(--gold-dim);}
+.sn.lm{color:var(--lime-hi);background:var(--lime-dim);}
+
+/* CALLOUT BOXES */
+.callout,.insight,.warning,.success{border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:12px;align-items:flex-start;}
+.callout{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);}
+.callout p,.insight p,.warning p,.success p{font-size:13px;color:var(--muted);line-height:1.75;}
+.callout strong{color:var(--rust-hi);}
+.insight{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);}
+.insight strong{color:var(--teal-hi);}
+.warning{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);}
+.warning strong{color:var(--gold-hi);}
+.success{background:var(--lime-dim);border:1px solid var(--border);}
+.success p{color:var(--muted);}
+.success strong{color:var(--lime-hi);}
+.cicon{font-size:1.1rem;flex-shrink:0;margin-top:2px;}
+
+/* DATA TABLE */
+.dtable{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.dtable th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.dtable td{padding:8px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.dtable tr:last-child td{border-bottom:none;}
+.dtable td:first-child{color:var(--white);font-weight:600;}
+.good{color:var(--good);}
+.warn{color:var(--warn);}
+.bad{color:var(--bad);}
+
+/* WEEK GRID */
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:14px 0;}
+.day-cell{border-radius:var(--r-sm);padding:10px 4px;text-align:center;}
+.day-cell .day-name{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;display:block;}
+.day-cell .day-icon{font-size:1.1rem;display:block;margin-bottom:4px;}
+.day-cell .day-label{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.08em;text-transform:uppercase;display:block;line-height:1.3;}
+.day-cell.play{background:var(--rust-dim);border:1px solid rgba(216,96,48,.3);}
+.day-cell.play .day-name{color:var(--rust-hi);}
+.day-cell.play .day-label{color:var(--rust-hi);}
+.day-cell.practice{background:var(--teal-dim);border:1px solid rgba(72,176,168,.3);}
+.day-cell.practice .day-name{color:var(--teal-hi);}
+.day-cell.practice .day-label{color:var(--teal-hi);}
+.day-cell.gym{background:var(--gold-dim);border:1px solid rgba(224,184,64,.3);}
+.day-cell.gym .day-name{color:var(--gold-hi);}
+.day-cell.gym .day-label{color:var(--gold-hi);}
+.day-cell.rest{background:var(--faint);border:1px solid rgba(232,240,216,.08);}
+.day-cell.rest .day-name{color:var(--muted);}
+.day-cell.rest .day-label{color:var(--muted);}
+.day-cell.setup{background:var(--lime-dim);border:1px solid var(--border);}
+.day-cell.setup .day-name{color:var(--lime-hi);}
+.day-cell.setup .day-label{color:var(--lime-hi);}
+
+/* MONTH CARD */
+.month-block{position:relative;padding-left:52px;margin-bottom:32px;}
+.month-block::before{content:'';position:absolute;left:18px;top:38px;bottom:-20px;width:2px;background:var(--border);}
+.month-block:last-child::before{display:none;}
+.month-num{position:absolute;left:0;top:0;width:38px;height:38px;background:var(--surface2);color:var(--gold-hi);font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.05em;border-radius:var(--r-sm);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1.1;}
+.month-num .ph-label{font-size:7px;color:var(--lime);letter-spacing:.2em;text-transform:uppercase;}
+.month-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:2px;}
+.month-sub{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;display:block;}
+
+/* CHECKLIST */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:14px;}
+.checklist li{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.7;}
+.check{font-family:'JetBrains Mono',monospace;font-size:9px;min-width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;font-weight:700;}
+.check.rust{color:var(--rust-hi);background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);}
+.check.teal{color:var(--teal-hi);background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);}
+.check.gold{color:var(--gold-hi);background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);}
+.check.lime{color:var(--lime-hi);background:var(--lime-dim);border:1px solid var(--border);}
+
+/* SESSION TEMPLATE */
+.session-block{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin:12px 0;}
+.session-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.session-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.session-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--faint);}
+.session-row:last-child{border-bottom:none;}
+.s-time{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);min-width:36px;}
+.s-pct{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;min-width:36px;}
+.s-pct.rs{color:var(--rust-hi);}
+.s-pct.tl{color:var(--teal-hi);}
+.s-pct.gd{color:var(--gold-hi);}
+.s-pct.lm{color:var(--lime-hi);}
+.s-bar{flex:1;height:4px;background:var(--faint);border-radius:2px;overflow:hidden;}
+.s-bar-fill{height:100%;border-radius:2px;}
+.s-label{font-size:13px;color:var(--muted);}
+
+/* COMPETITION TABLE */
+.comp-row{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--faint);}
+.comp-row:last-child{border-bottom:none;}
+.comp-month{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;min-width:76px;color:var(--rust-hi);text-transform:uppercase;letter-spacing:.1em;padding-top:2px;}
+.comp-detail{flex:1;}
+.comp-detail strong{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);display:block;margin-bottom:2px;}
+.comp-detail span{font-size:13px;color:var(--muted);}
+
+/* TWO COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0;}
+.mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;}
+.mini-card.teal{border-color:rgba(72,176,168,.2);background:var(--teal-dim);}
+.mini-card.gold{border-color:rgba(224,184,64,.2);background:var(--gold-dim);}
+.mini-kicker{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);display:block;margin-bottom:6px;}
+.mini-card.teal .mini-kicker{color:var(--teal-hi);}
+.mini-card.gold .mini-kicker{color:var(--gold-hi);}
+.mini-card h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.mini-card p{font-size:13px;color:var(--muted);line-height:1.7;}
+
+/* PULL QUOTE */
+.pull-quote{font-size:1rem;font-style:italic;color:var(--muted);line-height:1.8;padding:18px 22px;border-left:3px solid var(--gold);margin:20px 0;background:var(--surface2);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote span{display:block;font-style:normal;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:10px;opacity:.7;}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.b-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.b-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.b-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+
+/* MILESTONE ROW */
+.milestone-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--faint);}
+.milestone-row:last-child{border-bottom:none;}
+.ms-date{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;min-width:80px;color:var(--lime);}
+.ms-label{flex:1;font-size:13px;color:var(--muted);}
+.ms-target{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;min-width:60px;text-align:right;}
+
+/* FOOTER */
+.footer{text-align:center;padding:28px 20px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.18em;border-top:1px solid var(--border);position:relative;z-index:1;background:var(--surface);}
+
+@media(max-width:480px){
+  .two-col{grid-template-columns:1fr;}
+  .hero h1{font-size:2.2rem;}
+  .week-grid{grid-template-columns:repeat(4,1fr);}
+}
+
+/* ── Five Pillars Logo (tsp) ── */
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;position:relative;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<script async src="https://plausible.io/js/pa-XSwCniFb76oIDC0vR-U0K.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<script src="scratch_profile.js"></script>
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+  <button onclick="history.back()" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:0;">
+    <span style="font-size:14px;line-height:1;">&#8592;</span> Back
+  </button>
+</div>
+<a id="home-btn" href="index.html" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#a0c850;color:#0a160a;font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);">⌂ Home</a>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <p class="hero-label">Measure Playbook · Phase Plan · Months 1–6</p>
+  <h1>PHASE 1 &amp; 2 <em>Months 1–6 · Stop the Bleeding &amp; Build the Foundation</em></h1>
+  <p class="hero-sub">Your first 26 weeks, structured week-by-week from your Day 1. Every session, every drill, every competition slot — mapped from the start of your programme.</p>
+  <div class="hero-tags">
+    <span class="hero-topic">📅 Months 1–6</span>
+    <span class="hero-topic">🗓️ Week-by-Week</span>
+    <span class="hero-topic">🎯 Session Templates</span>
+    <span class="hero-topic">🏆 Competition Dates</span>
+    <span class="hero-topic">📊 6-Month Targets</span>
+  </div>
+</div>
+
+
+<!-- NAV -->
+
+<!-- BASELINE SECTION — always visible, never inside display:none -->
+<div id="baseline-section" style="background:var(--surface);border-bottom:2px solid rgba(72,176,168,0.3);padding:20px 16px 24px;position:relative;z-index:20;isolation:isolate;">
+  <div style="max-width:720px;margin:0 auto;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:8px;">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-hi);">📐 Day One Baselines — Enter Once · Saved to This Device</span>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button type="button" id="bl-toggle" onclick="toggleBaseline()" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--teal-dim);border:1px solid rgba(72,176,168,.3);color:var(--teal-hi);padding:6px 12px;border-radius:var(--r-sm);cursor:pointer;-webkit-appearance:none;touch-action:manipulation;">▼ Show</button>
+        <button type="button" onclick="saveBaseline()" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--lime);color:#0a160a;border:none;padding:6px 12px;border-radius:var(--r-sm);cursor:pointer;font-weight:700;-webkit-appearance:none;touch-action:manipulation;">💾 Save</button>
+        <span id="bl-status-27" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--lime);opacity:0;transition:opacity 0.4s;"></span>
+      </div>
+    </div>
+    <div id="bl-grid" style="display:none;margin-top:14px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;">
+        <div>
+          <label for="bl-hcp" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">Handicap Index</label>
+          <input id="bl-hcp" type="number" inputmode="decimal" step="0.1" min="0" max="54" placeholder="e.g. 14.2" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
+        </div>
+        <div>
+          <label for="bl-driver" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">Driver Speed (mph)</label>
+          <input id="bl-driver" type="number" inputmode="numeric" step="1" min="60" max="140" placeholder="e.g. 98" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
+        </div>
+        <div>
+          <label for="bl-7iron" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">7-Iron Carry (yds)</label>
+          <input id="bl-7iron" type="number" inputmode="numeric" step="1" min="80" max="220" placeholder="e.g. 155" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
+        </div>
+        <div>
+          <label for="bl-6ft" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">6ft Make % (out of 20 putts)</label>
+          <input id="bl-6ft" type="number" inputmode="numeric" step="1" min="0" max="100" placeholder="e.g. 65" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
+        </div>
+        <div>
+          <label for="bl-chip" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">Chip inside 6ft / 20 balls</label>
+          <input id="bl-chip" type="number" inputmode="numeric" step="1" min="0" max="20" placeholder="e.g. 8" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
+        </div>
+        <div>
+          <label for="bl-sg-app" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">SG: Approach (10-round avg)</label>
+          <input id="bl-sg-app" type="number" inputmode="decimal" step="0.1" min="-15" max="5" placeholder="e.g. -4.2" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
+        </div>
+        <div>
+          <label for="bl-sg-putt" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">SG: Putting (10-round avg)</label>
+          <input id="bl-sg-putt" type="number" inputmode="decimal" step="0.1" min="-5" max="3" placeholder="e.g. -1.1" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
+        </div>
+        <div>
+          <label for="bl-gir" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">GIR % (recent rounds avg)</label>
+          <input id="bl-gir" type="number" inputmode="numeric" step="1" min="0" max="100" placeholder="e.g. 28" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
+        </div>
+      </div>
+      <button type="button" onclick="clearBaseline()" style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:none;border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:var(--r-sm);cursor:pointer;-webkit-appearance:none;touch-action:manipulation;">Clear All Baselines</button>
+    </div>
+  </div>
+</div>
+
+<div class="nav-tabs">
+  <button class="tab-btn active" onclick="showTab('day1')">Day One</button>
+  <button class="tab-btn" onclick="showTab('schedule')">Weekly Template</button>
+  <button class="tab-btn" onclick="showTab('calendar')">Month-by-Month</button>
+  <button class="tab-btn" onclick="showTab('sessions')">Session Templates</button>
+  <button class="tab-btn" onclick="showTab('competition')">Competition Plan</button>
+  <button class="tab-btn" onclick="showTab('targets')">6-Month Targets</button>
+  <button class="tab-btn" onclick="showTab('tracker')">Progress Tracker</button>
+</div>
+
+<!-- ═══ TAB 1 — DAY ONE ═══ -->
+<div class="section active" id="day1">
+  <span class="section-label">Monday Month 1 of Your Programme</span>
+  <h2 class="section-title">DAY ONE PROTOCOL</h2>
+  <p class="section-desc">Everything you do on Month 1 sets the standard for the 26 weeks that follow. This is not a practice session — it is a setup day. Get the infrastructure in place so every subsequent session is tracked, purposeful, and measurable.</p>
+
+  <div class="callout" style="margin-bottom:16px;">
+    <span class="cicon">📖</span>
+    <p><strong>Read This First — before anything else today:</strong> Open <strong>Guide 04 (The Complete Golfer)</strong>. It is a 10-minute read that explains the evidence behind everything in this programme — the six scoring levers, the R&A research on what actually produces improvement, and why the plan is structured the way it is. Without it, some decisions in the months ahead will seem arbitrary. With it, every drill and target will make sense.</p>
+  </div>
+
+  <div class="callout" style="margin-bottom:16px;">
+    <span class="cicon">📅</span>
+    <p><strong>Bookmark the Weekly Dashboard</strong> from the main index — it is your day-to-day checklist for nutrition, mobility, training aids, and competition-day protocols. Open it every morning throughout the programme.</p>
+  </div>
+
+  <div class="pull-quote">
+    "The first day is not about hitting balls. It is about installing the system that makes every ball you hit count."
+    <span>— The Scratch Project · Phase 1 Foundation</span>
+  </div>
+
+  <div class="card gold-card">
+    <span class="card-kicker">Morning — Admin &amp; Setup (1–2 hrs)</span>
+    <h3>Install the Infrastructure</h3>
+    <ul class="steps">
+      <li><span class="sn gd">1</span><strong>Install Arccos or Shot Scope today.</strong> Attach sensors or charge device. Play a full 18 without worrying about the numbers — just capture them. You cannot improve what you do not measure. This is non-negotiable from round 1.</li>
+      <li><span class="sn gd">2</span><strong>Book a putter fitting this week.</strong> Phone your local fitter or Titleist/Ping fitting centre. Target: booked within 7 days. Highest ROI fitting available (+0.3–0.8 SG). Do not wait until Month 3.</li>
+      <li><span class="sn gd">3</span><strong>Open Guide 17 (Progress Journal).</strong> Create your first entry today: current handicap, honest self-assessment of biggest weakness, commitment statement. Date it Month 1 of Your Programme.</li>
+      <li><span class="sn gd">4</span><strong>Set up your practice log.</strong> Spreadsheet, notes app, or paper journal — your choice. Every session from today gets: date, focus area, drills completed, pass/fail result, and one observation.</li>
+      <li><span class="sn gd">5</span><strong>Confirm your weekly tee times.</strong> Block your Thursday round and Saturday round in your calendar for the next 12 weeks. Treat them as unmoveable appointments.</li>
+    </ul>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Afternoon — First Practice Session (90 min)</span>
+    <h3>Baseline Assessment</h3>
+    <p>Your first session is not about improvement — it is about honest measurement. You need baseline numbers to track against. No pressure, no targets. Just record what you actually do.</p>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn tl">1</span><strong>Putting baseline (25 min):</strong> From 6 ft, putt 20 balls and record make rate. From 20 ft, putt 10 balls and record average distance past the hole. These are your Week 1 benchmarks.</li>
+      <li><span class="sn tl">2</span><strong>Chipping baseline (20 min):</strong> From a standard lie, 10 yards off the green, chip 20 balls to a flag. Record how many finish inside 6 ft. This is your up-and-down starting point.</li>
+      <li><span class="sn tl">3</span><strong>Iron baseline (20 min):</strong> On a launch monitor or on range, hit 10 shots with your 7-iron and record average carry. This is your yardage reference before any technique changes.</li>
+      <li><span class="sn tl">4</span><strong>Pre-shot routine install (25 min):</strong> Read Guide 05. Decide your routine. Then hit 20 full shots using it — every single one. This is the day the routine starts. It starts today, not "soon".</li>
+    </ul>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Evening — Day One Baselines</span>
+    <h3>Your Month 6 Targets</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">Enter your Day 1 numbers in the <strong style="color:var(--teal-hi);">baseline strip at the top of this page</strong> — tap <em>▼ Show</em> to open it. Numbers save automatically to this device. The table below shows what you are working toward by Month 6.</p>
+    <table class="dtable">
+      <tr><th>Metric</th><th>Target by Month 6</th></tr>
+      <tr><td>6-ft make rate</td><td class="warn">75%+</td></tr>
+      <tr><td>20-ft lag distance past hole</td><td class="warn">&lt;18 inches</td></tr>
+      <tr><td>Chip to 6-ft circle (10 chip)</td><td class="warn">6/10+</td></tr>
+      <tr><td>7-iron carry (avg of 10)</td><td class="warn">Record honestly on Day 1</td></tr>
+      <tr><td>Pre-shot routine: used every shot</td><td class="good">Yes</td></tr>
+      <tr><td>Arccos/Shot Scope: installed</td><td class="good">Yes</td></tr>
+      <tr><td>Putter fitting: booked</td><td class="good">Yes</td></tr>
+    </table>
+  </div>
+
+  <div class="insight">
+    <span class="cicon">📌</span>
+    <p><strong>Week 1 only rule:</strong> Do not try to fix anything this week. Play your round on Thursday with your current game and your new pre-shot routine. Let Arccos or Shot Scope capture everything. You will have data by Sunday that tells you exactly where the biggest leaks are. The plan starts from data, not feeling.</p>
+  </div>
+</div>
+
+<!-- ═══ TAB 2 — WEEKLY TEMPLATE ═══ -->
+<div class="section" id="schedule">
+  <span class="section-label">Repeating Structure</span>
+  <h2 class="section-title">YOUR MODEL WEEK</h2>
+  <p class="section-desc">This template repeats across all 26 weeks, shifting only in session content as your monthly theme changes. The structure itself never changes — consistency of structure is what allows skill to compound.</p>
+
+  <div class="card">
+    <span class="card-kicker">Phase 1 &amp; 2 — Weekly Template</span>
+    <h3>Monday to Sunday</h3>
+    <div class="week-grid" style="margin-top:16px;">
+      <div class="day-cell setup">
+        <span class="day-name">Mon</span>
+        <span class="day-icon">📋</span>
+        <span class="day-label">Review + Plan</span>
+      </div>
+      <div class="day-cell practice">
+        <span class="day-name">Tue</span>
+        <span class="day-icon">🎯</span>
+        <span class="day-label">Practice 1</span>
+      </div>
+      <div class="day-cell gym">
+        <span class="day-name">Wed</span>
+        <span class="day-icon">🏋️</span>
+        <span class="day-label">Gym + Speed</span>
+      </div>
+      <div class="day-cell play">
+        <span class="day-name">Thu</span>
+        <span class="day-icon">⛳</span>
+        <span class="day-label">Round 1</span>
+      </div>
+      <div class="day-cell gym">
+        <span class="day-name">Fri</span>
+        <span class="day-icon">🏋️</span>
+        <span class="day-label">Gym + Mobility</span>
+      </div>
+      <div class="day-cell play">
+        <span class="day-name">Sat</span>
+        <span class="day-icon">🏆</span>
+        <span class="day-label">Round 2 / Comp</span>
+      </div>
+      <div class="day-cell practice">
+        <span class="day-name">Sun</span>
+        <span class="day-icon">🎯</span>
+        <span class="day-label">Practice 2</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Monday — 20 Minutes</span>
+    <h3>The Weekly Reset</h3>
+    <ul class="steps">
+      <li><span class="sn tl">1</span>Open Arccos/Shot Scope. Review SG in all four categories from the week's two rounds. Identify the single biggest leak this week.</li>
+      <li><span class="sn tl">2</span>Write one line in your practice log: "This week's focus: [category]." This drives both Tuesday and Sunday sessions.</li>
+      <li><span class="sn tl">3</span>Check which month theme you are in (see Month-by-Month tab). Confirm Tuesday's session plan is aligned to the theme.</li>
+      <li><span class="sn tl">4</span>6-minute mobility routine. Every Monday, every week.</li>
+    </ul>
+  </div>
+
+  <div class="card gold-card">
+    <span class="card-kicker">Tuesday &amp; Sunday — 75–90 Minutes Each</span>
+    <h3>Practice Session Structure</h3>
+    <p>Both sessions follow the same allocation, but Tuesday is <strong>theme-focused</strong> (the month's skill priority) and Sunday is <strong>data-driven</strong> (addressing what the week's rounds revealed).</p>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn gd">30%</span><strong>Putting</strong> — Speed gates, Clock Drill at 4–6 ft, lag from 30+ ft. Always tracked with pass/fail criteria.</li>
+      <li><span class="sn gd">35%</span><strong>Short Game</strong> — Chips, pitches, bunker. Proximity tracked. Pass/fail: chip inside 8-ft circle.</li>
+      <li><span class="sn gd">20%</span><strong>Iron Play</strong> — Low Point Drill, dispersion mapping. Never mechanics — contact and trajectory only.</li>
+      <li><span class="sn gd">10%</span><strong>Driver</strong> — Course simulation off tee. Rypstick speed session if speed is the current focus.</li>
+      <li><span class="sn gd">5%</span><strong>Mental/Routine</strong> — Pressure reps under consequence. Pre-shot routine on every shot, no exceptions.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <span class="card-kicker">Your Playing Days</span>
+    <h3>Playing Rules — Non-Negotiable</h3>
+    <ul class="steps">
+      <li><span class="sn">▸</span><strong>Full pre-shot routine on every shot.</strong> If you skip it, you are training to skip it under pressure. No exceptions, no shortcuts.</li>
+      <li><span class="sn">▸</span><strong>Never practise mechanics on a playing day.</strong> Range warm-up only (20 min: short game → irons → driver). No swing thoughts on the course.</li>
+      <li><span class="sn">▸</span><strong>Saturday = pressure round.</strong> When available: club medal, stableford, money match, or at minimum a solo scored round with no gimmes and full rules.</li>
+      <li><span class="sn">▸</span><strong>Post-round: 5 minutes of data.</strong> Before you leave the car park — log key stats and one observation in your journal.</li>
+    </ul>
+  </div>
+
+  <div class="warning">
+    <span class="cicon">⚠️</span>
+    <p><strong>The most common failure mode:</strong> replacing a practice session with another round. Rounds and practice sessions are not interchangeable. Rounds generate data. Practice sessions close the gaps the data reveals. You need both, every week.</p>
+  </div>
+</div>
+
+<!-- ═══ TAB 3 — MONTH-BY-MONTH ═══ -->
+<div class="section" id="calendar">
+  <span class="section-label">Months 1–6</span>
+  <h2 class="section-title">MONTH-BY-MONTH PLAN</h2>
+  <p class="section-desc">Each month has a named skill theme, a specific drill focus, a fitness phase, and a measurable checkpoint. Follow the themes in order — each builds on the last.</p>
+
+  <!-- JUNE -->
+  <div class="month-block">
+    <div class="month-num"><span class="ph-label">M1</span>1</div>
+    <p class="month-title">Foundation Install</p>
+    <span class="month-sub">Weeks 1–4 · Month 1 · HCP Target: ~9</span>
+    <ul class="checklist">
+      <li><span class="check rust">□</span><strong>Pre-shot routine:</strong> Install and use on every shot in every session and round from Day 1. Measure compliance: aim for 100%.</li>
+      <li><span class="check rust">□</span><strong>Stat tracking live:</strong> Arccos or Shot Scope active from first round. Review SG every Monday without fail.</li>
+      <li><span class="check rust">□</span><strong>Putter fitting:</strong> Booked Week 1, completed by Week 3 at the latest. Implement fitted specifications immediately.</li>
+      <li><span class="check rust">□</span><strong>Double bogey audit:</strong> After each round, count doubles. Understand why each one happened — decision error, execution error, or bad break. Target: below 3 per round by end of Month 1.</li>
+      <li><span class="check rust">□</span><strong>Daily mobility routine:</strong> 6 minutes, every morning — thoracic rotation, hip 90/90, hip flexor, wrist extension. Start Week 1, maintain throughout.</li>
+    </ul>
+    <div class="callout"><span class="cicon">🎯</span><p><strong>Month 1 drill focus:</strong> Make 100 at 4 ft (3× per week). Clock Drill 6 ft (both sessions). Shot selection hierarchy from Guide 02 on every greenside shot.</p></div>
+    <div class="callout" style="background:rgba(26,74,26,0.06);border-left-color:var(--teal);"><span class="cicon">📚</span><p><strong>Key guides for Month 1:</strong> <strong>Guide 01</strong> (Make 100 Drill) · <strong>Guide 05</strong> (Pre-Shot Routine installation) · <strong>Guide 17</strong> (Progress Journal — start Day 1) · <strong>Guide 20</strong> (Course Management — double bogey elimination) · <strong>Guide 15</strong> (Equipment Fitting — book putter fitting Week 1)</p></div>
+  </div>
+
+  <!-- JULY -->
+  <div class="month-block">
+    <div class="month-num"><span class="ph-label">M2</span>2</div>
+    <p class="month-title">Short Game Build</p>
+    <span class="month-sub">Weeks 5–8 · Month 2 · HCP Target: ~8</span>
+    <ul class="checklist">
+      <li><span class="check rust">□</span><strong>Wedge matrix:</strong> Build your full 4×4 matrix (4 wedges × 4 clock positions) using launch monitor or measured range. Guide 22. Completed by end of Month 2.</li>
+      <li><span class="check rust">□</span><strong>Chipping proximity:</strong> Track chip proximity every session. Target by end of Month 2: 60%+ of chips inside 8-ft circle from standard lies.</li>
+      <li><span class="check rust">□</span><strong>Bunker foundation:</strong> Square stance, open face. 15 min bunker practice in every session. Target: consistent exit every time — no skulls or fat shots.</li>
+      <li><span class="check rust">□</span><strong>Strength training:</strong> 2× per week, hip hinge focus. Goblet squat, deadlift, hip thrust, Pallof press. Guide 06 Phase 1 protocol.</li>
+    </ul>
+    <div class="insight"><span class="cicon">📊</span><p><strong>Month 2 checkpoint:</strong> U&amp;D% should be tracking above 28% by end of month. If below, add a third short game session on Wednesday morning before gym.</p></div>
+    <div class="callout" style="background:rgba(26,74,26,0.06);border-left-color:var(--teal);"><span class="cicon">📚</span><p><strong>Key guides for Month 2:</strong> <strong>Guide 22</strong> (Wedge Distance Matrix — build the full 4×4 this month) · <strong>Guide 02</strong> (Short Game Playbook — chipping and bunker technique) · <strong>Guide 06</strong> (Fitness Phase 1 — hip hinge strength protocol)</p></div>
+  </div>
+
+  <!-- AUGUST -->
+  <div class="month-block">
+    <div class="month-num" style="background:var(--teal);"><span class="ph-label" style="color:rgba(232,240,216,0.6);">Aug</span>3</div>
+    <p class="month-title">Putting Precision</p>
+    <span class="month-sub">Weeks 9–13 · Month 3 · HCP Target: ~7</span>
+    <ul class="checklist">
+      <li><span class="check teal">□</span><strong>AimPoint Express:</strong> Learn and apply the technique from Guide 01. Use on every putt in rounds from Week 9 onwards. Allocate 20 min per Tuesday session to green reading.</li>
+      <li><span class="check teal">□</span><strong>Lag putting:</strong> 30% of every putting block on lag putts 25 ft+. Pass/fail: inside 3-ft radius. Track 3-putt rate in every round — target below 10% by end of Month 3.</li>
+      <li><span class="check teal">□</span><strong>Speed gates drill:</strong> Two tees 4 inches apart at 6 ft, putt through the gate. 50 putts per session, minimum 42/50 to pass. Record daily.</li>
+      <li><span class="check teal">□</span><strong>Rypstick speed training:</strong> Begin Month 3 (Guide 25 protocol). 3× per week, 10 minutes. Integrate with gym days — speed before strength, never after.</li>
+    </ul>
+    <div class="insight"><span class="cicon">🏋️</span><p><strong>Fitness phase shift:</strong> Month 3 moves to Guide 06 Phase 2 — add rotational cable work and medicine ball throws. Strength is the base; power development begins now.</p></div>
+    <div class="callout" style="background:rgba(26,74,26,0.06);border-left-color:var(--teal);"><span class="cicon">📚</span><p><strong>Key guides for Month 3:</strong> <strong>Guide 01</strong> (Putting — AimPoint Express and lag drills) · <strong>Guide 25</strong> (Speed Training — Rypstick protocol begins this month) · <strong>Guide 06</strong> (Fitness Phase 2) · <strong>Guide 32</strong> (Green Reading)</p></div>
+  </div>
+
+  <!-- SEPTEMBER -->
+  <div class="month-block">
+    <div class="month-num" style="background:var(--teal);"><span class="ph-label" style="color:rgba(232,240,216,0.6);">Sep</span>4</div>
+    <p class="month-title">Iron Play Attack</p>
+    <span class="month-sub">Weeks 14–17 · Month 4 · HCP Target: ~6</span>
+    <ul class="checklist">
+      <li><span class="check teal">□</span><strong>Launch monitor session:</strong> Book a dedicated LM session (not a fitting — a data session). Verify carry distances for every club. End under-clubbing permanently. Guide 26 for how to read the data.</li>
+      <li><span class="check teal">□</span><strong>Low Point Drill:</strong> Alignment stick flat on ground, strike irons without touching it. 20 minutes every Tuesday session throughout Month 4. Target: consistent ball-first contact, divot forward of ball.</li>
+      <li><span class="check teal">□</span><strong>Dispersion mapping:</strong> Guide 11. Map 7-iron and PW dispersion — 20 shots each on LM or measured range. Apply offset rule in rounds from Week 15.</li>
+      <li><span class="check teal">□</span><strong>Wind percentage system:</strong> Guide 20 / Guide 23. Apply on every approach where wind exceeds 10 mph from Week 14 onwards. No exceptions.</li>
+    </ul>
+    <div class="callout"><span class="cicon">📐</span><p><strong>Month 4 focus stat:</strong> Approach proximity from 125–175 yards. Track this distance band separately in your journal. Target by end of Month 4: below 38 ft average from this range.</p></div>
+  </div>
+
+  <!-- OCTOBER -->
+  <div class="month-block">
+    <div class="month-num" style="background:var(--gold);color:#0a160a;"><span class="ph-label" style="color:rgba(10,22,10,0.7);">Oct</span>5</div>
+    <p class="month-title">Scoring Zone Precision</p>
+    <span class="month-sub">Weeks 18–22 · Month 5 · HCP Target: ~5–6</span>
+    <ul class="checklist">
+      <li><span class="check gold">□</span><strong>Wedge matrix verification:</strong> Re-test all wedge distances — they will have shifted with improved technique and fitness. Rebuild matrix with current numbers. No guessing in the scoring zone.</li>
+      <li><span class="check gold">□</span><strong>Course management audit:</strong> Apply Guide 20 framework to every hole on your home course. Create a written strategy card for each hole. Review after each round: did you follow it?</li>
+      <li><span class="check gold">□</span><strong>Pressure practice protocol:</strong> Every Sunday session must include one 20-minute pressure block. £1 per missed 6-ft putt. Chipping game: 10 chips, score yourself, beat your best. Make stakes real.</li>
+      <li><span class="check gold">□</span><strong>Video analysis:</strong> Film your swing from DTL and face-on once this month (Guide 14 protocol). Compare to Month 1 footage if available. Send to your coach or use for self-coaching.</li>
+    </ul>
+    <div class="warning"><span class="cicon">🏆</span><p><strong>Month 5 competition push:</strong> By now your club’s main competitive window for the season should be open or close to it. If it is, target 3 competitive rounds this month — your club championship if it falls around now, a regular medal, and an open stableford or equivalent away event. If Month 5 lands in a quiet patch of your club’s calendar instead, fill the gap with whatever competitive formats are available — winter leagues, simulator stakes, matchplay — to keep pressure-training volume up. The pressure gap closes through exposure, not practice.</p></div>
+  </div>
+
+  <!-- NOVEMBER -->
+  <div class="month-block">
+    <div class="month-num" style="background:var(--gold);color:#0a160a;"><span class="ph-label" style="color:rgba(10,22,10,0.7);">Nov</span>6</div>
+    <p class="month-title">Consolidation &amp; Review</p>
+    <span class="month-sub">Weeks 23–26 · Month 6 · HCP Target: ~5</span>
+    <ul class="checklist">
+      <li><span class="check gold">□</span><strong>6-month review:</strong> Pull all SG data from Months 1–6. Compare to Day 1 baselines. Every category should show measurable improvement. If any category is flat, it becomes Phase 3's priority.</li>
+      <li><span class="check gold">□</span><strong>Coach audit:</strong> Book a lesson with a TPI-certified coach or your regular coach. Bring your SG data and video. Ask them to identify the single biggest remaining physical limiter. This is the work for Phase 3 (Months 7–12).</li>
+      <li><span class="check gold">□</span><strong>Full wedge matrix + dispersion cards:</strong> Both should be complete, verified, and laminated on your bag by end of Month 6.</li>
+      <li><span class="check gold">□</span><strong>Set Phase 3 targets:</strong> Using Month 6 SG data, identify which of the four categories needs the most work in Phase 3. Write it down. This becomes Month 7's theme.</li>
+    </ul>
+    <div class="success"><span class="cicon">✅</span><p><strong>6-Month Checkpoint:</strong> If all targets in the Progress Tracker tab are met by end of Month 6, you are on track for scratch within your 24-month timeline. Phase 3 (Months 7–12) builds the attack that takes you from 5 to 1–2.</p></div>
+  </div>
+</div>
+
+<!-- ═══ TAB 4 — SESSION TEMPLATES ═══ -->
+<div class="section" id="sessions">
+  <span class="section-label">What to Actually Do</span>
+  <h2 class="section-title">SESSION TEMPLATES</h2>
+  <p class="section-desc">These are your exact practice blueprints for each month's theme. Every drill has a pass/fail standard. If you do not record the result, the session does not count.</p>
+
+  <div class="card">
+    <span class="card-kicker">Months 1–2 — Short Game Dominant (75 min)</span>
+    <h3>Foundation Install Sessions</h3>
+    <div class="session-block">
+      <p class="session-title">Session Allocation</p>
+      <div class="session-row">
+        <span class="s-pct tl">30%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:30%;background:linear-gradient(90deg,var(--teal),var(--teal-light));"></div></div>
+        <span class="s-label">Putting — Make 100 at 4 ft · Clock Drill · Lag gates</span>
+      </div>
+      <div class="session-row">
+        <span class="s-pct rs">40%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:40%;background:linear-gradient(90deg,var(--rust),var(--rust-hi));"></div></div>
+        <span class="s-label">Short Game — Proximity tracking · Wedge matrix build · Bunker exits</span>
+      </div>
+      <div class="session-row">
+        <span class="s-pct gd">20%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:20%;background:linear-gradient(90deg,var(--gold),var(--gold-light));"></div></div>
+        <span class="s-label">Iron Play — Low Point Drill · Contact quality focus</span>
+      </div>
+      <div class="session-row">
+        <span class="s-pct lm">10%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:10%;background:linear-gradient(90deg,#3a8a3a,#6ab86a);"></div></div>
+        <span class="s-label">Routine — Full PSR on every shot · Pressure chip game</span>
+      </div>
+    </div>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn">1</span><strong>Putting (22 min):</strong> 10 min Make 100 at 4 ft (pass = 75/100). 7 min Clock Drill at 6 ft (pass = 7/8). 5 min lag putting from 30 ft — all inside 3-ft radius.</li>
+      <li><span class="sn">2</span><strong>Short game (30 min):</strong> 10 chips from standard lie — record how many inside 8 ft (pass = 6+). 10 min wedge practice at 50, 75, 100 yards — record dispersion. 10 min bunker: 10 exits, all must clear the lip cleanly.</li>
+      <li><span class="sn">3</span><strong>Irons (15 min):</strong> Low Point Drill × 20 balls. Strike alignment stick test (pass = no contact). Record contact quality only — not distance.</li>
+      <li><span class="sn">4</span><strong>Pressure finish (8 min):</strong> 10-chip game to a tight pin with a 50p per shot consequence. Full pre-shot routine on every shot. Score yourself.</li>
+    </ul>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Months 3–4 — Putting &amp; Iron Dominant (80 min)</span>
+    <h3>Precision Build Sessions</h3>
+    <div class="session-block">
+      <p class="session-title">Session Allocation</p>
+      <div class="session-row">
+        <span class="s-pct tl">30%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:30%;background:linear-gradient(90deg,var(--teal),var(--teal-light));"></div></div>
+        <span class="s-label">Putting — Speed gates · AimPoint application · Lag from 30–40 ft</span>
+      </div>
+      <div class="session-row">
+        <span class="s-pct rs">25%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:25%;background:linear-gradient(90deg,var(--rust),var(--rust-hi));"></div></div>
+        <span class="s-label">Short Game — Proximity maintained · Bunker save consistency</span>
+      </div>
+      <div class="session-row">
+        <span class="s-pct gd">35%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:35%;background:linear-gradient(90deg,var(--gold),var(--gold-light));"></div></div>
+        <span class="s-label">Iron Play — Dispersion mapping · LM verification · Wind calculation</span>
+      </div>
+      <div class="session-row">
+        <span class="s-pct lm">10%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:10%;background:linear-gradient(90deg,#3a8a3a,#6ab86a);"></div></div>
+        <span class="s-label">Pressure — Scored putting game · Course simulation</span>
+      </div>
+    </div>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn tl">1</span><strong>Putting (24 min):</strong> 10 min speed gates at 6 ft (pass = 42/50). 8 min AimPoint green reading — read, putt, record accuracy. 6 min lag from 35 ft (pass = all inside 3 ft).</li>
+      <li><span class="sn tl">2</span><strong>Short game (20 min):</strong> 10 chips — all proximity tracked. Record average distance from hole. 10 min bunker — 10 exits, track how many stop within 10 ft of the flag.</li>
+      <li><span class="sn tl">3</span><strong>Iron play (28 min):</strong> 10 balls 7-iron on LM or measured range — record carry and offline distance. Low Point Drill × 15. Apply wind adjustment to 5 simulated approach scenarios — choose club, write it down.</li>
+      <li><span class="sn tl">4</span><strong>Pressure finish (8 min):</strong> 18-hole putting simulation — 18 putts, one from each distance (3–30 ft in steps), score yourself against par.</li>
+    </ul>
+  </div>
+
+  <div class="card gold-card">
+    <span class="card-kicker">Months 5–6 — Full Game Integration (85 min)</span>
+    <h3>Scoring Zone Sessions</h3>
+    <div class="session-block">
+      <p class="session-title">Session Allocation</p>
+      <div class="session-row">
+        <span class="s-pct tl">25%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:25%;background:linear-gradient(90deg,var(--teal),var(--teal-light));"></div></div>
+        <span class="s-label">Putting — 5–10 ft zone · Pressure putting game</span>
+      </div>
+      <div class="session-row">
+        <span class="s-pct rs">30%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:30%;background:linear-gradient(90deg,var(--rust),var(--rust-hi));"></div></div>
+        <span class="s-label">Short Game — All clubs · All lies · Course simulation</span>
+      </div>
+      <div class="session-row">
+        <span class="s-pct gd">30%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:30%;background:linear-gradient(90deg,var(--gold),var(--gold-light));"></div></div>
+        <span class="s-label">Iron Play — Proximity focus · Distance band targeting</span>
+      </div>
+      <div class="session-row">
+        <span class="s-pct lm">15%</span>
+        <div class="s-bar"><div class="s-bar-fill" style="width:15%;background:linear-gradient(90deg,#3a8a3a,#6ab86a);"></div></div>
+        <span class="s-label">Pressure &amp; Video — Consequence drills · Swing review</span>
+      </div>
+    </div>
+    <ul class="steps" style="margin-top:14px;">
+      <li><span class="sn gd">1</span><strong>Putting (21 min):</strong> 15 min pressure game — £1 per miss from 6 ft, 20 putts. Track total cost. 6 min: 3 putts each from 8, 10, 12, 15, 20 ft — record makes.</li>
+      <li><span class="sn gd">2</span><strong>Short game (25 min):</strong> Random lie game — coach or random selection. 3 different lies, 3 different distances, 3 different targets. Full PSR every shot. No second balls.</li>
+      <li><span class="sn gd">3</span><strong>Iron play (25 min):</strong> 10 approach shots to a target — record proximity. Calculate your average. Use wind percentage on 5 of them. One ball per shot, full PSR.</li>
+      <li><span class="sn gd">4</span><strong>Pressure/video (14 min):</strong> 10-hole putting simulation with consequence, followed by 5-minute video review of your putting stroke or one iron.</li>
+    </ul>
+  </div>
+
+  <div class="warning">
+    <span class="cicon">⚠️</span>
+    <p><strong>Pass/fail is not optional.</strong> If you do not record whether you passed or failed each drill, you are not practising deliberately — you are exercising. Block practice (hit → repeat → feel good) produces 42% skill retention at 72 hours. Deliberate practice with pass/fail criteria produces 78%. The recording is the practice.</p>
+  </div>
+</div>
+
+<!-- ═══ TAB 5 — COMPETITION PLAN ═══ -->
+<div class="section" id="competition">
+  <span class="section-label">Competitive Exposure</span>
+  <h2 class="section-title">COMPETITION SCHEDULE</h2>
+  <p class="section-desc">Competitive pressure is a skill that must be trained. Every counted competition this plan targets should be treated as a training opportunity — not a test. You are building the pressure infrastructure now that will support scratch-level performance later.</p>
+
+  <div class="card">
+    <span class="card-kicker">Months 1–6 · Target: 8–10 Competitive Rounds</span>
+    <h3>Planned Competition Calendar</h3>
+    <div class="comp-row">
+      <span class="comp-month">Month 1</span>
+      <div class="comp-detail">
+        <strong>Monthly Medal or Stableford (Week 3 or 4)</strong>
+        <span>Your first counted round of the plan. The objective is simply to play your routine on every shot. Score is secondary. Arccos tracking active throughout.</span>
+      </div>
+    </div>
+    <div class="comp-row">
+      <span class="comp-month">Month 2</span>
+      <div class="comp-detail">
+        <strong>Monthly Medal + Open Stableford</strong>
+        <span>Two competitions this month. The open stableford exposes you to an unfamiliar course and field — valuable pressure variation. Apply your shot selection hierarchy from Guide 02 aggressively.</span>
+      </div>
+    </div>
+    <div class="comp-row">
+      <span class="comp-month">Month 3</span>
+      <div class="comp-detail">
+        <strong>Monthly Medal + Midweek Stableford (Bank Holiday)</strong>
+        <span>Two rounds. By Month 3 your putting should be sharper — track 3-putt rate specifically in competition vs. practice this month. The gap (if any) tells you whether pressure is affecting your putting.</span>
+      </div>
+    </div>
+    <div class="comp-row">
+      <span class="comp-month">Month 4</span>
+      <div class="comp-detail">
+        <strong>Club Championship (if running) + Monthly Medal</strong>
+        <span>Month 4 often falls during club championship season for many clubs. If yours is scheduled around now, enter it regardless of where your handicap sits — the competitive pressure of a multi-round event is irreplaceable training. If your club championship falls in a different month, note the date now and treat that month’s entry as non-negotiable when it arrives. Two rounds minimum this month either way.</span>
+      </div>
+    </div>
+    <div class="comp-row">
+      <span class="comp-month">Month 5</span>
+      <div class="comp-detail">
+        <strong>Monthly Medal + Open Event + Matchplay (if available)</strong>
+        <span>Three competitive rounds target this month. Matchplay introduces a different pressure dynamic — hole-by-hole consequence rather than cumulative score. Seek it out if available at your club.</span>
+      </div>
+    </div>
+    <div class="comp-row">
+      <span class="comp-month">Month 6</span>
+      <div class="comp-detail">
+        <strong>End-of-Season Medal or Stableford</strong>
+        <span>One counted round to close the six months. Use it as a true benchmark — same course you played in Month 1 ideally. Compare your SG data directly. This is your 6-month performance review in live competitive conditions.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">Every Competitive Round</span>
+    <h3>Competition Day Protocol</h3>
+    <ul class="steps">
+      <li><span class="sn tl">▸</span><strong>Night before:</strong> Logistics confirmed. Tee time known. Strategy card reviewed. No swing thoughts. Higher-carb dinner, 8 hours sleep target.</li>
+      <li><span class="sn tl">▸</span><strong>90 min before:</strong> Arrive at course. Guide 08 morning protocol: range warm-up (not practice), short game calibration, putting green speed check. No new swing thoughts.</li>
+      <li><span class="sn tl">▸</span><strong>On the course:</strong> Process goals only — commit to your routine on every shot. No outcome goals once the round starts. Score is a by-product of process.</li>
+      <li><span class="sn tl">▸</span><strong>After:</strong> 5 minutes of data capture before you leave. One sentence in your journal: what was the mental game like today? Not the score — the quality of the process.</li>
+    </ul>
+  </div>
+
+  <div class="two-col">
+    <div class="mini-card">
+      <span class="mini-kicker">Saturday Rounds (Non-Competition)</span>
+      <h4>The Pressure Simulation</h4>
+      <p>On non-competition Saturdays: play alone, full scorecard, no gimmes, full Rules of Golf. Set yourself a target score and treat every shot as if it has consequences. This is not downtime — it is pressure training.</p>
+    </div>
+    <div class="mini-card teal">
+      <span class="mini-kicker">Handicap Management</span>
+      <h4>Count Everything</h4>
+      <p>Submit every qualifying score immediately. A handicap that accurately reflects your game gives you better competitive data. Do not protect your handicap — the plan requires honest numbers throughout.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TAB 6 — 6-MONTH TARGETS ═══ -->
+<div class="section" id="targets">
+  <span class="section-label">The Numbers</span>
+  <h2 class="section-title">SIX-MONTH TARGETS</h2>
+  <p class="section-desc">These are the measurable standards that confirm Phase 1 and 2 are complete. Every target has a start date, a checkpoint date, and a measurable number. Track in Arccos, Shot Scope, or your practice log.</p>
+
+  <span class="badge b-rust">📊 Milestone Schedule — Months 1–6</span>
+
+  <div class="card">
+    <span class="card-kicker">End of Month 1 — Checkpoint</span>
+    <h3>Foundation Installed</h3>
+    <table class="dtable">
+      <tr><th>Metric</th><th>Target</th><th>My Number</th></tr>
+      <tr><td>Pre-shot routine compliance</td><td class="good">Every shot ✓</td><td></td></tr>
+      <tr><td>Stats tracked (rounds)</td><td class="warn">4+ rounds ✓</td><td></td></tr>
+      <tr><td>Double bogeys / round</td><td class="warn">&lt;3</td><td></td></tr>
+      <tr><td>Putter fitting</td><td class="good">Completed ✓</td><td></td></tr>
+      <tr><td>Daily mobility routine</td><td class="good">Active ✓</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="card teal-card">
+    <span class="card-kicker">End of Month 3 — Checkpoint</span>
+    <h3>Short Game &amp; Putting Progressing</h3>
+    <table class="dtable">
+      <tr><th>Metric</th><th>Target</th><th>My Number</th></tr>
+      <tr><td>Up-and-Down %</td><td class="warn">30%+</td><td></td></tr>
+      <tr><td>3-Putt rate</td><td class="warn">&lt;12%</td><td></td></tr>
+      <tr><td>6-ft make rate (practice)</td><td class="warn">70%+</td><td></td></tr>
+      <tr><td>Wedge matrix</td><td class="good">Built &amp; verified ✓</td><td></td></tr>
+      <tr><td>Handicap</td><td class="warn">~7–8</td><td></td></tr>
+      <tr><td>Competitive rounds played</td><td class="warn">4+</td><td></td></tr>
+      <tr><td>Strength training</td><td class="good">2×/wk sustained ✓</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="card gold-card">
+    <span class="card-kicker">End of Month 6 — Checkpoint</span>
+    <h3>Phase 1 &amp; 2 Complete</h3>
+    <table class="dtable">
+      <tr><th>Metric</th><th>Scratch Target</th><th>Month 6 Target</th><th>My Number</th></tr>
+      <tr><td>Handicap</td><td class="good">0.0</td><td class="warn">~5</td><td></td></tr>
+      <tr><td>Up-and-Down %</td><td class="good">40%+</td><td class="warn">35%+</td><td></td></tr>
+      <tr><td>3-Putt rate</td><td class="good">&lt;5%</td><td class="warn">&lt;10%</td><td></td></tr>
+      <tr><td>6-ft make rate</td><td class="good">85%+</td><td class="warn">75%+</td><td></td></tr>
+      <tr><td>Approach prox (125–175 yds)</td><td class="good">&lt;25 ft</td><td class="warn">&lt;38 ft</td><td></td></tr>
+      <tr><td>Double bogeys / round</td><td class="good">&lt;0.6</td><td class="warn">&lt;1.5</td><td></td></tr>
+      <tr><td>Competitive rounds played</td><td class="good">24+ / yr</td><td class="warn">8–10</td><td></td></tr>
+      <tr><td>Putter fitting done</td><td class="good">✓</td><td class="good">✓</td><td></td></tr>
+      <tr><td>Wedge matrix built</td><td class="good">✓</td><td class="good">✓</td><td></td></tr>
+      <tr><td>Dispersion data mapped</td><td class="good">✓</td><td class="good">✓</td><td></td></tr>
+      <tr><td>Coach audit completed</td><td class="good">4×/yr</td><td class="warn">1× ✓</td><td></td></tr>
+    </table>
+  </div>
+
+  <div class="insight">
+    <span class="cicon">📌</span>
+    <p><strong>If a target is missed:</strong> Do not advance to Phase 3 (Month 7) until it is resolved. Use your Arccos/Shot Scope data to identify the specific category that is below target. Design Month 7's practice exclusively around that gap before moving on to Month 8. The plan only works if the foundations are genuine.</p>
+  </div>
+</div>
+
+<!-- ═══ TAB 7 — PROGRESS TRACKER ═══ -->
+<div class="section" id="tracker">
+  <span class="section-label">Live Data</span>
+  <h2 class="section-title">PROGRESS TRACKER</h2>
+  <p class="section-desc">Enter your numbers once and they are saved automatically to this device. Baselines set the starting line — every number you add after that is evidence of progress.</p>
+
+  
+  <span class="badge b-teal" style="margin-top:8px;">🗓️ Phase 1 &amp; 2 — Months 1–6 Log</span>
+  <div class="card teal-card">
+    <span class="card-kicker">Fill After Every Round · Auto-Saved</span>
+    <h3>Key Stats per Round</h3>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table class="dtable" id="round-table-27">
+      <tr><th>Date</th><th>HCP</th><th>Score</th><th>Doubles</th><th>U&D%</th><th>3-Putts</th><th>GIR%</th><th style="width:28px;"></th></tr>
+    </table>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+      <button type="button" onclick="addRoundRow()" style="background:var(--teal-dim);border:1px solid rgba(72,176,168,.3);color:var(--teal-hi);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:9px 14px;border-radius:var(--r-sm);cursor:pointer;-webkit-appearance:none;">+ Add Round</button>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);padding:8px 0;">Tap any field to edit · Saves automatically</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <span class="card-kicker">Practice Session Log · Auto-Saved</span>
+    <h3>Weekly Practice Record</h3>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table class="dtable" id="practice-table-27">
+      <tr><th>Date</th><th>Focus</th><th>Key Drill</th><th>Pass/Fail</th><th>Observation</th><th style="width:28px;"></th></tr>
+    </table>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+      <button type="button" onclick="addPracticeRow()" style="background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:9px 14px;border-radius:var(--r-sm);cursor:pointer;-webkit-appearance:none;">+ Add Session</button>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);padding:8px 0;">Tap any field to edit · Saves automatically</span>
+    </div>
+  </div>
+
+  <div class="card gold-card">
+    <span class="card-kicker">Monthly SG Summary · Auto-Saved</span>
+    <h3>Strokes Gained Trend — Months 1–6</h3>
+    <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <table class="dtable">
+      <tr><th>Month</th><th>OTT</th><th>APP</th><th>ARG</th><th>PUTT</th><th>HCP End</th></tr>
+      <tr>
+        <td style="color:var(--muted);font-size:11px;">Month 1</td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m1-ott"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m1-app"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m1-arg"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m1-putt"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m1-hcp"></td>
+      </tr>
+      <tr>
+        <td style="color:var(--muted);font-size:11px;">Month 2</td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m2-ott"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m2-app"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m2-arg"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m2-putt"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m2-hcp"></td>
+      </tr>
+      <tr>
+        <td style="color:var(--muted);font-size:11px;">Month 3</td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m3-ott"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m3-app"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m3-arg"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m3-putt"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m3-hcp"></td>
+      </tr>
+      <tr>
+        <td style="color:var(--muted);font-size:11px;">Month 4</td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m4-ott"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m4-app"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m4-arg"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m4-putt"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m4-hcp"></td>
+      </tr>
+      <tr>
+        <td style="color:var(--muted);font-size:11px;">Month 5</td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m5-ott"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m5-app"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m5-arg"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m5-putt"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m5-hcp"></td>
+      </tr>
+      <tr>
+        <td style="color:var(--lime);font-weight:600;">Month 6 ★</td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m6-ott"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m6-app"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m6-arg"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m6-putt"></td>
+        <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" style="color:var(--lime);" data-key="sg-m6-hcp"></td>
+      </tr>
+    </table>
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin-top:10px;">Target at Month 6: HCP ~5 · SG: APP improving toward −3.0 · All categories trending less negative month-on-month.</p>
+  </div>
+
+  <div class="pull-quote">
+    "The journal is not a record of what you did. It is the instrument that converts what you did into what you understand — and understanding is the only thing that changes behaviour."
+    <span>— The Scratch Project · Progress Journal</span>
+  </div>
+</div>
+<style id="tios-css-27">
+.t-inp-27 {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--white);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  width: 100%;
+  min-width: 44px;
+  padding: 3px 2px;
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  -webkit-user-select: text;
+  user-select: text;
+  touch-action: manipulation;
+}
+.t-inp-27:focus {
+  border-bottom-color: var(--lime);
+  background: rgba(160,200,80,0.05);
+}
+.t-inp-27::placeholder { color: var(--faint); }
+.t-td-27 { padding: 4px 6px !important; }
+.t-del-27 {
+  background: none; border: none; color: var(--bad);
+  cursor: pointer; font-size: 16px; padding: 2px 4px;
+  opacity: 0.4; line-height: 1; -webkit-appearance: none;
+}
+.t-del-27:hover, .t-del-27:active { opacity: 1; }
+.t-sg-inp-27 {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  color: var(--white);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  width: 100%;
+  padding: 3px 2px;
+  outline: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  min-width: 44px;
+}
+.t-sg-inp-27:focus {
+  border-bottom-color: var(--lime);
+  background: rgba(160,200,80,0.05);
+}
+.t-sg-inp-27::placeholder { color: var(--faint); }
+</style>
+<script id="tios-js-27">
+(function() {
+  var STORE = 'tsp_tracker_27';
+  function ls() { try { return JSON.parse(localStorage.getItem(STORE) || '{}'); } catch(e) { return {}; } }
+  function ss(d) { try { localStorage.setItem(STORE, JSON.stringify(d)); } catch(e) {} }
+  function deb(fn, ms) { var t; return function() { var a = arguments; clearTimeout(t); t = setTimeout(function() { fn.apply(null, a); }, ms); }; }
+
+  /* ── Baseline ── */
+  var BL = ["bl-hcp", "bl-driver", "bl-7iron", "bl-6ft", "bl-chip", "bl-sg-app", "bl-sg-putt", "bl-gir"];
+  function loadBL() {
+    var d = ls();
+    for (var i = 0; i < BL.length; i++) {
+      var el = document.getElementById(BL[i]);
+      if (el && d[BL[i]] !== undefined) el.value = d[BL[i]];
+    }
+  }
+
+  window.toggleBaseline = function() {
+    var grid = document.getElementById('bl-grid');
+    var btn = document.getElementById('bl-toggle');
+    if (grid.style.display === 'none') {
+      grid.style.display = 'block';
+      btn.textContent = '▲ Hide';
+    } else {
+      grid.style.display = 'none';
+      btn.textContent = '▼ Show';
+    }
+  };
+  window.saveBaseline = function() {
+    var d = ls();
+    for (var i = 0; i < BL.length; i++) {
+      var el = document.getElementById(BL[i]);
+      if (el) d[BL[i]] = el.value;
+    }
+    ss(d);
+    var s = document.getElementById('bl-status-27');
+    if (s) { s.textContent = '✓ Saved'; s.style.opacity = '1'; setTimeout(function() { s.style.opacity = '0'; }, 2500); }
+  };
+  window.clearBaseline = function() {
+    if (!confirm('Clear all baseline numbers?')) return;
+    var d = ls();
+    for (var i = 0; i < BL.length; i++) { delete d[BL[i]]; var el = document.getElementById(BL[i]); if (el) el.value = ''; }
+    ss(d);
+  };
+
+  /* ── Input cell factory ── */
+  function makeInp(val, onchange, placeholder) {
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.className = 't-inp-27';
+    inp.value = val || '';
+    inp.placeholder = placeholder || '—';
+    inp.setAttribute('autocomplete', 'off');
+    inp.setAttribute('autocorrect', 'off');
+    inp.setAttribute('autocapitalize', 'off');
+    inp.setAttribute('spellcheck', 'false');
+    inp.addEventListener('input', deb(onchange, 600));
+    inp.addEventListener('change', onchange);
+    return inp;
+  }
+
+  function makeCell(val, row, field, tkey) {
+    var td = document.createElement('td');
+    td.className = 't-td-27';
+    var inp = makeInp(val, function() {
+      var d = ls(); var rows = d[tkey] || [];
+      for (var i = 0; i < rows.length; i++) { if (rows[i]._id === row._id) { rows[i][field] = inp.value; break; } }
+      d[tkey] = rows; ss(d);
+    });
+    td.appendChild(inp);
+    return td;
+  }
+
+  function makeDelBtn(row, rowEl, tkey) {
+    var td = document.createElement('td'); td.style.width = '28px';
+    var btn = document.createElement('button');
+    btn.className = 't-del-27'; btn.textContent = '×'; btn.type = 'button'; btn.title = 'Remove row';
+    btn.addEventListener('click', function() {
+      if (!confirm('Remove this row?')) return;
+      rowEl.remove();
+      var d = ls(); var rows = d[tkey] || [];
+      for (var i = 0; i < rows.length; i++) { if (rows[i]._id === row._id) { rows.splice(i, 1); break; } }
+      d[tkey] = rows; ss(d);
+    });
+    td.appendChild(btn); return td;
+  }
+
+  /* ── Round table ── */
+  var RF = ["date", "hcp", "score", "doubles", "ud", "three_putts", "gir"];
+  function renderRoundRow(row, table) {
+    var tr = document.createElement('tr');
+    for (var i = 0; i < RF.length; i++) {
+      tr.appendChild(makeCell(row[RF[i]], row, RF[i], 'round_rows'));
+    }
+    tr.appendChild(makeDelBtn(row, tr, 'round_rows'));
+    table.appendChild(tr);
+  }
+  function loadRoundTable() {
+    var t = document.getElementById('round-table-27'); if (!t) return;
+    var rows = ls()['round_rows'] || [];
+    while (t.rows.length > 1) t.deleteRow(1);
+    for (var i = 0; i < rows.length; i++) renderRoundRow(rows[i], t);
+  }
+  window.addRoundRow = function() {
+    var d = ls(); var rows = d['round_rows'] || [];
+    var row = { _id: Date.now().toString() };
+    for (var i = 0; i < RF.length; i++) row[RF[i]] = '';
+    rows.push(row); d['round_rows'] = rows; ss(d);
+    var t = document.getElementById('round-table-27');
+    renderRoundRow(row, t);
+    t.rows[t.rows.length - 1].cells[0].querySelector('input').focus();
+  };
+
+  /* ── Practice table ── */
+  var PF = ['date', 'focus', 'drill', 'passfail', 'observation'];
+  function renderPracticeRow(row, table) {
+    var tr = document.createElement('tr');
+    for (var i = 0; i < PF.length; i++) tr.appendChild(makeCell(row[PF[i]], row, PF[i], 'practice_rows'));
+    tr.appendChild(makeDelBtn(row, tr, 'practice_rows'));
+    table.appendChild(tr);
+  }
+  function loadPracticeTable() {
+    var t = document.getElementById('practice-table-27'); if (!t) return;
+    var rows = ls()['practice_rows'] || [];
+    while (t.rows.length > 1) t.deleteRow(1);
+    for (var i = 0; i < rows.length; i++) renderPracticeRow(rows[i], t);
+  }
+  window.addPracticeRow = function() {
+    var d = ls(); var rows = d['practice_rows'] || [];
+    var row = { _id: Date.now().toString(), date: '', focus: '', drill: '', passfail: '', observation: '' };
+    rows.push(row); d['practice_rows'] = rows; ss(d);
+    var t = document.getElementById('practice-table-27');
+    renderPracticeRow(row, t);
+    t.rows[t.rows.length - 1].cells[0].querySelector('input').focus();
+  };
+
+  /* ── SG cells (named inputs) ── */
+  function loadSGCells() {
+    var d = ls();
+    var inputs = document.querySelectorAll('.t-sg-inp-27');
+    for (var i = 0; i < inputs.length; i++) {
+      (function(inp) {
+        var key = inp.dataset.key;
+        if (key && d[key] !== undefined) inp.value = d[key];
+        var save = deb(function() { var dd = ls(); dd[inp.dataset.key] = inp.value; ss(dd); }, 600);
+        inp.addEventListener('input', save);
+        inp.addEventListener('change', save);
+      })(inputs[i]);
+    }
+  }
+
+  /* ── Extra table cells (proximity / pressure) ── */
+  function loadExtraCells() {
+    var d = ls();
+    var inputs = document.querySelectorAll('.t-extra-inp-27');
+    for (var i = 0; i < inputs.length; i++) {
+      (function(inp) {
+        var key = inp.dataset.key;
+        if (key && d[key] !== undefined) inp.value = d[key];
+        var save = deb(function() { var dd = ls(); dd[inp.dataset.key] = inp.value; ss(dd); }, 600);
+        inp.addEventListener('input', save);
+        inp.addEventListener('change', save);
+      })(inputs[i]);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    loadBL(); loadRoundTable(); loadPracticeTable(); loadSGCells(); loadExtraCells();
+  });
+})();
+</script>
+
+
+
+<div class="footer">
+  THE SCRATCH PROJECT · PHASE 1 &amp; 2 · MONTHS 1–6 · STOP THE BLEEDING &amp; BUILD THE FOUNDATION<br>
+  <span style="display:block;margin-top:6px;opacity:0.5;">Review weekly · Update your numbers · Data drives the plan — not feeling</span> · © 2026 The Scratch Project</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    event.currentTarget.classList.add('active');
+    window.scrollTo({top: document.querySelector('.nav-tabs').offsetTop - 2, behavior: 'smooth'});
+  }
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="10_scratch_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">24-Month Scratch Plan</span>
+    </a>
+    <a href="28_months_7_12_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📆</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Months 7–12 Plan</span>
+    </a>
+    <a href="06_golf_fitness.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">💪</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Golf Fitness Plan</span>
+    </a>
+    <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📓</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Progress Journal</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+
+<script>
+(function(){
+  const p=JSON.parse(localStorage.getItem('scratch_profile')||'null');
+  if(!p) return;
+  const MN=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  function mDate(n){
+    const [y,m]=p.startDate.split('-').map(Number);
+    const d=new Date(y,m-1+(n-1),1);
+    return MN[d.getMonth()]+' '+d.getFullYear();
+  }
+  const BASE={1:10,2:9,3:8.5,4:8,6:7,9:5,12:4,18:2,24:0};
+  const scale=(p.startHcp-(p.goalHcp||0))/10;
+  const curM=Math.max(1,Math.min(24,Math.floor((new Date()-new Date(p.startDate))/(1000*60*60*24*30.44))+1));
+  const guideStart=1, guideEnd=6;
+  const inThisGuide=curM>=guideStart&&curM<=guideEnd;
+
+  // Inject banner before first content
+  const banner=document.createElement('div');
+  banner.style.cssText='background:rgba(30,100,30,0.06);border:1px solid rgba(30,100,30,0.2);border-radius:6px;padding:12px 16px;margin:16px 22px;font-size:12px;font-family:monospace;color:#3d2e1a;line-height:1.8';
+  banner.innerHTML=`<strong style="color:#4a7a1e">YOUR PLAN</strong> · HCP ${p.startHcp} → ${p.goalHcp||0} · Guide covers ${mDate(guideStart)}–${mDate(guideEnd)}${inThisGuide?' · <strong style=\"color:#b54a22\">You are here — Month '+curM+'</strong>':' · '+(!inThisGuide&&curM<guideStart?'Ahead of you':'Completed')} · <a href="quick_start.html" style="color:#4a7a1e">Edit plan</a>`;
+  const firstSection=document.querySelector('.section,.sec,main,article,[class*="content"]');
+  if(firstSection) firstSection.parentNode.insertBefore(banner,firstSection);
+  else document.body.prepend(banner);
+
+  // Replace Month-N text nodes with real dates
+  function walkText(node){
+    if(node.nodeType===3){
+      const t=node.textContent;
+      const r=t
+        .replace(/\bMonths?\s+(\d+)–(\d+)\b/g,(m,a,b)=>{
+          const sa=mDate(parseInt(a)).split(' '),ea=mDate(parseInt(b)).split(' ');
+          return sa[1]===ea[1]?sa[0]+'–'+ea[0]+' '+ea[1]:mDate(parseInt(a))+'–'+mDate(parseInt(b));
+        })
+        .replace(/\bMonth\s+(\d+)\b/g,(m,n)=>mDate(parseInt(n)));
+      if(r!==t) node.textContent=r;
+    } else if(node.nodeType===1&&!['SCRIPT','STYLE'].includes(node.tagName)){
+      Array.from(node.childNodes).forEach(walkText);
+    }
+  }
+  walkText(document.body);
+})();
+</script>
+
+</body>
+</html>

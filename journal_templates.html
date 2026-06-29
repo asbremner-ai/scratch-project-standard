@@ -1,0 +1,1252 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-28 · journal_templates.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Progress Journal Templates — The Scratch Project</title>
+<style>
+
+/* ── SCREEN CHROME ─────────────────────────────────────────── */
+@media screen {
+  body {
+    background: #0a160a;
+    color: #e8f0d8;
+    font-family: 'Georgia', serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  .screen-header {
+    background: #111e11;
+    border-bottom: 1px solid rgba(160,200,80,0.2);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .screen-header a {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(232,240,216,0.55);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .screen-header button {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(232,240,216,0.55);
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+  }
+
+  .brand-centre {
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(232,240,216,0.2);
+  }
+
+  .screen-intro {
+    max-width: 680px;
+    margin: 40px auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+
+  .screen-intro h1 {
+    font-family: Georgia, serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #e8f0d8;
+    margin-bottom: 10px;
+  }
+
+  .screen-intro p {
+    font-size: 13px;
+    color: rgba(232,240,216,0.55);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #a0c850;
+    color: #0a160a;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 13px 28px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 8px;
+  }
+
+  .print-btn:hover { background: #c0e060; }
+
+  .print-note {
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(232,240,216,0.3);
+    margin-top: 8px;
+  }
+
+  .template-nav {
+    max-width: 680px;
+    margin: 0 auto 32px;
+    padding: 0 24px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .tpl-pill {
+    font-family: 'Courier New', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: rgba(160,200,80,0.09);
+    border: 1px solid rgba(160,200,80,0.2);
+    color: rgba(160,200,80,0.8);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .tpl-pill:hover { background: rgba(160,200,80,0.18); }
+
+  /* screen preview wrapper */
+  .page-preview {
+    max-width: 680px;
+    margin: 0 auto 48px;
+    padding: 0 16px;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.5);
+    overflow: hidden;
+  }
+}
+
+/* ── PRINT / TEMPLATE CORE ─────────────────────────────────── */
+@media print {
+  body { margin: 0; padding: 0; background: #fff; }
+  .screen-header, .screen-intro, .template-nav, .print-btn,
+  .print-note, .no-print { display: none !important; }
+  .page-preview { box-shadow: none; border-radius: 0; margin: 0; padding: 0; max-width: 100%; }
+}
+
+/* shared template styles (used in both screen preview and print) */
+.tpl-page {
+  background: #fff;
+  color: #1a1a1a;
+  font-family: 'Georgia', serif;
+  padding: 28px 32px 24px;
+  page-break-after: always;
+  position: relative;
+}
+
+.tpl-page:last-of-type { page-break-after: avoid; }
+
+/* header strip */
+.tpl-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 2px solid #1a1a1a;
+  padding-bottom: 10px;
+  margin-bottom: 18px;
+  gap: 16px;
+}
+
+.tpl-brand {
+  font-family: 'Courier New', monospace;
+  font-size: 8px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #666;
+  line-height: 1.5;
+}
+
+.tpl-brand strong {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+
+.tpl-title {
+  font-family: 'Courier New', monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #888;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.tpl-title strong {
+  display: block;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: #1a1a1a;
+  margin-bottom: 2px;
+}
+
+/* field row */
+.f-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+
+.f-row.cols-2 > .f-block { flex: 1; }
+
+.f-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.f-label {
+  font-family: 'Courier New', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 3px;
+}
+
+.f-line {
+  border: none;
+  border-bottom: 1px solid #bbb;
+  height: 22px;
+  width: 100%;
+  background: transparent;
+}
+
+.f-lines-3 { display: flex; flex-direction: column; gap: 6px; }
+.f-lines-3 .f-line { height: 20px; }
+
+.f-lines-4 { display: flex; flex-direction: column; gap: 5px; }
+.f-lines-4 .f-line { height: 18px; }
+
+.f-lines-5 { display: flex; flex-direction: column; gap: 5px; }
+.f-lines-5 .f-line { height: 17px; }
+
+/* section divider */
+.tpl-section {
+  font-family: 'Courier New', monospace;
+  font-size: 7px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #999;
+  border-top: 1px solid #ddd;
+  padding-top: 8px;
+  margin: 12px 0 8px;
+}
+
+/* rating boxes */
+.ratings-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.rating-box {
+  flex: 1;
+  text-align: center;
+}
+
+.rating-label {
+  font-family: 'Courier New', monospace;
+  font-size: 6.5px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #666;
+  display: block;
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.rating-square {
+  border: 1.5px solid #1a1a1a;
+  height: 28px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #ccc;
+}
+
+/* SG row */
+.sg-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.sg-box {
+  flex: 1;
+  text-align: center;
+}
+
+.sg-label {
+  font-family: 'Courier New', monospace;
+  font-size: 7px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #666;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.sg-input {
+  border: none;
+  border-bottom: 1.5px solid #1a1a1a;
+  height: 20px;
+  width: 100%;
+  background: transparent;
+  text-align: center;
+}
+
+/* checkbox items */
+.check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Courier New', monospace;
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: #333;
+}
+
+.check-box {
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid #555;
+  flex-shrink: 0;
+}
+
+/* footer strip */
+.tpl-footer {
+  position: absolute;
+  bottom: 10px;
+  left: 32px;
+  right: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Courier New', monospace;
+  font-size: 6.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #bbb;
+  border-top: 1px solid #e0e0e0;
+  padding-top: 6px;
+}
+
+/* pressure index box */
+.pi-box {
+  border: 1.5px solid #1a1a1a;
+  padding: 8px 12px;
+  margin: 8px 0;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.pi-input-area {
+  flex: 1;
+}
+
+.pi-formula {
+  font-family: 'Courier New', monospace;
+  font-size: 7px;
+  letter-spacing: 0.1em;
+  color: #888;
+  line-height: 1.8;
+  white-space: nowrap;
+}
+
+/* month tracker grid */
+.month-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 4px;
+  margin-bottom: 10px;
+}
+
+.month-cell {
+  border: 1px solid #ccc;
+  padding: 4px 3px;
+  text-align: center;
+}
+
+.month-cell-label {
+  font-family: 'Courier New', monospace;
+  font-size: 6px;
+  letter-spacing: 0.1em;
+  color: #888;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.month-cell-val {
+  height: 14px;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+}
+
+/* self talk table */
+.st-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.st-table th {
+  font-family: 'Courier New', monospace;
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #555;
+  border-bottom: 1.5px solid #1a1a1a;
+  padding: 4px 6px;
+  text-align: left;
+}
+
+.st-table td {
+  padding: 3px 6px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: top;
+}
+
+.st-num {
+  font-family: 'Courier New', monospace;
+  font-size: 8px;
+  color: #999;
+  width: 14px;
+}
+
+.st-line {
+  border: none;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  height: 16px;
+  background: transparent;
+}
+
+/* quarterly chart */
+.q-chart {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.q-month {
+  flex: 1;
+  border: 1px solid #ccc;
+  padding: 6px 5px;
+}
+
+.q-month-label {
+  font-family: 'Courier New', monospace;
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #555;
+  display: block;
+  margin-bottom: 6px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 4px;
+}
+
+.q-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3px;
+}
+
+.q-stat-label {
+  font-family: 'Courier New', monospace;
+  font-size: 6.5px;
+  letter-spacing: 0.08em;
+  color: #888;
+}
+
+.q-stat-val {
+  border-bottom: 1px solid #bbb;
+  width: 40px;
+  height: 14px;
+}
+
+</style>
+</head>
+<body>
+
+<!-- ── SCREEN CHROME (hidden on print) ─────────────────────── -->
+<div class="screen-header no-print" style="position:sticky;top:0;z-index:100;">
+  <a href="17_progress_journal.html">&#8962; Journal</a>
+  <span class="brand-centre">The Scratch Project</span>
+  <button onclick="history.back()">&#8592; Back</button>
+</div>
+
+<div class="screen-intro no-print">
+  <h1>Printable Journal Templates</h1>
+  <p>Five A4 templates — print single-sided, punch and file in an A4 ring binder. One Round Entry per round, one Practice Log per session, one Mental Tracking sheet per round, one Monthly Review per month, one Quarterly Review per quarter.</p>
+  <button class="print-btn" onclick="window.print()">🖨 Print All Templates</button>
+  <p class="print-note">Set printer to A4 · Black & white · Single-sided · No scaling</p>
+</div>
+
+<div class="template-nav no-print">
+  <a class="tpl-pill" href="#tpl-round">01 · Round Entry</a>
+  <a class="tpl-pill" href="#tpl-practice">02 · Practice Log</a>
+  <a class="tpl-pill" href="#tpl-mental">03 · Mental Tracking</a>
+  <a class="tpl-pill" href="#tpl-monthly">04 · Monthly Review</a>
+  <a class="tpl-pill" href="#tpl-quarterly">05 · Quarterly Review</a>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TEMPLATE 01 — ROUND ENTRY
+══════════════════════════════════════════════════════════ -->
+<div class="page-preview">
+<div class="tpl-page" id="tpl-round">
+
+  <div class="tpl-header">
+    <div class="tpl-brand">
+      <strong>The Scratch Project</strong>
+      thescratchproject.co.uk · Guide 17
+    </div>
+    <div class="tpl-title">
+      <strong>Round Entry</strong>
+      Template 01 of 05
+    </div>
+  </div>
+
+  <!-- Date / Course / Format -->
+  <div class="f-row cols-2">
+    <div class="f-block">
+      <div class="f-label">Date</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block">
+      <div class="f-label">Course</div>
+      <div class="f-line"></div>
+    </div>
+  </div>
+
+  <div class="f-row cols-2">
+    <div class="f-block">
+      <div class="f-label">Format (stroke / stableford / matchplay)</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block">
+      <div class="f-label">Type (competitive / practice / social)</div>
+      <div class="f-line"></div>
+    </div>
+  </div>
+
+  <div class="f-row" style="gap:12px;">
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Score / Points</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Target Score / Points</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:2;">
+      <div class="f-label">Conditions (wind / temp / green speed)</div>
+      <div class="f-line"></div>
+    </div>
+  </div>
+
+  <!-- Ratings -->
+  <div class="tpl-section">Performance Ratings (circle 1–10)</div>
+  <div class="ratings-row">
+    <div class="rating-box">
+      <span class="rating-label">Mental Game</span>
+      <div class="rating-square">/10</div>
+    </div>
+    <div class="rating-box">
+      <span class="rating-label">Ball Striking</span>
+      <div class="rating-square">/10</div>
+    </div>
+    <div class="rating-box">
+      <span class="rating-label">Short Game</span>
+      <div class="rating-square">/10</div>
+    </div>
+    <div class="rating-box">
+      <span class="rating-label">Putting</span>
+      <div class="rating-square">/10</div>
+    </div>
+    <div class="rating-box">
+      <span class="rating-label">Decisions</span>
+      <div class="rating-square">/10</div>
+    </div>
+    <div class="rating-box">
+      <span class="rating-label">Routine</span>
+      <div class="rating-square">/10</div>
+    </div>
+  </div>
+
+  <!-- SG Summary -->
+  <div class="tpl-section">Strokes Gained Summary (from Arccos / Shot Scope / Golfmetrics)</div>
+  <div class="sg-row">
+    <div class="sg-box"><span class="sg-label">OTT</span><div class="sg-input"></div></div>
+    <div class="sg-box"><span class="sg-label">Approach</span><div class="sg-input"></div></div>
+    <div class="sg-box"><span class="sg-label">Around Green</span><div class="sg-input"></div></div>
+    <div class="sg-box"><span class="sg-label">Putting</span><div class="sg-input"></div></div>
+    <div class="sg-box"><span class="sg-label">Total</span><div class="sg-input"></div></div>
+    <div class="sg-box"><span class="sg-label">Dominant Leak</span><div class="sg-input"></div></div>
+  </div>
+
+  <!-- Narrative fields -->
+  <div class="tpl-section">Round Analysis</div>
+
+  <div class="f-block" style="margin-bottom:10px;">
+    <div class="f-label">Primary Leak (one sentence — what cost the most strokes?)</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+
+  <div class="f-row cols-2">
+    <div class="f-block">
+      <div class="f-label">Best Decision of the Round</div>
+      <div class="f-lines-4"><div class="f-line"></div><div class="f-line"></div><div class="f-line"></div></div>
+    </div>
+    <div class="f-block">
+      <div class="f-label">Worst Decision / What I Would Change</div>
+      <div class="f-lines-4"><div class="f-line"></div><div class="f-line"></div><div class="f-line"></div></div>
+    </div>
+  </div>
+
+  <div class="f-block" style="margin-bottom:10px;">
+    <div class="f-label">Mental Game Note (patterns, triggers, routine compliance)</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+
+  <div class="f-row cols-2">
+    <div class="f-block">
+      <div class="f-label">Lesson (one sentence to carry forward)</div>
+      <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+    </div>
+    <div class="f-block">
+      <div class="f-label">Practice Priority → Next Session</div>
+      <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+    </div>
+  </div>
+
+  <div class="tpl-footer">
+    <span>The Scratch Project · Round Entry · Template 01</span>
+    <span>thescratchproject.co.uk</span>
+    <span>Round # ______</span>
+  </div>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TEMPLATE 02 — PRACTICE LOG
+══════════════════════════════════════════════════════════ -->
+<div class="page-preview">
+<div class="tpl-page" id="tpl-practice">
+
+  <div class="tpl-header">
+    <div class="tpl-brand">
+      <strong>The Scratch Project</strong>
+      thescratchproject.co.uk · Guide 17
+    </div>
+    <div class="tpl-title">
+      <strong>Practice Log</strong>
+      Template 02 of 05
+    </div>
+  </div>
+
+  <!-- Session basics -->
+  <div class="f-row" style="gap:12px;">
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Date</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Location (range / course / home)</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Duration (mins)</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">HRV / Readiness</div>
+      <div class="f-line"></div>
+    </div>
+  </div>
+
+  <div class="f-row cols-2">
+    <div class="f-block">
+      <div class="f-label">Coach Priority (from last session / round entry)</div>
+      <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+    </div>
+    <div class="f-block">
+      <div class="f-label">Session Goal (specific, measurable)</div>
+      <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+    </div>
+  </div>
+
+  <!-- Session structure -->
+  <div class="tpl-section">Session Structure &amp; Volume</div>
+
+  <div class="f-block" style="margin-bottom:6px;">
+    <div class="f-label">Block 1 — Area / Drill / Duration / Volume</div>
+    <div class="f-line"></div>
+  </div>
+  <div class="f-block" style="margin-bottom:6px;">
+    <div class="f-label">Block 2 — Area / Drill / Duration / Volume</div>
+    <div class="f-line"></div>
+  </div>
+  <div class="f-block" style="margin-bottom:10px;">
+    <div class="f-label">Block 3 — Area / Drill / Duration / Volume</div>
+    <div class="f-line"></div>
+  </div>
+
+  <!-- Drill results -->
+  <div class="tpl-section">Drill Results (Pass / Fail — record score vs. benchmark)</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
+    <div>
+      <div class="f-label">Drill Name</div>
+      <div class="f-line" style="margin-bottom:5px;"></div>
+      <div class="f-line" style="margin-bottom:5px;"></div>
+      <div class="f-line"></div>
+    </div>
+    <div>
+      <div class="f-label">Score / Result</div>
+      <div class="f-line" style="margin-bottom:5px;"></div>
+      <div class="f-line" style="margin-bottom:5px;"></div>
+      <div class="f-line"></div>
+    </div>
+    <div>
+      <div class="f-label">Benchmark / Pass?</div>
+      <div class="f-line" style="margin-bottom:5px;"></div>
+      <div class="f-line" style="margin-bottom:5px;"></div>
+      <div class="f-line"></div>
+    </div>
+  </div>
+
+  <!-- Mevo / HackMotion -->
+  <div class="tpl-section">Tech Data (if applicable)</div>
+  <div class="f-row" style="gap:12px;">
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Mevo — Spin Axis avg (°)</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Mevo — Smash Factor avg</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">HackMotion — Lead wrist at P7 (°)</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Driver Speed avg (mph)</div>
+      <div class="f-line"></div>
+    </div>
+  </div>
+
+  <!-- Narrative -->
+  <div class="tpl-section">Session Review</div>
+
+  <div class="f-row cols-2">
+    <div class="f-block">
+      <div class="f-label">Coach Priority — Progress this session?</div>
+      <div class="f-lines-4"><div class="f-line"></div><div class="f-line"></div><div class="f-line"></div></div>
+    </div>
+    <div class="f-block">
+      <div class="f-label">One Thing That Worked (cue / feel / technique)</div>
+      <div class="f-lines-4"><div class="f-line"></div><div class="f-line"></div><div class="f-line"></div></div>
+    </div>
+  </div>
+
+  <div class="f-block">
+    <div class="f-label">Focus for Next Practice Session</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+
+  <div class="tpl-footer">
+    <span>The Scratch Project · Practice Log · Template 02</span>
+    <span>thescratchproject.co.uk</span>
+    <span>Session # ______</span>
+  </div>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TEMPLATE 03 — MENTAL TRACKING
+══════════════════════════════════════════════════════════ -->
+<div class="page-preview">
+<div class="tpl-page" id="tpl-mental">
+
+  <div class="tpl-header">
+    <div class="tpl-brand">
+      <strong>The Scratch Project</strong>
+      thescratchproject.co.uk · Guide 17
+    </div>
+    <div class="tpl-title">
+      <strong>Mental Game Tracker</strong>
+      Template 03 of 05
+    </div>
+  </div>
+
+  <!-- Header row -->
+  <div class="f-row cols-2">
+    <div class="f-block">
+      <div class="f-label">Date / Course</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block">
+      <div class="f-label">Score / Type (comp / practice / social)</div>
+      <div class="f-line"></div>
+    </div>
+  </div>
+
+  <!-- Mental metrics -->
+  <div class="tpl-section">Mental Game Metrics</div>
+
+  <div class="check-list">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;">
+
+      <div class="f-block">
+        <div class="f-label">Routine Compliance (1–10)</div>
+        <div class="f-line"></div>
+      </div>
+      <div class="f-block">
+        <div class="f-label">Pre-Shot Thought Type (target / feel / mechanical / negative)</div>
+        <div class="f-line"></div>
+      </div>
+      <div class="f-block">
+        <div class="f-label">10-Second Rule — Any Failures? (hole numbers)</div>
+        <div class="f-line"></div>
+      </div>
+      <div class="f-block">
+        <div class="f-label">Score-Awareness — Which Hole Did It Enter?</div>
+        <div class="f-line"></div>
+      </div>
+      <div class="f-block">
+        <div class="f-label">Body Language (confident / tentative / mixed)</div>
+        <div class="f-line"></div>
+      </div>
+      <div class="f-block">
+        <div class="f-label">Tipping Point Hole (where mental state visibly changed)</div>
+        <div class="f-line"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Pressure Index -->
+  <div class="tpl-section">Pressure Index (competitive rounds only)</div>
+  <div class="pi-box">
+    <div class="pi-formula">
+      Pressure Index = Competitive Score − Solo Round Average<br>
+      Target: below +1.5 · Scratch standard: below +1.0
+    </div>
+    <div class="pi-input-area">
+      <div style="display:flex;gap:8px;align-items:flex-end;">
+        <div class="f-block" style="flex:1;">
+          <div class="f-label">Today's Score</div>
+          <div class="f-line"></div>
+        </div>
+        <div class="f-block" style="flex:1;">
+          <div class="f-label">Solo Average</div>
+          <div class="f-line"></div>
+        </div>
+        <div class="f-block" style="flex:1;">
+          <div class="f-label">Pressure Index</div>
+          <div class="f-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Self-Talk Log -->
+  <div class="tpl-section">Self-Talk Log — Record 1–3 examples from the round</div>
+  <table class="st-table">
+    <tr>
+      <th style="width:18px;">#</th>
+      <th style="width:35%;">Hole / Situation</th>
+      <th>What I Said to Myself</th>
+      <th style="width:22%;">Category (target / positive / negative / mechanical)</th>
+    </tr>
+    <tr>
+      <td class="st-num">1</td>
+      <td><div class="st-line"></div></td>
+      <td><div class="st-line"></div></td>
+      <td><div class="st-line"></div></td>
+    </tr>
+    <tr>
+      <td class="st-num">2</td>
+      <td><div class="st-line"></div></td>
+      <td><div class="st-line"></div></td>
+      <td><div class="st-line"></div></td>
+    </tr>
+    <tr>
+      <td class="st-num">3</td>
+      <td><div class="st-line"></div></td>
+      <td><div class="st-line"></div></td>
+      <td><div class="st-line"></div></td>
+    </tr>
+  </table>
+
+  <!-- Narrative -->
+  <div class="tpl-section">Round Reflection</div>
+
+  <div class="f-block" style="margin-bottom:10px;">
+    <div class="f-label">What triggered the biggest mental shift in this round?</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+
+  <div class="f-row cols-2">
+    <div class="f-block">
+      <div class="f-label">Mental Game Strength Today</div>
+      <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+    </div>
+    <div class="f-block">
+      <div class="f-label">Mental Game Pattern to Address</div>
+      <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+    </div>
+  </div>
+
+  <div class="f-block">
+    <div class="f-label">One Intention for Next Round (specific trigger → specific response)</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+
+  <div class="tpl-footer">
+    <span>The Scratch Project · Mental Game Tracker · Template 03</span>
+    <span>thescratchproject.co.uk</span>
+    <span>Round # ______</span>
+  </div>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TEMPLATE 04 — MONTHLY REVIEW
+══════════════════════════════════════════════════════════ -->
+<div class="page-preview">
+<div class="tpl-page" id="tpl-monthly">
+
+  <div class="tpl-header">
+    <div class="tpl-brand">
+      <strong>The Scratch Project</strong>
+      thescratchproject.co.uk · Guide 17
+    </div>
+    <div class="tpl-title">
+      <strong>Monthly Review</strong>
+      Template 04 of 05
+    </div>
+  </div>
+
+  <div class="f-row" style="gap:12px;">
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Month / Year</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Current Handicap Index</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Previous Month HCP</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">HCP Change (+ / −)</div>
+      <div class="f-line"></div>
+    </div>
+  </div>
+
+  <!-- Scoring summary -->
+  <div class="tpl-section">Scoring Summary</div>
+  <div class="f-row" style="gap:12px;">
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Rounds Played</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Score Average</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Previous Month Avg</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Best Score</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Practice Sessions</div>
+      <div class="f-line"></div>
+    </div>
+  </div>
+
+  <!-- SG monthly averages -->
+  <div class="tpl-section">SG Monthly Averages (10-round rolling)</div>
+  <div class="sg-row">
+    <div class="sg-box"><span class="sg-label">SG: OTT</span><div class="sg-input"></div></div>
+    <div class="sg-box"><span class="sg-label">SG: APP</span><div class="sg-input"></div></div>
+    <div class="sg-box"><span class="sg-label">SG: ARG</span><div class="sg-input"></div></div>
+    <div class="sg-box"><span class="sg-label">SG: PUTT</span><div class="sg-input"></div></div>
+    <div class="sg-box"><span class="sg-label">SG: Total</span><div class="sg-input"></div></div>
+    <div class="sg-box"><span class="sg-label">Dominant Leak</span><div class="sg-input"></div></div>
+  </div>
+
+  <div class="f-block" style="margin-bottom:10px;">
+    <div class="f-label">SG Pattern vs. Previous Month (which category improved / worsened / flat?)</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+
+  <!-- Qualitative patterns -->
+  <div class="tpl-section">Qualitative Patterns (read all round entries — what sentence recurs?)</div>
+  <div class="f-block" style="margin-bottom:8px;">
+    <div class="f-label">Recurring Mental Game Pattern</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+  <div class="f-block" style="margin-bottom:10px;">
+    <div class="f-label">Recurring Technical / Strategic Pattern</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+
+  <!-- Drill performance -->
+  <div class="tpl-section">Practice — Drill Benchmark Progress</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;margin-bottom:10px;">
+    <div class="f-label">Drill</div>
+    <div class="f-label">Start of Month</div>
+    <div class="f-label">End of Month</div>
+    <div class="f-label">Trend</div>
+    <div class="f-line"></div><div class="f-line"></div><div class="f-line"></div><div class="f-line"></div>
+    <div class="f-line"></div><div class="f-line"></div><div class="f-line"></div><div class="f-line"></div>
+    <div class="f-line"></div><div class="f-line"></div><div class="f-line"></div><div class="f-line"></div>
+  </div>
+
+  <!-- Three priorities output -->
+  <div class="tpl-section">Three Priorities for Next Month</div>
+
+  <div class="f-block" style="margin-bottom:8px;">
+    <div class="f-label">Priority 1 — SG Focus (specific category, distance band, drill, session allocation)</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+  <div class="f-block" style="margin-bottom:8px;">
+    <div class="f-label">Priority 2 — Mental Game Intention (specific trigger → specific response)</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+  <div class="f-block">
+    <div class="f-label">Priority 3 — Physical / Fitness / Injury Prevention</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+
+  <div class="tpl-footer">
+    <span>The Scratch Project · Monthly Review · Template 04</span>
+    <span>thescratchproject.co.uk</span>
+    <span>Month _______ of 24</span>
+  </div>
+</div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════════
+     TEMPLATE 05 — QUARTERLY REVIEW
+══════════════════════════════════════════════════════════ -->
+<div class="page-preview">
+<div class="tpl-page" id="tpl-quarterly">
+
+  <div class="tpl-header">
+    <div class="tpl-brand">
+      <strong>The Scratch Project</strong>
+      thescratchproject.co.uk · Guide 17
+    </div>
+    <div class="tpl-title">
+      <strong>Quarterly Review</strong>
+      Template 05 of 05
+    </div>
+  </div>
+
+  <div class="f-row" style="gap:12px;">
+    <div class="f-block" style="flex:2;">
+      <div class="f-label">Quarter (e.g. Q1 · Jan–Mar 2026)</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">HCP Start of Quarter</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">HCP End of Quarter</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">HCP Change</div>
+      <div class="f-line"></div>
+    </div>
+  </div>
+
+  <!-- 3-month SG tracker -->
+  <div class="tpl-section">SG Three-Month Tracker</div>
+  <div class="q-chart">
+    <div class="q-month">
+      <span class="q-month-label">Month 1</span>
+      <div class="q-stat"><span class="q-stat-label">SG: OTT</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">SG: APP</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">SG: ARG</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">SG: PUTT</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">SG: Total</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">Score Avg</span><div class="q-stat-val"></div></div>
+    </div>
+    <div class="q-month">
+      <span class="q-month-label">Month 2</span>
+      <div class="q-stat"><span class="q-stat-label">SG: OTT</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">SG: APP</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">SG: ARG</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">SG: PUTT</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">SG: Total</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">Score Avg</span><div class="q-stat-val"></div></div>
+    </div>
+    <div class="q-month">
+      <span class="q-month-label">Month 3</span>
+      <div class="q-stat"><span class="q-stat-label">SG: OTT</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">SG: APP</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">SG: ARG</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">SG: PUTT</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">SG: Total</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">Score Avg</span><div class="q-stat-val"></div></div>
+    </div>
+    <div class="q-month" style="border:1.5px solid #1a1a1a;">
+      <span class="q-month-label" style="font-weight:700;color:#1a1a1a;">Quarter Trend</span>
+      <div class="q-stat"><span class="q-stat-label">OTT ↑↓</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">APP ↑↓</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">ARG ↑↓</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">PUTT ↑↓</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">Total ↑↓</span><div class="q-stat-val"></div></div>
+      <div class="q-stat"><span class="q-stat-label">Score ↑↓</span><div class="q-stat-val"></div></div>
+    </div>
+  </div>
+
+  <!-- Handicap trajectory -->
+  <div class="tpl-section">Handicap Trajectory vs. Phase Target (Guide 10)</div>
+  <div class="f-row" style="gap:12px;">
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Phase Target at End of Quarter</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:1;">
+      <div class="f-label">Actual HCP at End of Quarter</div>
+      <div class="f-line"></div>
+    </div>
+    <div class="f-block" style="flex:2;">
+      <div class="f-label">Ahead / Behind / On Track? (note strokes)</div>
+      <div class="f-line"></div>
+    </div>
+  </div>
+
+  <!-- Qualitative 3-month patterns -->
+  <div class="tpl-section">Systemic Patterns (appear in all three monthly reviews)</div>
+  <div class="f-row cols-2">
+    <div class="f-block">
+      <div class="f-label">Technical / SG Pattern (3-month)</div>
+      <div class="f-lines-4"><div class="f-line"></div><div class="f-line"></div><div class="f-line"></div></div>
+    </div>
+    <div class="f-block">
+      <div class="f-label">Mental Game Pattern (3-month)</div>
+      <div class="f-lines-4"><div class="f-line"></div><div class="f-line"></div><div class="f-line"></div></div>
+    </div>
+  </div>
+
+  <!-- Milestone checkpoint -->
+  <div class="tpl-section">Milestone Checkpoint (Guide 10)</div>
+  <div style="display:grid;grid-template-columns:2fr 1fr 1fr;gap:6px;margin-bottom:10px;">
+    <div class="f-label">Milestone</div>
+    <div class="f-label">Target</div>
+    <div class="f-label">Actual / Met?</div>
+    <div class="f-line"></div><div class="f-line"></div><div class="f-line"></div>
+    <div class="f-line"></div><div class="f-line"></div><div class="f-line"></div>
+    <div class="f-line"></div><div class="f-line"></div><div class="f-line"></div>
+  </div>
+
+  <!-- Coaching questions -->
+  <div class="tpl-section">Coaching Session Questions (prepare before session)</div>
+  <div class="f-block" style="margin-bottom:5px;">
+    <div class="f-label">Q1</div><div class="f-line"></div>
+  </div>
+  <div class="f-block" style="margin-bottom:5px;">
+    <div class="f-label">Q2</div><div class="f-line"></div>
+  </div>
+  <div class="f-block" style="margin-bottom:10px;">
+    <div class="f-label">Q3</div><div class="f-line"></div>
+  </div>
+
+  <!-- Quarter priorities -->
+  <div class="tpl-section">Three Strategic Priorities for Next Quarter</div>
+  <div class="f-block" style="margin-bottom:6px;">
+    <div class="f-label">Priority 1 — Technical / SG</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+  <div class="f-block" style="margin-bottom:6px;">
+    <div class="f-label">Priority 2 — Mental Game / Competition</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+  <div class="f-block">
+    <div class="f-label">Priority 3 — Programme / Physical</div>
+    <div class="f-lines-3"><div class="f-line"></div><div class="f-line"></div></div>
+  </div>
+
+  <div class="tpl-footer">
+    <span>The Scratch Project · Quarterly Review · Template 05</span>
+    <span>thescratchproject.co.uk</span>
+    <span>Quarter ___ of 8</span>
+  </div>
+</div>
+</div>
+
+</body>
+</html>
