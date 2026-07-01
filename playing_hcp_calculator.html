@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-25 · playing_hcp_calculator.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Playing Handicap Calculator — The Scratch Project</title>
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#162416;--border:rgba(160,200,80,.14);--border-hi:rgba(160,200,80,.32);--lime:#a0c850;--lime-dim:rgba(160,200,80,.08);--gold:#e0b840;--gold-dim:rgba(224,184,64,.08);--gold-border:rgba(224,184,64,.22);--teal:#48b0a8;--teal-dim:rgba(72,176,168,.08);--teal-border:rgba(72,176,168,.22);--white:#e8f0d8;--muted:rgba(232,240,216,.6);--faint:rgba(232,240,216,.08);--r:10px;--r-sm:6px;}
+html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.topbar a:hover{color:var(--lime);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+.hero{background:linear-gradient(160deg,#0d1e10 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.6rem);font-weight:700;line-height:1.05;margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:500px;}
+.page{max-width:600px;margin:0 auto;padding:20px 16px 80px;}
+.card{background:linear-gradient(145deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(72,176,168,.3),transparent);}
+.card-gold{border-color:var(--gold-border);}.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.3),transparent);}
+.card-teal{border-color:var(--teal-border);}
+.card-lime{border-color:var(--border-hi);}.card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:10px;}
+.card p{font-size:13px;color:var(--muted);line-height:1.75;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;}
+.field input[type=number],.field select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--white);font-family:'Inter',system-ui;font-size:16px;padding:11px 13px;outline:none;-webkit-appearance:none;}
+.field input:focus,.field select:focus{border-color:var(--teal);}
+.field select option{background:#111e11;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.calc-btn{width:100%;background:var(--teal);color:#0a160a;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:none;border-radius:var(--r-sm);padding:15px;cursor:pointer;margin-top:4px;}
+.calc-btn:active{opacity:.85;}
+.result-big{background:linear-gradient(135deg,var(--teal-dim),rgba(72,176,168,.03));border:1.5px solid var(--teal-border);border-radius:var(--r);padding:22px 18px;text-align:center;margin:16px 0;}
+.rb-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.rb-value{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--white);line-height:1;}
+.rb-sub{font-size:12px;color:var(--muted);margin-top:6px;}
+.info-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0;}
+.info-cell{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px;text-align:center;}
+.ic-val{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--gold);}
+.ic-label{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:3px;}
+.result-section{display:none;}
+.result-section.visible{display:block;}
+.reset-btn{background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px;width:100%;margin-top:8px;cursor:pointer;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.explain-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;margin:12px 0;font-size:12px;color:var(--muted);line-height:1.7;}
+.explain-box strong{color:var(--white);}
+.footer{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);text-align:center;padding:24px 20px;border-top:1px solid var(--border);margin-top:40px;}
+a.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--lime);color:var(--bg);font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+
+/* ── Five Pillars Logo (tsp) ── */
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;position:relative;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<script async src="https://plausible.io/js/pa-XSwCniFb76oIDC0vR-U0K.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+<body>
+<div class="topbar"><a href="index.html">&#8962; All Playbooks</a><span class="tsp-mini" aria-hidden="true"><span class="tsp-mini-bar" style="width:4px;height:9px;background:#e0a830;"></span><span class="tsp-mini-bar" style="width:4px;height:13px;background:#a0c850;"></span><span class="tsp-mini-bar" style="width:4px;height:16px;background:#4cb8c4;"></span><span class="tsp-mini-bar" style="width:4px;height:7px;background:#c8d8e8;"></span><span class="tsp-mini-bar" style="width:4px;height:11px;background:#c87830;"></span></span><span class="topbar-brand">The Scratch Project</span></div>
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <p class="hero-label">Interactive Tool · Compete Pillar</p>
+  <h1>Playing Handicap<br><em>Calculator</em></h1>
+  <p class="hero-sub">Enter your handicap index, course rating, slope rating, and par — get your playing handicap, expected score range, and target score for any competition format.</p>
+</div>
+<div class="page">
+<div class="card card-teal">
+  <span class="card-tag">Course & Handicap Details</span>
+  <h3>Enter the Numbers From the Scorecard</h3>
+  <div class="two-col">
+    <div class="field"><label>Handicap Index</label><input type="number" id="hcpIdx" placeholder="e.g. 8.4" min="-10" max="54" step="0.1" inputmode="decimal"></div>
+    <div class="field"><label>Course Par</label><input type="number" id="par" placeholder="e.g. 72" min="60" max="80" inputmode="numeric"></div>
+  </div>
+  <div class="two-col">
+    <div class="field"><label>Course Rating (CR)</label><input type="number" id="cr" placeholder="e.g. 71.2" min="55" max="80" step="0.1" inputmode="decimal"></div>
+    <div class="field"><label>Slope Rating (SR)</label><input type="number" id="sr" placeholder="e.g. 131" min="55" max="155" inputmode="numeric"></div>
+  </div>
+  <div class="field">
+    <label>Competition Format</label>
+    <select id="format">
+      <option value="stroke">Stroke Play (full handicap)</option>
+      <option value="stableford">Stableford (full handicap)</option>
+      <option value="match75">Match Play (3/4 difference)</option>
+      <option value="bogey">Bogey / Par Competition (full)</option>
+    </select>
+  </div>
+</div>
+<button class="calc-btn" onclick="calculate()">Calculate Playing Handicap</button>
+
+<div class="result-section" id="results">
+  <div class="result-big">
+    <div class="rb-label">Your Playing Handicap</div>
+    <div class="rb-value" id="playingHcp">—</div>
+    <div class="rb-sub" id="playingHcpSub"></div>
+  </div>
+  <div class="info-row">
+    <div class="info-cell"><div class="ic-val" id="targetScore">—</div><div class="ic-label">Target Score</div></div>
+    <div class="info-cell"><div class="ic-val" id="courseHcp">—</div><div class="ic-label">Course HCP</div></div>
+    <div class="info-cell"><div class="ic-val" id="difficultyRating">—</div><div class="ic-label">Difficulty</div></div>
+  </div>
+  <div class="card card-lime">
+    <span class="card-tag">Score Range</span>
+    <h3>Realistic Score Targets for Today</h3>
+    <table class="tbl" id="scoreTable"></table>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">WHS Explanation</span>
+    <h3 id="explainTitle">How This Was Calculated</h3>
+    <div class="explain-box" id="explainBox"></div>
+  </div>
+  <button class="reset-btn" onclick="reset()">↺ Calculate for Another Course</button>
+</div>
+
+<div style="height:16px;"></div>
+<div class="card">
+  <span class="card-tag">Quick Reference — Slope Rating Guide</span>
+  <h3>What Slope Ratings Mean</h3>
+  <table class="tbl">
+    <tr><th>Slope Rating</th><th>Course Description</th><th>Typical Example</th></tr>
+    <tr><td>113</td><td>Standard — average difficulty</td><td>Most parkland club courses</td></tr>
+    <tr><td>120–130</td><td>Moderately challenging</td><td>Quality heathland / links</td></tr>
+    <tr><td>130–140</td><td>Significantly challenging</td><td>Championship layouts</td></tr>
+    <tr><td>140–155</td><td>Severe — expert required</td><td>Difficult links, mountain courses</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--muted);margin-top:8px;">A slope rating above 130 means the course penalises higher handicaps significantly — your playing handicap will be meaningfully higher than your index. A slope below 113 means the course plays easier than standard for all handicaps.</p>
+</div>
+</div>
+<div class="footer">INTERACTIVE TOOL · PLAYING HANDICAP CALCULATOR · THE SCRATCH PROJECT · © 2026</div>
+<a href="index.html" class="home-btn">&#8962; Home</a>
+<script>
+function calculate(){
+  const idx = parseFloat(document.getElementById('hcpIdx').value);
+  const par = parseInt(document.getElementById('par').value);
+  const cr  = parseFloat(document.getElementById('cr').value);
+  const sr  = parseInt(document.getElementById('sr').value);
+  const fmt = document.getElementById('format').value;
+  if(isNaN(idx)||isNaN(par)||isNaN(cr)||isNaN(sr)){alert('Please fill in all four fields.');return;}
+  // WHS Playing Handicap = ROUND( Index × (SR/113) + (CR-Par) )
+  const courseHcp = Math.round(idx * (sr/113) + (cr - par));
+  let playingHcp = courseHcp;
+  let fmtNote = '';
+  if(fmt==='match75'){
+    playingHcp = Math.round(courseHcp * 0.75);
+    fmtNote = '(3/4 of course handicap for match play)';
+  } else if(fmt==='stroke'||fmt==='stableford'||fmt==='bogey'){
+    fmtNote = '(full handicap)';
+  }
+  const targetScore = par + playingHcp;
+  const diff = cr - 113/sr; // simplified difficulty index
+  const diffRating = sr >= 135 ? 'Very Hard' : sr >= 125 ? 'Hard' : sr >= 115 ? 'Moderate' : 'Easy';
+
+  document.getElementById('playingHcp').textContent = playingHcp >= 0 ? playingHcp : '+ '+Math.abs(playingHcp);
+  document.getElementById('playingHcpSub').textContent = fmtNote + ' · ' + (fmt==='stableford'?'Points target: 36':'Score target: '+targetScore);
+  document.getElementById('courseHcp').textContent = courseHcp;
+  document.getElementById('targetScore').textContent = targetScore;
+  document.getElementById('difficultyRating').textContent = diffRating;
+
+  const scoreTable = document.getElementById('scoreTable');
+  const stablePoints = fmt==='stableford';
+  if(stablePoints){
+    scoreTable.innerHTML = '<tr><th>Performance</th><th>Points Range</th><th>Equivalent</th></tr>'+
+      '<tr><td>Exceptional</td><td>40+</td><td>Handicap improvement likely</td></tr>'+
+      '<tr><td>Good</td><td>36–39</td><td>On-target for your handicap</td></tr>'+
+      '<tr><td>Average</td><td>30–35</td><td>Slightly below handicap</td></tr>'+
+      '<tr><td>Difficult day</td><td>< 30</td><td>Probably a tough conditions day</td></tr>';
+  } else {
+    const t = targetScore;
+    scoreTable.innerHTML = '<tr><th>Performance</th><th>Score Range</th><th>Meaning</th></tr>'+
+      '<tr><td>Exceptional</td><td>'+Math.max(par,t-6)+' – '+(t-3)+'</td><td>Playing well above handicap — CSS cuts likely</td></tr>'+
+      '<tr><td>Good</td><td>'+(t-2)+' – '+(t+1)+'</td><td>On-target for your current handicap</td></tr>'+
+      '<tr><td>Average</td><td>'+(t+2)+' – '+(t+6)+'</td><td>Just above target — no CSS impact</td></tr>'+
+      '<tr><td>Difficult day</td><td>'+(t+7)+'+</td><td>Handicap may buffer if CSS adjusted</td></tr>';
+  }
+
+  document.getElementById('explainTitle').textContent = 'WHS Calculation Breakdown';
+  document.getElementById('explainBox').innerHTML =
+    '<strong>Step 1 — Course Handicap:</strong> Index ('+idx+') × (Slope '+sr+' ÷ 113) + (CR '+cr+' − Par '+par+') = '+courseHcp+'<br><br>'+
+    '<strong>Step 2 — Playing Handicap:</strong> '+courseHcp+(fmt==='match75'?' × 0.75 (match play 3/4) = '+playingHcp:'')+'<br><br>'+
+    '<strong>Why slope matters:</strong> A slope of '+sr+' means the course is '+Math.round((sr/113)*100-100)+'% more/less difficult for a bogey golfer relative to a scratch golfer, compared to a standard course. Your index adjusts by this factor.';
+
+  document.getElementById('results').classList.add('visible');
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function reset(){document.getElementById('hcpIdx').value='';document.getElementById('results').classList.remove('visible');window.scrollTo({top:0,behavior:'smooth'});}
+</script>
+
+<!-- LEGAL FOOTER -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:18px 20px;text-align:center;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+  <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+</div>
+</body></html>

@@ -1,7 +1,7 @@
 {
   "name": "The Scratch Project",
   "short_name": "Scratch",
-  "description": "60 expert golf playbooks — strokes gained analytics, any handicap to your goal. WHS compatible worldwide — UK, US, and European competitive pathways.",
+  "description": "The Scratch Project \u2014 37 guides + 6 tools. Strokes gained analytics, SG diagnostic, and structured 24-month improvement programme. Any handicap to your goal. WHS compatible worldwide.",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#060c06",
@@ -22,28 +22,47 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["sports", "health", "education"],
+  "categories": [
+    "sports",
+    "health",
+    "education"
+  ],
   "shortcuts": [
     {
-      "name": "Caddie Card",
-      "short_name": "Caddie",
-      "description": "On-course reference card",
-      "url": "/caddie_card.html",
-      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Performance Tracker",
-      "short_name": "Tracker",
-      "description": "Daily logging and stats",
-      "url": "/tracking_app_v2.html",
-      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+      "name": "SG Diagnostic",
+      "short_name": "Diagnostic",
+      "description": "Run your strokes gained diagnostic",
+      "url": "/sg_diagnostic.html",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Round Prep",
       "short_name": "Prep",
       "description": "Pre-round protocol",
       "url": "/08_pro_round_prep.html",
-      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Wind Calculator",
+      "short_name": "Wind",
+      "description": "Wind adjustment calculator",
+      "url": "/wind_calculator.html",
+      "icons": [
+        {
+          "src": "icons/icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }

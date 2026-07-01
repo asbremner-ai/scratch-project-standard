@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-25 · swing_fault_finder.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Swing Fault Finder — The Scratch Project</title>
+<meta name="description" content="Select your ball flight — start direction and curve shape — and get the D-Plane diagnosis, probable cause, kinematic chain break, and direct guide links to fix it.">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#162416;--border:rgba(160,200,80,.14);--border-hi:rgba(160,200,80,.32);--lime:#a0c850;--lime-dim:rgba(160,200,80,.08);--gold:#e0b840;--gold-dim:rgba(224,184,64,.08);--gold-border:rgba(224,184,64,.22);--teal:#48b0a8;--teal-dim:rgba(72,176,168,.08);--teal-border:rgba(72,176,168,.22);--rust:#d86030;--rust-dim:rgba(216,96,48,.08);--rust-border:rgba(216,96,48,.22);--white:#e8f0d8;--muted:rgba(232,240,216,.6);--faint:rgba(232,240,216,.08);--r:10px;--r-sm:6px;}
+html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.topbar a:hover{color:var(--lime);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+.hero{background:linear-gradient(160deg,#0f1e10 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.6rem);font-weight:700;line-height:1.05;margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:500px;}
+.page{max-width:640px;margin:0 auto;padding:20px 16px 80px;}
+/* Selector grid */
+.selector-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;display:block;}
+.sel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;}
+.sel-btn{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:11px 8px;text-align:center;cursor:pointer;transition:all .12s;-webkit-tap-highlight-color:transparent;}
+.sel-btn:hover{border-color:var(--teal);}
+.sel-btn.active{background:var(--teal-dim);border-color:var(--teal);box-shadow:0 0 0 1px var(--teal);}
+.sel-btn .sb-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:4px;display:block;}
+.sel-btn.active .sb-label{color:var(--teal);}
+.sel-btn .sb-icon{font-size:1.4rem;display:block;}
+/* Curve selector */
+.curve-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;}
+.curve-btn{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:11px 8px;text-align:center;cursor:pointer;transition:all .12s;-webkit-tap-highlight-color:transparent;}
+.curve-btn:hover{border-color:var(--lime);}
+.curve-btn.active{background:var(--lime-dim);border-color:var(--lime);}
+.curve-btn .cb-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:4px;display:block;}
+.curve-btn.active .cb-label{color:var(--lime);}
+.curve-btn .cb-icon{font-size:1.4rem;display:block;}
+.diagnose-btn{width:100%;background:var(--teal);color:#0a160a;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:none;border-radius:var(--r-sm);padding:14px;cursor:pointer;margin-top:4px;}
+.diagnose-btn:active{opacity:.85;}
+/* Result */
+.result-section{display:none;}
+.result-section.visible{display:block;}
+.card{background:linear-gradient(145deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:var(--rust-border);}.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.3),transparent);}
+.card-gold{border-color:var(--gold-border);}.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.3),transparent);}
+.card-lime{border-color:var(--border-hi);}.card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-teal{border-color:var(--teal-border);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;display:block;}
+.card-rust .card-tag{color:var(--rust);}
+.card-gold .card-tag{color:var(--gold);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:10px;}
+.card p{font-size:13px;color:var(--muted);line-height:1.75;}
+.diagnosis-hero{background:linear-gradient(135deg,var(--rust-dim),rgba(0,0,0,.02));border:2px solid var(--rust-border);border-radius:var(--r);padding:18px 16px;margin:0 0 14px;text-align:center;}
+.dh-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:6px;}
+.dh-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.15;}
+.dh-sub{font-size:12px;color:var(--muted);line-height:1.6;}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-n.gd{color:var(--gold);background:var(--gold-dim);border-color:var(--gold-border);}
+.step-n.lm{color:var(--lime);background:var(--lime-dim);border-color:var(--border-hi);}
+.guide-links{display:flex;flex-direction:column;gap:8px;margin-top:10px;}
+.guide-link{display:flex;align-items:center;gap:12px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px 13px;text-decoration:none;color:inherit;transition:border-color .15s;}
+.guide-link:hover{border-color:var(--lime);}
+.gl-icon{font-size:1.3rem;flex-shrink:0;}
+.gl-body{flex:1;}
+.gl-num{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:2px;}
+.gl-name{font-size:13px;font-weight:600;color:var(--white);}
+.gl-why{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.5;}
+.gl-arrow{font-size:16px;color:var(--lime);flex-shrink:0;}
+.dplane-note{background:var(--surface2);border:1px solid var(--teal-border);border-radius:var(--r-sm);padding:12px 14px;margin:12px 0;font-size:12px;color:var(--muted);line-height:1.7;}
+.dplane-note strong{color:var(--white);}
+.reset-btn{background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px;width:100%;margin-top:8px;cursor:pointer;}
+a.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--lime);color:var(--bg);font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+
+/* ── Five Pillars Logo (tsp) ── */
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;position:relative;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<script async src="https://plausible.io/js/pa-XSwCniFb76oIDC0vR-U0K.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+<body>
+<div class="topbar"><a href="index.html">&#8962; All Playbooks</a><span class="tsp-mini" aria-hidden="true"><span class="tsp-mini-bar" style="width:4px;height:9px;background:#e0a830;"></span><span class="tsp-mini-bar" style="width:4px;height:13px;background:#a0c850;"></span><span class="tsp-mini-bar" style="width:4px;height:16px;background:#4cb8c4;"></span><span class="tsp-mini-bar" style="width:4px;height:7px;background:#c8d8e8;"></span><span class="tsp-mini-bar" style="width:4px;height:11px;background:#c87830;"></span></span><span class="topbar-brand">The Scratch Project</span></div>
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <p class="hero-label">Interactive Tool · Strike Pillar</p>
+  <h1>Swing Fault<br><em>Finder</em></h1>
+  <p class="hero-sub">Select what your ball does — start direction and curve shape — and get the D-Plane diagnosis: what the face and path are doing, which link in the kinematic chain has broken, and exactly where to go to fix it.</p>
+</div>
+<div class="page">
+
+<div style="height:4px;"></div>
+
+<div class="card card-teal">
+  <span class="card-tag">Step 1 — Where Does the Ball Start?</span>
+  <h3>Ball Starting Direction</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Watch the first 10 yards of ball flight — before any curve. For a right-handed player:</p>
+  <span class="selector-label">Ball starts:</span>
+  <div class="sel-grid">
+    <div class="sel-btn" data-start="left" onclick="selectStart(this)"><span class="sb-icon">↖️</span><span class="sb-label">Left of target</span></div>
+    <div class="sel-btn" data-start="straight" onclick="selectStart(this)"><span class="sb-icon">⬆️</span><span class="sb-label">At target</span></div>
+    <div class="sel-btn" data-start="right" onclick="selectStart(this)"><span class="sb-icon">↗️</span><span class="sb-label">Right of target</span></div>
+  </div>
+</div>
+
+<div class="card card-lime">
+  <span class="card-tag">Step 2 — How Does the Ball Curve?</span>
+  <h3>Ball Curvature in Flight</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">After the initial start, which way does the ball curve? For a right-handed player:</p>
+  <span class="selector-label">Ball curves:</span>
+  <div class="curve-grid">
+    <div class="curve-btn" data-curve="left" onclick="selectCurve(this)"><span class="cb-icon">↩️</span><span class="cb-label">Curves left (draw)</span></div>
+    <div class="curve-btn" data-curve="straight" onclick="selectCurve(this)"><span class="cb-icon">⬆️</span><span class="cb-label">Minimal curve</span></div>
+    <div class="curve-btn" data-curve="right" onclick="selectCurve(this)"><span class="cb-icon">↪️</span><span class="cb-label">Curves right (fade)</span></div>
+  </div>
+</div>
+
+<div class="card">
+  <span class="card-tag">Step 3 — Contact Quality</span>
+  <h3>What Did the Strike Feel Like?</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+    <div class="sel-btn" data-contact="solid" onclick="selectContact(this)" style="border-color:var(--border);"><span class="sb-icon">✅</span><span class="sb-label">Solid / pure</span></div>
+    <div class="sel-btn" data-contact="thin" onclick="selectContact(this)" style="border-color:var(--border);"><span class="sb-icon">⚡</span><span class="sb-label">Thin / low on face</span></div>
+    <div class="sel-btn" data-contact="fat" onclick="selectContact(this)" style="border-color:var(--border);"><span class="sb-icon">💥</span><span class="sb-label">Fat / heavy</span></div>
+    <div class="sel-btn" data-contact="toe" onclick="selectContact(this)" style="border-color:var(--border);"><span class="sb-icon">🔊</span><span class="sb-label">Off toe/heel</span></div>
+  </div>
+</div>
+
+<button class="diagnose-btn" onclick="diagnose()">Diagnose My Ball Flight →</button>
+
+<!-- RESULTS -->
+<div class="result-section" id="results">
+  <div style="height:16px;"></div>
+  <div class="diagnosis-hero" id="diagHero"></div>
+  <div id="diagCards"></div>
+  <button class="reset-btn" onclick="resetTool()">↺ Diagnose a Different Shot</button>
+</div>
+</div>
+<a href="index.html" class="home-btn">&#8962; Home</a>
+
+<script>
+let selStart=null, selCurve=null, selContact=null;
+function selectStart(el){document.querySelectorAll('[data-start]').forEach(b=>b.classList.remove('active'));el.classList.add('active');selStart=el.dataset.start;}
+function selectCurve(el){document.querySelectorAll('[data-curve]').forEach(b=>b.classList.remove('active'));el.classList.add('active');selCurve=el.dataset.curve;}
+function selectContact(el){document.querySelectorAll('[data-contact]').forEach(b=>b.classList.remove('active'));el.classList.add('active');selContact=el.dataset.contact;}
+
+// D-Plane fault library (right-handed player)
+// Face direction = ~75-80% of start line
+// Path vs face = sidespin curve direction
+const FAULTS = {
+  // Start Left
+  'left_left': {name:'Pull-Draw', face:'Closed to target', path:'Club travelling right-to-left (over-the-top), face closed to path', chain:'Hip/shoulder over-rotation — torso leads too early, creating steep OTT path. Face also closed.', severity:'common',
+    fixes:['Path: shallow the downswing — feel like arms drop under the shoulder plane at transition','Face: check grip — a strong grip compounds a closed face at impact','Video: watch P5 (mid-downswing) — elbow should be tucked, not flying']},
+  'left_straight': {name:'Pull / Straight Pull', face:'Closed to target, path matches face', path:'Both face AND path pointing left — consistent leftward miss', chain:'Classic over-the-top with face matching path. Path is OTT; face closed to target, square to path.',
+    fixes:['Shallow the swing plane — feel the club drops inside on the downswing','Gate drill: place headcover outside the ball — force the club to approach from inside','Cause: too much early shoulder rotation at transition']},
+  'left_right': {name:'Pull-Fade / Slice', face:'Slightly closed to target (starts left)', path:'Out-to-in path — classic slice path. Face open to path despite being closed to target.', chain:'The most common amateur fault. OTT path with face open to path — maximum left-to-right sidespin.',
+    severity:'very_common',
+    fixes:['Priority 1: Fix the path — swing more to the right through impact','Feel: swing to 3 o\'clock, not 12 o\'clock','Practice: drop right foot back 6 inches at address to rehearse inside-out path sensation']},
+  // Start Straight
+  'straight_left': {name:'Draw / Overdraw', face:'Square to target', path:'Club travelling slightly inside-out, face square — produces right-to-left spin',
+    chain:'Healthy inside-out path with square face — a draw. If excessive, path is too far inside-out.',
+    fixes:['If this is your miss: strengthen grip or close stance slightly to make it reliable','If uncontrolled: reduce inside-out path angle — feel club exits more toward target line']},
+  'straight_straight': {name:'Straight Shot', face:'Square to target', path:'Path matches face — minimal sidespin — straight flight',
+    chain:'Ideal: face and path both on target. No chain break. Consistent impact geometry.',
+    fixes:['This is the goal. Maintain current impact conditions.','Focus on consistency — your technique is producing the desired outcome']},
+  'straight_right': {name:'Fade', face:'Square to target', path:'Club travelling slightly outside-in — produces left-to-right spin',
+    chain:'Mild OTT or early extension. Face is square (ball starts at target) but path is slightly left.',
+    fixes:['Drop the right shoulder at transition instead of the right hip','Feel: right elbow into right hip pocket on downswing','Mild fade: may be intentional and manageable — many great players play a consistent fade']},
+  // Start Right
+  'right_left': {name:'Push-Draw', face:'Open to target (starts right)', path:'Club travelling right-to-left relative to face — strong draw back toward target',
+    chain:'Inside-out path. Face open to target but more closed to path — produces draw spin. Often good players over-rotating.',
+    fixes:['This is often a sign of good mechanics — inside-out path with active face rotation','If missing right-to-left: check timing — face closing too late or too early','For control: stabilise the release timing — HackMotion can identify exact flex/extension timing']},
+  'right_straight': {name:'Push / Block', face:'Open to target', path:'Face and path both pointing right — consistent rightward miss',
+    chain:'Classic block. Body stalls through impact — hips stop rotating, arms cannot catch up, face stays open.',
+    fixes:['Hips must clear through impact — feel the left hip rotating behind you at P7','The block comes from the body stopping — not the arms. Keep rotating.','Check: is there early extension (hips moving toward ball)? This causes the stall pattern']},
+  'right_right': {name:'Push-Fade / Banana Slice', face:'Open to target', path:'Path also right but face MORE open — right-to-right sidespin. Worst case slice.',
+    chain:'Inside-out path but face massively open — very common beginners. Or: correct path but face wide open.',
+    severity:'very_common',
+    fixes:['Face first: grip check — weak grip (V pointing at left shoulder) leaves face open at impact','Then path: if path is inside-out AND face is open, the face correction alone can produce a playable push-draw','Do not try to fix path and face simultaneously — face first, path second']},
+};
+
+// Contact additional diagnoses
+const CONTACT_EXTRAS = {
+  thin: {title:'Thin Contact — Additional Diagnosis', text:'Thin shots (low on the face) indicate early extension (hips moving toward ball through impact), a casting release (wrists unhinging too early), or a low point problem (club bottoming out before the ball). The ball flight tells you about face and path — the thin contact tells you about attack angle and low point location.', links:[
+    {icon:'📐', num:'Guide 14', name:'Video Analysis', href:'14_video_analysis.html', why:'Check P7 position — is the body extending toward the ball through impact?'},
+    {icon:'🏌️', num:'Guide 03', name:'Long Game Playbook', href:'03_longgame_pro.html', why:'Attack angle and low point control section'}
+  ]},
+  fat: {title:'Fat Contact — Additional Diagnosis', text:'Fat shots (behind the ball) indicate a low point too far behind the ball — usually from hanging back (weight staying on trail foot), or from a casting release that drives the club into the ground early. The weight must shift forward before impact.', links:[
+    {icon:'🏌️', num:'Guide 03', name:'Long Game Playbook', href:'03_longgame_pro.html', why:'Weight transfer and low point control'},
+    {icon:'⚡', num:'Guide 39', name:'Ground Reaction Force', href:'39_ground_reaction_force.html', why:'Proper ground engagement for correct weight shift'}
+  ]},
+  toe: {title:'Off-Centre Contact — Additional Diagnosis', text:'Toe strikes usually indicate a path that is too far inside-out AND a body that is moving away from the ball (reverse pivot or standing up through impact). Heel strikes indicate a path too steep or the body moving INTO the ball. Both are low-point and posture issues as much as path issues.', links:[
+    {icon:'📊', num:'Guide 11', name:'Shot Dispersion Mapping', href:'11_shot_dispersion.html', why:'Face tape test to map your contact pattern before diagnosing cause'}
+  ]}
+};
+
+const BASE_LINKS = {
+  path_ott: [{icon:'🏌️', num:'Guide 03', name:'Long Game Playbook', href:'03_longgame_pro.html', why:'Swing plane, transition, and path control fundamentals'},
+             {icon:'📊', num:'Guide 11', name:'Shot Dispersion Mapping', href:'11_shot_dispersion.html', why:'Measure your miss pattern — how far OTT before deciding on fix'}],
+  face:     [{icon:'🏌️', num:'Guide 03', name:'Long Game Playbook', href:'03_longgame_pro.html', why:'Face angle control, grip, and impact position'},
+             {icon:'🎥', num:'Guide 14', name:'Video Analysis', href:'14_video_analysis.html', why:'Check face angle at P1 (address), P4 (top), P7 (impact) using your phone'}],
+  path_inside:[{icon:'🏌️', num:'Guide 03', name:'Long Game Playbook', href:'03_longgame_pro.html', why:'Inside-out path control — feel vs. reality and how to calibrate'},
+               {icon:'⚡', num:'Guide 39', name:'Ground Reaction Force', href:'39_ground_reaction_force.html', why:'Hip clearing — the engine of the inside-out path'}],
+};
+
+function diagnose(){
+  if(!selStart||!selCurve){alert('Please select both a starting direction and a curve direction.');return;}
+  const key = `${selStart}_${selCurve}`;
+  const fault = FAULTS[key];
+  if(!fault){alert('Selection not recognised — please try again.');return;}
+
+  // Hero
+  document.getElementById('diagHero').innerHTML = `
+    <div class="dh-label">Ball Flight Diagnosis</div>
+    <div class="dh-title">${fault.name}</div>
+    <div class="dh-sub">Face: ${fault.face} · ${fault.path}</div>
+  `;
+
+  // Build cards
+  let html = '';
+
+  // D-Plane explanation
+  html += `<div class="card card-rust">
+    <span class="card-tag">D-Plane Analysis</span>
+    <h3>What Your Face &amp; Path Are Doing</h3>
+    <p style="margin-bottom:10px;"><strong style="color:var(--white);">Face at impact:</strong> ${fault.face}</p>
+    <p style="margin-bottom:10px;"><strong style="color:var(--white);">Swing path:</strong> ${fault.path}</p>
+    <p><strong style="color:var(--white);">Kinematic chain break:</strong> ${fault.chain}</p>
+    <div class="dplane-note" style="margin-top:10px;"><strong>D-Plane reminder:</strong> The ball starts approximately 75–80% in the direction the clubface points at impact. The ball curves away from the path, relative to the face. Face controls start; path-to-face difference controls curve. Fix the face first, then the path.</div>
+  </div>`;
+
+  // Fixes
+  html += `<div class="card card-gold">
+    <span class="card-tag">Priority Fixes — In This Order</span>
+    <h3>What to Work On</h3>
+    <ul class="steps">${fault.fixes.map((f,i)=>`<li><span class="step-n gd">${i+1}</span><div>${f}</div></li>`).join('')}</ul>
+  </div>`;
+
+  // Guide links
+  const isOTT = selStart==='left'||(selStart==='straight'&&selCurve==='right');
+  const isBlock = selStart==='right'&&selCurve==='straight';
+  const isFaceOpen = selStart==='right';
+  const links = isOTT ? BASE_LINKS.path_ott : isBlock ? BASE_LINKS.path_inside : isFaceOpen ? BASE_LINKS.face : BASE_LINKS.path_ott;
+  html += `<div class="card card-lime">
+    <span class="card-tag">Start Here — The Relevant Guides</span>
+    <h3>Where to Go to Fix This</h3>
+    <div class="guide-links">${links.map(l=>`<a href="${l.href}" class="guide-link"><span class="gl-icon">${l.icon}</span><div class="gl-body"><div class="gl-num">${l.num}</div><div class="gl-name">${l.name}</div><div class="gl-why">${l.why}</div></div><span class="gl-arrow">→</span></a>`).join('')}</div>
+  </div>`;
+
+  // Contact extra
+  if(selContact && CONTACT_EXTRAS[selContact]){
+    const ce = CONTACT_EXTRAS[selContact];
+    html += `<div class="card card-teal">
+      <span class="card-tag">${ce.title}</span>
+      <h3>Contact Pattern — What It Tells You</h3>
+      <p>${ce.text}</p>
+      <div class="guide-links" style="margin-top:10px;">${ce.links.map(l=>`<a href="${l.href}" class="guide-link"><span class="gl-icon">${l.icon}</span><div class="gl-body"><div class="gl-num">${l.num}</div><div class="gl-name">${l.name}</div><div class="gl-why">${l.why}</div></div><span class="gl-arrow">→</span></a>`).join('')}</div>
+    </div>`;
+  }
+
+  document.getElementById('diagCards').innerHTML = html;
+  document.getElementById('results').classList.add('visible');
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function resetTool(){
+  selStart=selCurve=selContact=null;
+  document.querySelectorAll('.sel-btn, .curve-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('results').classList.remove('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+<!-- LEGAL FOOTER -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:18px 20px;text-align:center;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+  <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+</div>
+</body></html>

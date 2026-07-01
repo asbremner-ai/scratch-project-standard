@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<!-- version:v2.2 · 2026-06-05 · 09_golf_coach_ai.html -->
+<!-- version:v3.0 · 2026-07-01 · 09_golf_coach_ai.html — replaced live Anthropic API call (broken outside claude.ai Artifacts, zero auth) with a deterministic rules engine: diagnoseFaults()/renderCoachingReport() evaluate the same SG/D-Plane benchmark thresholds against entered launch monitor data, no network call. runAnalysis() and loadHistory() switched from textContent to innerHTML to render structured output. Copy updated to remove "Live AI"/"Claude analyses" claims in hero-sub and footer. CSV import, manual entry, metrics display, and session history unchanged. -->
+<!-- version:v3.1 · 2026-07-01 · 09_golf_coach_ai.html — renamed guide from "Golf Coach AI" to "Launch Monitor Coach" (title, H1, footer) to match rule-based Standard reality; filename/URL unchanged. Hero-sub rewritten to state manual entry works with any launch monitor, not just Mevo. -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Golf Coach AI — Launch Monitor Analyser</title>
+<title>Launch Monitor Coach — The Scratch Project</title>
 <style>
 /* ─── Self-hosted fonts — no external requests ─────────────────────────── */
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 300; font-display: swap;
@@ -211,7 +212,7 @@ hr{border:none;border-top:1px solid var(--border);margin:22px 0;}
 </style>
 
 <style>
-/* ── Golf Coach AI extra styles (preserve original app appearance) ── */
+/* ── Launch Monitor Coach extra styles (preserve original app appearance) ── */
 .coach-wrap { max-width: 720px; margin: 0 auto; padding: 0 16px; position: relative; z-index: 1; }
 .ctx-bar { display: flex; gap: 16px; flex-wrap: wrap; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 24px; }
 .ctx-item { display: flex; flex-direction: column; gap: 2px; }
@@ -334,6 +335,9 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 </head>
 <body>
 <!-- HOME NAV -->
@@ -362,8 +366,8 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     </div>
   </div>
   <p class="hero-label">Strike Playbook · Guide 09</p>
-  <h1>Your Personal<br><em>Golf Coach</em></h1>
-  <p class="hero-sub">Import your Mevo CSV or enter data manually. Claude analyses every number using your full Strokes Gained playbook and provides specific, actionable coaching.</p>
+  <h1>Launch Monitor<br><em>Coach</em></h1>
+  <p class="hero-sub">Works with any launch monitor. CSV auto-import for Mevo Gen2, manual entry for everything else — every number checked against tour and Strokes Gained benchmarks for specific, actionable coaching.</p>
   <div class="hero-tags">
     <span class="htag">📂 CSV Import</span><span class="htag">✏️ Manual Entry</span>
     <span class="htag">📊 SG Framework</span><span class="htag">🎯 Personalised Coaching</span>
@@ -373,8 +377,8 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <div class="coach-wrap">
 
   <div class="ctx-bar">
-    <div class="ctx-item"><span class="ctx-lbl">Current HCP</span><span class="ctx-val">10</span></div>
-    <div class="ctx-item"><span class="ctx-lbl">Target</span><span class="ctx-val">Single Figures</span></div>
+    <div class="ctx-item"><span class="ctx-lbl">Handicap Range</span><span class="ctx-val">24–0</span></div>
+    <div class="ctx-item"><span class="ctx-lbl">Target</span><span class="ctx-val">Your Goal</span></div>
     <div class="ctx-item"><span class="ctx-lbl">Device</span><span class="ctx-val">Mevo Gen2 Pro</span></div>
     <div class="ctx-item"><span class="ctx-lbl">Framework</span><span class="ctx-val">SG-Based</span></div>
   </div>
@@ -489,7 +493,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 
 </div>
 
-<div class="footer">GOLF COACH AI · POWERED BY CLAUDE · STROKES GAINED COACHING ENGINE · © 2026 The Scratch Project</div>
+<div class="footer">LAUNCH MONITOR COACH · RULE-BASED DIAGNOSTIC ENGINE · STROKES GAINED COACHING · © 2026 The Scratch Project</div>
 
 <script>
 
@@ -770,100 +774,172 @@ async function analyseManual() {
   document.getElementById('analyseBtn').disabled = false;
 }
 
+// ── Deterministic coaching rules engine ─────────────────────
+// Diagnoses launch monitor data against the same SG/D-Plane
+// benchmark thresholds a coach would reference. No network call.
+function classifyClub(club) {
+  const c = (club || '').toLowerCase();
+  if (c.includes('driver')) return 'driver';
+  if (c.includes('wood') || c.includes('hybrid')) return 'wood';
+  if (c.includes('wedge') || /\b(pw|gw|sw|lw)\b/.test(c)) return 'wedge';
+  return 'iron';
+}
+
+function diagnoseFaults(data) {
+  const type = classifyClub(data.club);
+  const faults = [];
+
+  if (data.smashFactor != null) {
+    if (data.smashFactor < 1.43) {
+      faults.push({ key:'contact', sgWeight:3, severity: data.smashFactor < 1.38 ? 3 : 2,
+        detail: `Smash factor of ${data.smashFactor.toFixed(2)} is below the 1.43 threshold typical for solid contact (tour average is 1.48-1.49). This points to energy loss at impact, most likely off-centre strikes rather than a swing path or angle-of-attack issue on its own.`,
+        drills: [
+          'Impact-tape or foot-spray test: 10 balls, mark the face after each strike, target a tight cluster within half an inch of centre',
+          'Half-swing contact drill: 20 balls at half speed focusing purely on centre-face contact before adding speed back',
+          'Check grip pressure through impact — an over-tight grip is a common cause of inconsistent centredness'
+        ]});
+    } else if (data.smashFactor < 1.47) {
+      faults.push({ key:'contact-minor', sgWeight:1, severity:1,
+        detail: `Smash factor of ${data.smashFactor.toFixed(2)} is acceptable but has room to tighten toward the 1.47+ mark that separates good ball-striking from great.`,
+        drills: ['Impact-tape test over 10-15 balls to see exactly where contact is landing on the face']});
+    }
+  }
+
+  if (data.attackAngle != null && type === 'driver' && data.attackAngle < -1) {
+    faults.push({ key:'attack-angle', sgWeight:2, severity: data.attackAngle < -3 ? 3 : 2,
+      detail: `Attack angle of ${data.attackAngle.toFixed(1)}° is descending with the driver. Tour-optimal is +3° to +5° ascending — a negative angle of attack here typically costs 15-30 yards of carry through excess spin and a lower, less efficient launch.`,
+      drills: [
+        'Tee the ball higher and move it forward in your stance until the low point of the swing sits clearly behind the ball',
+        'Feel drill: exaggerate "hitting up" on the ball — most steep players need to over-correct the feel before the real motion shifts',
+        'Half-tee drill: place a tee just in front of the ball at ground level — a descending strike clips it, an ascending one does not'
+      ]});
+  }
+
+  if (data.facePath != null && Math.abs(data.facePath) >= 4) {
+    const fp = data.facePath;
+    const dir = fp > 0 ? 'open to path (fade/slice-biased contact)' : 'closed to path (draw/hook-biased contact)';
+    faults.push({ key:'face-path', sgWeight:3, severity: Math.abs(fp) >= 7 ? 3 : 2,
+      detail: `Face-to-path of ${fp>=0?'+':''}${fp.toFixed(1)}° is ${dir}. Face-to-path is the primary driver of curve — face angle accounts for roughly 83% of initial start direction, with path determining the curve on top of that. This magnitude typically costs accuracy, not just shot shape.`,
+      drills: [
+        fp > 0
+          ? 'Gate drill: place an alignment stick just outside the ball on the target line — an out-to-in path or open face clips it'
+          : 'Release check: look for an early, hands-only release that closes the face — pause at the top and feel the body leading the downswing before the hands fire',
+        'Grip check: a weak grip (hands rotated toward target) tends to leave the face open; a strong grip tends to close it',
+        'Face-on video comparing face angle at address vs impact — the delta shows whether this starts at set-up or develops during the swing'
+      ]});
+  }
+
+  if (data.spinRate != null) {
+    if (type === 'driver' && data.spinRate > 3000) {
+      faults.push({ key:'spin-driver', sgWeight:2, severity: data.spinRate > 3600 ? 3 : 2,
+        detail: `Driver spin rate of ${Math.round(data.spinRate).toLocaleString()} rpm is above the 2,200-2,700 rpm optimal window. Excess spin balloons ball flight and costs total distance even when carry looks acceptable.`,
+        drills: [
+          'Check attack angle first — a negative (descending) attack angle is the most common cause of driver over-spin',
+          'If attack angle is already positive and spin remains high, this points toward equipment: a lower-spin shaft or reduced loft',
+          'Tee higher and aim to catch the ball on the upswing — a low tee with a descending strike compounds spin'
+        ]});
+    } else if (type === 'iron' && (data.spinRate < 5500 || data.spinRate > 8500)) {
+      faults.push({ key:'spin-iron', sgWeight:1, severity:1,
+        detail: `Spin rate of ${Math.round(data.spinRate).toLocaleString()} rpm sits outside the typical 6,500-7,500 rpm mid-iron window, which affects stopping power and distance control into greens.`,
+        drills: ['Compare against a known-good club in the bag to isolate whether this is strike-related or specific to this club']});
+    }
+  }
+
+  if (data.dynamicLoft != null && type === 'driver' && (data.dynamicLoft > 18 || data.dynamicLoft < 10)) {
+    faults.push({ key:'dynamic-loft', sgWeight:1, severity:1,
+      detail: `Dynamic loft of ${data.dynamicLoft.toFixed(1)}° is ${data.dynamicLoft > 18 ? 'above the 18° ceiling, likely adding unnecessary spin' : 'below the 10° floor, risking a low, knuckling flight'}. Tour-optimal driver dynamic loft sits in the 12-15° band.`,
+      drills: ['Re-check attack angle and static loft together — dynamic loft is a product of both, not an isolated fix']});
+  }
+
+  if (data.shotCount > 1 && data.carryStdDev != null && data.carryStdDev >= 15) {
+    faults.push({ key:'consistency', sgWeight:2, severity:2,
+      detail: `Carry distance standard deviation of ${data.carryStdDev.toFixed(1)} yards across ${data.shotCount} shots is above the 15-yard mark that separates acceptable from significant — this reads as a strike-consistency gap rather than a single mechanical fault.`,
+      drills: [
+        'Ladder drill: 10 balls to progressively longer targets, focused only on solid, repeatable contact — distance control follows contact control',
+        'Track smash factor per shot within the session — wide shot-to-shot swings point to contact, not technique'
+      ]});
+  }
+
+  faults.sort((a, b) => (b.sgWeight * b.severity) - (a.sgWeight * a.severity));
+  return faults;
+}
+
+function renderCoachingReport(data) {
+  const faults = diagnoseFaults(data);
+  const priority = faults.slice(0, 2);
+  const clean = faults.length === 0;
+  const tag = t => `<span class="card-tag" style="margin-top:2px">${t}</span>`;
+  const sec = (title, html) => `<div style="margin-bottom:20px">${tag(title)}<div style="color:rgba(232,240,216,.8);line-height:1.75">${html}</div></div>`;
+
+  let assessment = data.shotCount > 1
+    ? `Across ${data.shotCount} shots with the ${data.club}, `
+    : `On this ${data.club} shot, `;
+  if (data.smashFactor != null) {
+    assessment += `contact quality (smash factor ${data.smashFactor.toFixed(2)}) is ${data.smashFactor >= 1.47 ? 'strong' : data.smashFactor >= 1.43 ? 'solid with room to tighten' : 'the area costing the most efficiency'}. `;
+  }
+  if (data.carryDist != null) assessment += `Carry sits at ${data.carryDist.toFixed(0)} yds`;
+  if (data.ballSpeed != null) assessment += ` from ${data.ballSpeed.toFixed(1)} mph ball speed`;
+  if (data.carryDist != null || data.ballSpeed != null) assessment += '.';
+  if (data.notes) assessment += `<br><br><em style="color:rgba(232,240,216,.55)">Noted: "${data.notes.replace(/</g,'&lt;')}"</em>`;
+
+  let html = sec('Data Assessment', assessment);
+
+  html += sec('Priority Fault(s)', clean
+    ? 'Nothing here crosses a significant threshold. Numbers sit within normal range for the benchmarks tracked — the highest-leverage move now is repeating this across more sessions to confirm consistency, not chasing a mechanical change.'
+    : priority.map((f,i) => `<div style="margin-bottom:${i<priority.length-1?'14px':'0'}"><strong style="color:var(--white)">${i+1}.</strong> ${f.detail}</div>`).join(''));
+
+  if (!clean) {
+    const drills = priority.flatMap(f => f.drills).slice(0, 4);
+    html += sec('Drills & Fixes', `<ol style="padding-left:18px;margin:0">${drills.map(d => `<li style="margin-bottom:8px">${d}</li>`).join('')}</ol>`);
+  }
+
+  const top = priority[0];
+  let gains;
+  if (clean) gains = 'No major faults identified — expect continued incremental gains from volume and consistency work rather than a single fix.';
+  else if (top.key === 'attack-angle' || top.key === 'spin-driver') gains = 'Correcting attack angle and spin together on driver shots is typically worth 10-20 yards of carry once the change is grooved.';
+  else if (top.key.startsWith('contact')) gains = 'Tightening contact toward a 1.47+ smash factor recovers several yards per club and, more importantly, tightens dispersion — which carries outsized strokes gained value versus raw distance.';
+  else if (top.key === 'face-path') gains = 'Reducing face-to-path toward the 2° window materially tightens dispersion — usually the single highest strokes gained lever available from launch monitor data.';
+  else gains = 'Addressing the flagged item(s) should show up first in dispersion tightness before raw distance gains.';
+  html += sec('Performance Gains', gains);
+
+  let cue;
+  if (clean) cue = 'Trust what is working — log a few more sessions before changing anything.';
+  else if (top.key.startsWith('contact')) cue = 'One thought: centre-face contact before anything else.';
+  else if (top.key === 'attack-angle') cue = 'One thought: catch it on the upswing.';
+  else if (top.key === 'face-path') cue = 'One thought: check the face before the path.';
+  else if (top.key.startsWith('spin')) cue = 'One thought: attack angle first — spin follows.';
+  else cue = 'One thought: contact before distance.';
+  html += sec('Session Focus Cue', cue);
+
+  return html;
+}
+
 // ── Core analysis engine ───────────────────────────────────
 async function runAnalysis(data, source) {
   renderMetrics(data);
-  const lines = [];
-  const f = (label, val, unit='') => val !== null && val !== undefined && lines.push(`${label}: ${typeof val === 'number' ? (Math.abs(val) < 10 ? val.toFixed(2) : val.toFixed(1)) : val}${unit}`);
-
-  lines.push(`Club: ${data.club}`);
-  lines.push(`Analysis: ${data.isSingle ? 'Single shot' : data.shotCount + '-shot session average'}`);
-  f('Ball Speed', data.ballSpeed, ' mph');
-  f('Club Speed', data.clubSpeed, ' mph');
-  f('Smash Factor', data.smashFactor);
-  f('Carry Distance', data.carryDist, ' yds');
-  f('Total Distance', data.totalDist, ' yds');
-  f('Launch Angle', data.launchAngle, '°');
-  f('Launch Direction', data.launchDir, '° (negative = left)');
-  f('Spin Rate', data.spinRate ? Math.round(data.spinRate) : null, ' rpm');
-  f('Attack Angle', data.attackAngle, '°');
-  f('Club Path', data.clubPath, '° (negative = out-to-in)');
-  f('Face Angle', data.faceAngle, '°');
-  f('Face to Path', data.facePath, '°');
-  f('Dynamic Loft', data.dynamicLoft, '°');
-  f('Spin Loft', data.spinLoft, '°');
-  f('Apex Height', data.apexHeight, ' ft');
-  f('Curve', data.curve, ' yds');
-  f('Low Point', data.lowPoint, ' in (positive = ahead of ball)');
-  if (data.carryStdDev !== null) f('Carry Std Dev (strike consistency)', data.carryStdDev, ' yds');
-  if (data.lateralStdDev !== null) f('Lateral Direction Std Dev (dispersion)', data.lateralStdDev, '°');
-  if (data.smashStdDev !== null) f('Smash Factor Std Dev (contact consistency)', data.smashStdDev);
-  if (data.notes) lines.push(`Player observations: ${data.notes}`);
-
-  const prompt = `You are an expert PGA-level golf coach specialising in launch monitor data analysis and strokes gained methodology. You are coaching a player with this profile:
-
-PLAYER PROFILE:
-- Handicap: 10 (has been lower, understands pro-level concepts)
-- Goal: Single figures and beyond
-- Device: FlightScope Mevo Gen2 with Pro Package
-- Improvement framework: Strokes Gained
-
-KEY BENCHMARKS:
-- Smash Factor: Tour 1.48–1.49 / 10 HCP typical 1.42–1.45. Below 1.43 = contact quality issue.
-- Driver attack angle: optimal +3° to +5° (ascending). Descending = -1° to -2° for most amateurs. Costs 15–30 yds.
-- D-Plane: Face angle = 83% of initial ball direction. Path = curve. Face-to-path = shot shape magnitude.
-- Spin Rate (driver): optimal 2,200–2,700 rpm. Over 3,000 = too much, balloons and loses distance.
-- Spin Rate (irons 7i): optimal 6,500–7,500 rpm. Steep attack = over-spin, ballooning.
-- Iron low point: Tour ±0.5 in ahead of ball / Amateur ±2 in. Low point behind ball = thin or heavy.
-- Dynamic Loft (driver): optimal 12–15°. Over 18° = too much spin. Under 10° = knuckleball.
-- Spin Loft: lower = more efficient energy transfer. High spin loft = glancing blow.
-- Under-clubbing: 10 HCP overestimates carry by 10–15 yds per club.
-- Dispersion (150 yds): Tour ±8 yds L/R / 10 HCP ±25 yds L/R.
-- SG losses typical for 10 HCP: -2.0 to -3.0 SG Approach / -1.4 to -2.0 SG Off-Tee per round vs tour.
-- Consistency: carry std dev under 8 yds = good / 8–15 yds = acceptable / over 15 yds = significant issue.
-
-DATA:
-${lines.join('\n')}
-
-Provide a detailed, specific coaching analysis:
-
-1. **Data Assessment** — what these exact numbers reveal about strike quality, efficiency, trajectory, and ball flight. Reference the actual values. Be precise.
-2. **Priority Fault(s)** — identify the 1–2 most impactful issues ranked by strokes gained consequence. Explain cause and effect clearly. Don't be vague.
-3. **Drills & Fixes** — 2–3 specific, actionable drills with precise instructions (distances, reps, pass/fail criteria, what feedback to look for on the launch monitor).
-4. **Performance Gains** — realistic distance or accuracy gains if faults are corrected.
-5. **Session Focus Cue** — one clear thought or feel for the next session.
-
-Be direct, data-driven, and specific to this exact data. Don't be generic.`;
-
+  await new Promise(r => setTimeout(r, 550));
+  let html;
   try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ model: "claude-sonnet-4-6", max_tokens: 1000, messages: [{ role: "user", content: prompt }] })
-    });
-    const result = await res.json();
-    const text = result.content?.map(c => c.text||'').join('') || 'Unable to generate analysis. Please try again.';
-    document.getElementById('coachText').textContent = text;
-    document.getElementById('loading').classList.remove('visible');
-    document.getElementById('analysisOutput').classList.add('visible');
-    document.getElementById('analysisOutput').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-    const entry = {
-      id: Date.now(),
-      date: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }),
-      club: data.club, carry: data.carryDist ? data.carryDist.toFixed(0) : null,
-      smash: data.smashFactor ? data.smashFactor.toFixed(2) : null,
-      shotCount: data.shotCount, source, analysis: text, data
-    };
-    sessionHistory.unshift(entry);
-    if (sessionHistory.length > 20) sessionHistory.pop();
-    localStorage.setItem('golfCoachHistory', JSON.stringify(sessionHistory));
-    renderHistory();
-  } catch(err) {
-    document.getElementById('loading').classList.remove('visible');
-    document.getElementById('coachText').textContent = 'Error connecting to coaching engine. Please try again.';
-    document.getElementById('analysisOutput').classList.add('visible');
+    html = renderCoachingReport(data);
+  } catch (err) {
+    html = '<p>Unable to generate analysis from this data. Please check the values entered and try again.</p>';
   }
+  document.getElementById('coachText').innerHTML = html;
+  document.getElementById('loading').classList.remove('visible');
+  document.getElementById('analysisOutput').classList.add('visible');
+  document.getElementById('analysisOutput').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const entry = {
+    id: Date.now(),
+    date: new Date().toLocaleDateString('en-GB', { day:'numeric', month:'short', hour:'2-digit', minute:'2-digit' }),
+    club: data.club, carry: data.carryDist ? data.carryDist.toFixed(0) : null,
+    smash: data.smashFactor ? data.smashFactor.toFixed(2) : null,
+    shotCount: data.shotCount, source, analysis: html, data
+  };
+  sessionHistory.unshift(entry);
+  if (sessionHistory.length > 20) sessionHistory.pop();
+  localStorage.setItem('golfCoachHistory', JSON.stringify(sessionHistory));
+  renderHistory();
 }
 
 // ── Metrics strip ──────────────────────────────────────────
@@ -912,7 +988,7 @@ function loadHistory(id) {
   const e = sessionHistory.find(x => x.id === id);
   if (!e) return;
   renderMetrics(e.data);
-  document.getElementById('coachText').textContent = e.analysis;
+  document.getElementById('coachText').innerHTML = e.analysis;
   document.getElementById('analysisOutput').classList.add('visible');
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -940,14 +1016,6 @@ renderHistory();
     <span style="font-size:1.3rem;flex-shrink:0;">🔢</span>
     <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Stats & SG Interpretation</span>
   </a>
-  <a href="mevo_gen2_playbook.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">📡</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Mevo Gen2 Data Mastery</span>
-  </a>
-  <a href="hackmotion_playbook.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
-    <span style="font-size:1.3rem;flex-shrink:0;">🖥️</span>
-    <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">HackMotion Data Mastery</span>
-  </a>
   <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s,background 0.2s;flex:1;min-width:140px;max-width:220px;">
     <span style="font-size:1.3rem;flex-shrink:0;">📓</span>
     <span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:#e8f0d8;line-height:1.35;">Progress Journal</span>
@@ -955,6 +1023,10 @@ renderHistory();
   </div>
   <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,0.07);text-align:center;">
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.35);text-decoration:none;">⌂ All Playbooks — Home</a>
+    <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+    <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+    <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+    <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
   </div>
 </div>
 </body>

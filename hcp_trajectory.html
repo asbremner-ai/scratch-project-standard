@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-25 · hcp_trajectory.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Handicap Trajectory Simulator — The Scratch Project</title>
+<meta name="description" content="Interactive handicap trajectory simulator. Enter your current handicap, weekly practice hours, and SG profile to see your projected improvement curve and milestone timeline.">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/inter-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2')}
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#162416;
+  --border:rgba(160,200,80,.14);--border-hi:rgba(160,200,80,.32);
+  --lime:#a0c850;--lime-dim:rgba(160,200,80,.08);
+  --gold:#e0b840;--gold-dim:rgba(224,184,64,.08);--gold-border:rgba(224,184,64,.22);
+  --teal:#48b0a8;--teal-dim:rgba(72,176,168,.08);--teal-border:rgba(72,176,168,.22);
+  --rust:#d86030;--rust-dim:rgba(216,96,48,.08);--rust-border:rgba(216,96,48,.22);
+  --white:#e8f0d8;--muted:rgba(232,240,216,.6);--faint:rgba(232,240,216,.08);
+  --r:10px;--r-sm:6px;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.topbar a:hover{color:var(--lime);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+.hero{background:linear-gradient(160deg,#0f2010 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:10px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.6rem);font-weight:700;line-height:1.05;margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--lime);}
+.hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:500px;}
+.page{max-width:640px;margin:0 auto;padding:20px 16px 80px;}
+.card{background:linear-gradient(145deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.25),transparent);}
+.card-gold{border-color:var(--gold-border);}.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.3),transparent);}
+.card-teal{border-color:var(--teal-border);}.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.3),transparent);}
+.card-lime{border-color:var(--border-hi);}.card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:7px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-teal .card-tag{color:var(--teal);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:10px;}
+.card p{font-size:13px;color:var(--muted);line-height:1.75;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;}
+.field input[type=number],.field select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--white);font-family:'Inter',system-ui;font-size:16px;padding:11px 13px;outline:none;-webkit-appearance:none;}
+.field input:focus,.field select:focus{border-color:var(--teal);}
+.field select option{background:#111e11;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+/* SG chips */
+.sg-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;display:block;}
+.sg-chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px;}
+.sg-chip{background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:7px 12px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);cursor:pointer;transition:all .12s;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
+.sg-chip.active{background:var(--teal);border-color:var(--teal);color:#0a160a;font-weight:700;}
+.calc-btn{width:100%;background:var(--lime);color:#0a160a;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:none;border-radius:var(--r-sm);padding:15px;cursor:pointer;margin-top:4px;-webkit-tap-highlight-color:transparent;}
+.calc-btn:active{opacity:.85;}
+/* Chart */
+.chart-wrap{position:relative;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin-bottom:14px;overflow:hidden;}
+canvas#trajCanvas{width:100%;display:block;}
+.chart-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+.legend-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+/* Milestone timeline */
+.milestone-list{display:flex;flex-direction:column;gap:0;}
+.milestone{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--faint);}
+.milestone:last-child{border-bottom:none;}
+.ms-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:2px;}
+.ms-body{flex:1;}
+.ms-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;}
+.ms-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+.ms-time{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;}
+/* Key stats */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.stat-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 10px;text-align:center;}
+.stat-val{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--lime);line-height:1;}
+.stat-sub{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+.result-section{display:none;}
+.result-section.visible{display:block;}
+.reset-btn{background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px;width:100%;margin-top:4px;cursor:pointer;}
+.reset-btn:hover{border-color:var(--border-hi);color:var(--white);}
+.info-box{background:var(--surface2);border:1px solid var(--teal-border);border-radius:var(--r-sm);padding:12px 13px;margin:12px 0;display:flex;gap:10px;}
+.info-box .ico{font-size:15px;flex-shrink:0;margin-top:1px;}
+.info-box p{font-size:12px;color:var(--muted);line-height:1.65;}
+.info-box p strong{color:var(--white);}
+a.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--lime);color:var(--bg);font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+
+/* ── Five Pillars Logo (tsp) ── */
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;position:relative;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<script async src="https://plausible.io/js/pa-XSwCniFb76oIDC0vR-U0K.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+<body>
+<div class="topbar">
+  <a href="index.html">&#8962; All Playbooks</a>
+  <span class="tsp-mini" aria-hidden="true"><span class="tsp-mini-bar" style="width:4px;height:9px;background:#e0a830;"></span><span class="tsp-mini-bar" style="width:4px;height:13px;background:#a0c850;"></span><span class="tsp-mini-bar" style="width:4px;height:16px;background:#4cb8c4;"></span><span class="tsp-mini-bar" style="width:4px;height:7px;background:#c8d8e8;"></span><span class="tsp-mini-bar" style="width:4px;height:11px;background:#c87830;"></span></span><span class="topbar-brand">The Scratch Project</span>
+</div>
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <p class="hero-label">Interactive Tool · Plan Pillar</p>
+  <h1>Handicap Trajectory<br><em>Simulator</em></h1>
+  <p class="hero-sub">Enter your current handicap, weekly practice hours, and your biggest scoring weakness — see your projected improvement curve and how long it realistically takes to reach each milestone.</p>
+</div>
+<div class="page">
+
+<div class="card card-gold">
+  <span class="card-tag">Step 1 — Your Starting Point</span>
+  <h3>Current Handicap & Practice</h3>
+  <div class="two-col">
+    <div class="field">
+      <label>Current handicap index</label>
+      <input type="number" id="hcp" min="0" max="54" step="0.1" placeholder="e.g. 12.4" inputmode="decimal">
+    </div>
+    <div class="field">
+      <label>Practice hours / week</label>
+      <input type="number" id="hrs" min="0.5" max="30" step="0.5" placeholder="e.g. 4" inputmode="decimal">
+    </div>
+  </div>
+  <div class="field">
+    <label>Competitive rounds per month</label>
+    <select id="rounds">
+      <option value="0">0 — practice only</option>
+      <option value="1">1 round</option>
+      <option value="2" selected>2 rounds</option>
+      <option value="4">4 rounds (weekly)</option>
+      <option value="6">6+ rounds (serious competitor)</option>
+    </select>
+  </div>
+</div>
+
+<div class="card">
+  <span class="card-tag">Step 2 — Coaching & Technology</span>
+  <h3>Support System</h3>
+  <div class="two-col">
+    <div class="field">
+      <label>Coaching sessions / month</label>
+      <select id="coaching">
+        <option value="0">None</option>
+        <option value="0.5">1 per 2 months</option>
+        <option value="1" selected>Monthly</option>
+        <option value="2">Fortnightly</option>
+        <option value="4">Weekly</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>SG tracking tool</label>
+      <select id="tracking">
+        <option value="none">None / scorecard only</option>
+        <option value="partial">GPS app (partial)</option>
+        <option value="full" selected>Arccos / Golfmetrics (full SG)</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<div class="card card-teal">
+  <span class="card-tag">Step 3 — Your Biggest Leak</span>
+  <h3>Primary SG Weakness</h3>
+  <p style="font-size:12px;color:var(--muted);margin-bottom:10px;">Select the category where you lose the most strokes per round. This is your primary improvement driver.</p>
+  <span class="sg-label">Where do you leak the most shots?</span>
+  <div class="sg-chips">
+    <div class="sg-chip" data-cat="ott" onclick="selectLeak(this)">Off the Tee</div>
+    <div class="sg-chip" data-cat="app" onclick="selectLeak(this)">Approach Play</div>
+    <div class="sg-chip" data-cat="arg" onclick="selectLeak(this)">Around Green</div>
+    <div class="sg-chip" data-cat="putt" onclick="selectLeak(this)">Putting</div>
+    <div class="sg-chip active" data-cat="balanced" onclick="selectLeak(this)">Balanced / Not Sure</div>
+  </div>
+</div>
+
+<button class="calc-btn" onclick="calculate()">Project My Trajectory →</button>
+
+<!-- ── RESULTS ── -->
+<div class="result-section" id="results">
+
+  <div style="height:16px;"></div>
+
+  <div class="stat-row" id="statRow"></div>
+
+  <div class="chart-wrap">
+    <span class="card-tag" style="color:var(--lime);">Projected Handicap Curve</span>
+    <canvas id="trajCanvas" height="220"></canvas>
+    <div class="chart-legend">
+      <div class="legend-item"><div class="legend-dot" style="background:#a0c850;"></div>Your trajectory</div>
+      <div class="legend-dot" style="background:rgba(160,200,80,.25);width:18px;height:4px;border-radius:2px;"></div>
+      <div class="legend-item" style="margin-left:-4px;">Confidence band</div>
+      <div class="legend-item"><div class="legend-dot" style="background:#48b0a8;"></div>Scratch milestone</div>
+    </div>
+  </div>
+
+  <div class="card card-lime">
+    <span class="card-tag">Milestone Timeline</span>
+    <h3>When You Could Reach Each Target</h3>
+    <div class="milestone-list" id="milestoneList"></div>
+  </div>
+
+  <div class="card card-gold" id="adviceCard">
+    <span class="card-tag">Priority Advice</span>
+    <h3 id="adviceTitle">Your Highest-Leverage Action</h3>
+    <p id="adviceText"></p>
+  </div>
+
+  <div class="info-box">
+    <span class="ico">📊</span>
+    <p><strong>How accurate is this?</strong> These projections are based on SG improvement rates from Broadie's research and typical amateur development curves calibrated to practice volume and coaching frequency. Individual results vary — genetics, starting consistency, and life schedule all play a role. Treat the curve as a direction, not a guarantee. Update it every 3 months as your handicap changes.</p>
+  </div>
+
+  <button class="reset-btn" onclick="reset()">↺ Start Again</button>
+</div>
+
+</div><!-- /page -->
+<a href="index.html" class="home-btn">&#8962; Home</a>
+
+<script>
+let selLeak = 'balanced';
+
+function selectLeak(chip){
+  document.querySelectorAll('.sg-chip').forEach(c=>c.classList.remove('active'));
+  chip.classList.add('active');
+  selLeak = chip.dataset.cat;
+}
+
+// ── Model ──────────────────────────────────────────────────────────────────
+// Improvement rate: monthly HCP points drop, calibrated by inputs
+function monthlyRate(hcp, hrs, rounds, coaching, tracking, leak){
+  // Base rate from practice hours (diminishing returns)
+  let base = 0;
+  if(hrs <= 1)        base = 0.08;
+  else if(hrs <= 2)   base = 0.14;
+  else if(hrs <= 4)   base = 0.22;
+  else if(hrs <= 6)   base = 0.28;
+  else if(hrs <= 10)  base = 0.34;
+  else                base = 0.38;
+
+  // Coaching multiplier
+  const coachM = coaching === 0 ? 0.75 : coaching <= 0.5 ? 0.90 : coaching <= 1 ? 1.0 : coaching <= 2 ? 1.12 : 1.20;
+  // Tracking multiplier
+  const trackM = tracking === 'none' ? 0.80 : tracking === 'partial' ? 0.92 : 1.08;
+  // Rounds multiplier
+  const roundM = rounds === 0 ? 0.70 : rounds === 1 ? 0.88 : rounds <= 2 ? 1.0 : rounds <= 4 ? 1.10 : 1.15;
+  // Leak multiplier — focused practice on biggest weakness improves rate
+  const leakM = leak === 'balanced' ? 0.95 : 1.05;
+  // Difficulty curve — harder to improve from lower handicaps
+  const diffM = hcp >= 18 ? 1.20 : hcp >= 12 ? 1.05 : hcp >= 8 ? 0.95 : hcp >= 5 ? 0.82 : hcp >= 3 ? 0.68 : 0.55;
+
+  return base * coachM * trackM * roundM * leakM * diffM;
+}
+
+function calculate(){
+  const hcp = parseFloat(document.getElementById('hcp').value);
+  const hrs = parseFloat(document.getElementById('hrs').value);
+  const rounds = parseInt(document.getElementById('rounds').value);
+  const coaching = parseFloat(document.getElementById('coaching').value);
+  const tracking = document.getElementById('tracking').value;
+
+  if(isNaN(hcp)||hcp<0||hcp>54){ alert('Please enter a valid handicap (0–54).'); return; }
+  if(isNaN(hrs)||hrs<0.5){ alert('Please enter your practice hours per week (minimum 0.5).'); return; }
+
+  // Project 36 months
+  const months = 36;
+  const curve = [hcp];
+  const upper = [hcp];
+  const lower = [hcp];
+  let current = hcp;
+  for(let m=1;m<=months;m++){
+    const rate = monthlyRate(current, hrs, rounds, coaching, tracking, selLeak);
+    const drop = Math.max(0.01, rate);
+    current = Math.max(-4, current - drop);
+    curve.push(Math.round(current*10)/10);
+    upper.push(Math.round((current + drop*0.8)*10)/10);
+    lower.push(Math.round(Math.max(-4, current - drop*0.5)*10)/10);
+  }
+
+  // Find milestones
+  const targets = [{hcp:18,label:'18 HCP',emoji:'🎯'},{hcp:14,label:'14 HCP',emoji:'📈'},{hcp:10,label:'10 HCP',emoji:'⬆️'},{hcp:6,label:'6 HCP',emoji:'🔥'},{hcp:2,label:'2 HCP',emoji:'💫'},{hcp:0,label:'Scratch',emoji:'⭐'},{hcp:-1,label:'+1 HCP',emoji:'🏆'}];
+  const milestones = [];
+  for(const t of targets){
+    if(t.hcp >= hcp) continue;
+    const mIdx = curve.findIndex(v=>v<=t.hcp);
+    if(mIdx>0) milestones.push({...t, months:mIdx});
+  }
+
+  // Stats
+  const finalHcp = curve[months];
+  const totalDrop = hcp - finalHcp;
+  const scratchMonth = curve.findIndex(v=>v<=0);
+  document.getElementById('statRow').innerHTML = `
+    <div class="stat-box"><div class="stat-val">${finalHcp > 0 ? finalHcp.toFixed(1) : '+'+Math.abs(finalHcp).toFixed(1)}</div><div class="stat-sub">3-year target</div></div>
+    <div class="stat-box"><div class="stat-val">${totalDrop.toFixed(1)}</div><div class="stat-sub">Shots gained</div></div>
+    <div class="stat-box"><div class="stat-val">${scratchMonth>0 ? scratchMonth+'mo' : hcp<=0 ? 'Now' : '36+mo'}</div><div class="stat-sub">To scratch</div></div>
+  `;
+
+  // Draw chart
+  drawChart(curve, upper, lower, months, hcp);
+
+  // Milestones
+  const ml = document.getElementById('milestoneList');
+  ml.innerHTML = '';
+  if(milestones.length === 0){
+    ml.innerHTML = '<p style="font-size:13px;color:var(--muted);padding:10px 0;">You are already at or beyond scratch — the next targets are plus-handicap. Keep going.</p>';
+  } else {
+    milestones.forEach(m=>{
+      const yr = Math.floor(m.months/12);
+      const mo = m.months%12;
+      const timeStr = yr>0 ? `${yr}y ${mo}m` : `${mo} months`;
+      ml.innerHTML += `<div class="milestone">
+        <div class="ms-dot" style="background:var(--lime-dim);border:1.5px solid var(--border-hi);">${m.emoji}</div>
+        <div class="ms-body">
+          <div class="ms-label" style="color:var(--lime);">${m.label}</div>
+          <div class="ms-desc">Projected at your current input profile — from ${hcp.toFixed(1)} today</div>
+        </div>
+        <div class="ms-time" style="color:var(--lime);">${timeStr}</div>
+      </div>`;
+    });
+  }
+
+  // Advice
+  const adviceMap = {
+    ott: ['Driving Accuracy is Your Unlock','Your biggest SG opportunity is off the tee. At your current level, reducing lateral scatter by 10 yards on drives is worth more per round than any other single improvement. Prioritise Guide 11 (Shot Dispersion Mapping) and Guide 03 (Long Game Playbook). With SG tracking enabled, review your OTT data monthly.'],
+    app: ['Approach Play is the Main Event','The research is clear: approach play SG has the largest impact on handicap for players in your range. Closing the proximity gap by 5 feet on approach shots is worth approximately 2–3 shots per round. Guide 37 (Approach Zone) is your starting point. Add a launch monitor session (Guide 15) to verify carry distances.'],
+    arg: ['Around the Green is Your Edge','ARG improvement has the fastest visible impact on scorecards — saves that used to be bogeys become pars. The short game lie system (Guide 02) and a dedicated chipping practice protocol produce results within weeks, not months. Track your up-and-down percentage monthly.'],
+    putt: ['Putting is Where Rounds Are Won and Lost','Putting improvement at your handicap level is worth 3–5 shots per round on average. Every putt inside 8 feet that you convert adds SG: Putting directly. Guide 01 (Putting Playbook) and the practice green protocol form your system. Measure make% from 6 feet as your primary KPI.'],
+    balanced: ['Fix the Biggest Leak First','Without a clear single weakness, start by running 8+ rounds through your SG tracking tool (Arccos or Golfmetrics). Let the data identify your primary leak — then use the relevant pillar guide to address it. Trying to improve everything simultaneously is less effective than fixing the biggest leak first.'],
+  };
+  const [advTitle, advText] = adviceMap[selLeak] || adviceMap.balanced;
+  document.getElementById('adviceTitle').textContent = advTitle;
+  document.getElementById('adviceText').textContent = advText;
+
+  document.getElementById('results').classList.add('visible');
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function drawChart(curve, upper, lower, months, startHcp){
+  const canvas = document.getElementById('trajCanvas');
+  const dpr = window.devicePixelRatio||1;
+  const W = canvas.parentElement.clientWidth - 32;
+  const H = 220;
+  canvas.width = W*dpr; canvas.height = H*dpr;
+  canvas.style.width = W+'px'; canvas.style.height = H+'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+
+  const pad = {l:36,r:16,t:12,b:28};
+  const cw = W-pad.l-pad.r;
+  const ch = H-pad.t-pad.b;
+
+  const minV = Math.min(-2, ...curve)-1;
+  const maxV = Math.max(startHcp+2, ...upper)+1;
+  const range = maxV-minV;
+
+  const xOf = i => pad.l + (i/months)*cw;
+  const yOf = v => pad.t + (1-(v-minV)/range)*ch;
+
+  // Grid
+  ctx.strokeStyle='rgba(160,200,80,.08)';ctx.lineWidth=1;
+  for(let h=Math.ceil(minV);h<=Math.floor(maxV);h+=5){
+    if(h%5!==0) continue;
+    ctx.beginPath();ctx.moveTo(pad.l,yOf(h));ctx.lineTo(pad.l+cw,yOf(h));ctx.stroke();
+    ctx.fillStyle='rgba(232,240,216,.3)';ctx.font='9px JetBrains Mono,monospace';
+    ctx.fillText(h,2,yOf(h)+3);
+  }
+  // Scratch line
+  ctx.strokeStyle='rgba(72,176,168,.4)';ctx.lineWidth=1.5;ctx.setLineDash([4,4]);
+  ctx.beginPath();ctx.moveTo(pad.l,yOf(0));ctx.lineTo(pad.l+cw,yOf(0));ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='rgba(72,176,168,.8)';ctx.font='9px JetBrains Mono,monospace';
+  ctx.fillText('Scratch',pad.l+4,yOf(0)-4);
+
+  // Confidence band
+  ctx.fillStyle='rgba(160,200,80,.08)';
+  ctx.beginPath();ctx.moveTo(xOf(0),yOf(upper[0]));
+  upper.forEach((v,i)=>ctx.lineTo(xOf(i),yOf(v)));
+  for(let i=lower.length-1;i>=0;i--)ctx.lineTo(xOf(i),yOf(lower[i]));
+  ctx.closePath();ctx.fill();
+
+  // Main curve
+  ctx.strokeStyle='#a0c850';ctx.lineWidth=2.5;
+  ctx.beginPath();curve.forEach((v,i)=>i===0?ctx.moveTo(xOf(i),yOf(v)):ctx.lineTo(xOf(i),yOf(v)));
+  ctx.stroke();
+
+  // X axis labels
+  ctx.fillStyle='rgba(232,240,216,.4)';ctx.font='9px JetBrains Mono,monospace';
+  [6,12,18,24,30,36].forEach(m=>{
+    const y = m<=12 ? `${m}m` : `${m/12}yr`;
+    ctx.fillText(y,xOf(m)-8,H-6);
+  });
+}
+
+function reset(){
+  document.getElementById('hcp').value='';
+  document.getElementById('hrs').value='';
+  document.getElementById('results').classList.remove('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+
+<!-- LEGAL FOOTER -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:18px 20px;text-align:center;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+  <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+</div>
+</body>
+</html>

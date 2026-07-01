@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-24 · wind_calculator.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Wind Adjustment Calculator — The Scratch Project</title>
+<meta name="description" content="On-course wind adjustment calculator. Input actual distance, wind speed and direction — get adjusted target yardage and club recommendation instantly.">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/inter-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2')}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a160a;
+  --surface:#111e11;
+  --surface2:#162416;
+  --border:rgba(160,200,80,.14);
+  --border-hi:rgba(160,200,80,.32);
+  --lime:#a0c850;
+  --lime-dim:rgba(160,200,80,.08);
+  --gold:#e0b840;
+  --gold-dim:rgba(224,184,64,.08);
+  --gold-border:rgba(224,184,64,.22);
+  --teal:#48b0a8;
+  --teal-dim:rgba(72,176,168,.08);
+  --teal-border:rgba(72,176,168,.22);
+  --rust:#d86030;
+  --rust-dim:rgba(216,96,48,.08);
+  --rust-border:rgba(216,96,48,.22);
+  --white:#e8f0d8;
+  --muted:rgba(232,240,216,.6);
+  --faint:rgba(232,240,216,.08);
+  --r:10px;
+  --r-sm:6px;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
+
+/* ── TOP NAV ── */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.topbar a:hover{color:var(--lime);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(160deg,#0f2010 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.8rem);font-weight:700;line-height:1.1;margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:520px;margin-bottom:16px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:4px 10px;border-radius:20px;}
+
+/* ── MAIN LAYOUT ── */
+.page{max-width:600px;margin:0 auto;padding:20px 16px 80px;}
+
+/* ── CARDS ── */
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(72,176,168,.3),transparent);}
+.card-teal{border-color:var(--teal-border);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.35),transparent);}
+.card-gold{border-color:var(--gold-border);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.3),transparent);}
+.card-rust{border-color:var(--rust-border);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.3),transparent);}
+.card-lime{border-color:var(--border-hi);}
+.card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-lime .card-tag{color:var(--lime);}
+.card-rust .card-tag{color:var(--rust);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2;}
+.card p{font-size:13px;color:var(--muted);line-height:1.75;}
+
+/* ── SECTION HEADERS ── */
+.sec-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.sec-desc{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:16px;padding-left:10px;border-left:2px solid var(--teal);}
+.badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:10px;}
+.badge-gold{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);}
+.badge-lime{background:var(--lime-dim);border-color:var(--border-hi);color:var(--lime);}
+.badge-rust{background:var(--rust-dim);border-color:var(--rust-border);color:var(--rust);}
+
+/* ── FORM INPUTS ── */
+.form-section{margin-bottom:20px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;}
+.field input[type=number]{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--white);font-family:'Inter',system-ui;font-size:16px;font-weight:600;padding:12px 14px;outline:none;-webkit-appearance:none;appearance:none;}
+.field input[type=number]:focus{border-color:var(--teal);box-shadow:0 0 0 2px rgba(72,176,168,.15);}
+.field input[type=number]::placeholder{color:rgba(232,240,216,.25);font-weight:400;}
+
+/* ── DIRECTION GRID ── */
+.dir-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;display:block;}
+.dir-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px;}
+.dir-btn{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.dir-btn .emoji{font-size:18px;display:block;margin-bottom:3px;}
+.dir-btn .dir-name{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.dir-btn:active{transform:scale(.97);}
+.dir-btn.selected{background:var(--teal);border-color:var(--teal);box-shadow:0 0 10px rgba(72,176,168,.3);}
+.dir-btn.selected .dir-name{color:#fff;}
+
+/* ── SPEED CHIPS ── */
+.speed-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;display:block;}
+.speed-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.speed-chip{background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
+.speed-chip:active{transform:scale(.97);}
+.speed-chip.selected{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700;box-shadow:0 0 8px rgba(72,176,168,.3);}
+
+/* ── FLIGHT TYPE ── */
+.flight-chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
+.flight-chip{background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;transition:all .15s;flex:1;text-align:center;min-width:80px;-webkit-tap-highlight-color:transparent;}
+.flight-chip.selected{background:var(--gold);border-color:var(--gold);color:#0a160a;font-weight:700;}
+
+/* ── CALCULATE BUTTON ── */
+.calc-btn{width:100%;background:var(--teal);color:#0a160a;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:none;border-radius:var(--r-sm);padding:16px;cursor:pointer;margin-top:4px;transition:opacity .15s;-webkit-tap-highlight-color:transparent;}
+.calc-btn:active{opacity:.85;}
+.calc-btn:disabled{opacity:.4;cursor:not-allowed;}
+
+/* ── RESULT PANEL ── */
+.result{display:none;margin-top:20px;}
+.result.visible{display:block;}
+.result-hero{background:linear-gradient(135deg,rgba(72,176,168,.15),rgba(72,176,168,.05));border:1.5px solid var(--teal-border);border-radius:var(--r);padding:20px 18px;text-align:center;margin-bottom:14px;}
+.result-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.result-yardage{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:4px;}
+.result-yardage span{font-size:1.2rem;color:var(--muted);font-weight:400;}
+.result-delta{font-family:'JetBrains Mono',monospace;font-size:12px;margin-bottom:12px;}
+.result-delta.add{color:var(--rust);}
+.result-delta.sub{color:var(--teal);}
+.result-delta.none{color:var(--muted);}
+.result-club{background:var(--lime-dim);border:1px solid var(--border-hi);border-radius:var(--r-sm);display:inline-block;padding:8px 18px;font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--lime);margin-top:4px;}
+
+/* ── BREAKDOWN TABLE ── */
+.breakdown{font-size:12px;width:100%;border-collapse:collapse;margin-top:4px;}
+.breakdown td{padding:7px 10px;border-bottom:1px solid var(--faint);color:var(--muted);line-height:1.5;vertical-align:top;}
+.breakdown td:first-child{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--white);width:55%;}
+.breakdown tr:last-child td{border-bottom:none;}
+.breakdown .val{text-align:right;font-weight:600;}
+.val-add{color:var(--rust);}
+.val-sub{color:var(--teal);}
+.val-zero{color:var(--muted);}
+
+/* ── ADVICE BOXES ── */
+.advice{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:10px;font-size:13px;color:var(--muted);line-height:1.75;}
+.advice strong{color:var(--white);display:block;margin-bottom:4px;font-size:12px;}
+.advice.tip-head::before{content:'💡 ';font-size:14px;}
+.advice.warn-head::before{content:'⚠️ ';font-size:14px;}
+
+/* ── REFERENCE TABLE ── */
+.ref-tbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px;}
+.ref-tbl th{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.ref-tbl td{padding:6px 10px;color:var(--muted);border-bottom:1px solid var(--faint);vertical-align:top;}
+.ref-tbl td:first-child{color:var(--white);}
+.ref-tbl tr:last-child td{border-bottom:none;}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+
+.divider{height:1px;background:var(--border);margin:20px 0;}
+
+/* ── RESET BUTTON ── */
+.reset-btn{background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:10px 16px;cursor:pointer;width:100%;margin-top:10px;transition:border-color .15s;}
+.reset-btn:hover{border-color:var(--border-hi);color:var(--white);}
+
+/* ── TABS ── */
+.tab-bar{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;cursor:pointer;white-space:nowrap;transition:all .15s;margin-bottom:-1px;}
+.tab.active{color:var(--teal);border-bottom-color:var(--teal);}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+
+/* ── HOME BUTTON ── */
+.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--lime);color:var(--bg);font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+
+/* ── Five Pillars Logo (tsp) ── */
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;position:relative;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<script async src="https://plausible.io/js/pa-XSwCniFb76oIDC0vR-U0K.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html">&#8962; All Playbooks</a>
+  <span class="tsp-mini" aria-hidden="true"><span class="tsp-mini-bar" style="width:4px;height:9px;background:#e0a830;"></span><span class="tsp-mini-bar" style="width:4px;height:13px;background:#a0c850;"></span><span class="tsp-mini-bar" style="width:4px;height:16px;background:#4cb8c4;"></span><span class="tsp-mini-bar" style="width:4px;height:7px;background:#c8d8e8;"></span><span class="tsp-mini-bar" style="width:4px;height:11px;background:#c87830;"></span></span><span class="topbar-brand">The Scratch Project</span>
+</div>
+
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <p class="hero-label">Interactive Tool · Score Pillar</p>
+  <h1>Wind Adjustment<br><em>Calculator</em></h1>
+  <p class="hero-sub">Input actual distance, wind speed, and direction. Get your adjusted target yardage and club recommendation instantly — calibrated for UK conditions and shot trajectory.</p>
+  <div class="hero-tags">
+    <span class="htag">🌬️ Wind Compensation</span>
+    <span class="htag">🏌️ Club Selection</span>
+    <span class="htag">📏 Adjusted Yardage</span>
+    <span class="htag">⚡ On-Course Use</span>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ── TAB BAR ── -->
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('calculator',this)">Calculator</button>
+    <button class="tab" onclick="switchTab('method',this)">Method</button>
+    <button class="tab" onclick="switchTab('reference',this)">Reference</button>
+    <button class="tab" onclick="switchTab('links',this)">Links Mode</button>
+  </div>
+
+  <!-- ══ TAB: CALCULATOR ══ -->
+  <div class="tab-pane active" id="tab-calculator">
+
+    <div class="card card-teal">
+      <span class="card-tag">Step 1 — Actual Distance</span>
+      <h3>How Far Is It?</h3>
+      <div class="field">
+        <label for="dist">Distance to target (yards)</label>
+        <input type="number" id="dist" placeholder="e.g. 155" min="30" max="320" inputmode="numeric">
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="card-tag">Step 2 — Wind Direction</span>
+      <h3>Where Is the Wind Coming From?</h3>
+      <span class="dir-label">Select the direction the wind is blowing <em>from</em></span>
+      <div class="dir-grid">
+        <div class="dir-btn" data-dir="into" onclick="selectDir(this)">
+          <span class="emoji">⬆️</span>
+          <span class="dir-name">Into</span>
+        </div>
+        <div class="dir-btn" data-dir="down" onclick="selectDir(this)">
+          <span class="emoji">⬇️</span>
+          <span class="dir-name">Down</span>
+        </div>
+        <div class="dir-btn" data-dir="left" onclick="selectDir(this)">
+          <span class="emoji">➡️</span>
+          <span class="dir-name">L→R</span>
+        </div>
+        <div class="dir-btn" data-dir="right" onclick="selectDir(this)">
+          <span class="emoji">⬅️</span>
+          <span class="dir-name">R→L</span>
+        </div>
+        <div class="dir-btn" data-dir="dl" onclick="selectDir(this)">
+          <span class="emoji">↘️</span>
+          <span class="dir-name">Down-L</span>
+        </div>
+        <div class="dir-btn" data-dir="dr" onclick="selectDir(this)">
+          <span class="emoji">↙️</span>
+          <span class="dir-name">Down-R</span>
+        </div>
+        <div class="dir-btn" data-dir="il" onclick="selectDir(this)">
+          <span class="emoji">↗️</span>
+          <span class="dir-name">Into-L</span>
+        </div>
+        <div class="dir-btn" data-dir="ir" onclick="selectDir(this)">
+          <span class="emoji">↖️</span>
+          <span class="dir-name">Into-R</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="card-tag">Step 3 — Wind Speed</span>
+      <h3>How Strong Is It?</h3>
+      <span class="speed-label">Approximate wind speed (mph)</span>
+      <div class="speed-chips">
+        <div class="speed-chip" data-mph="5" onclick="selectSpeed(this)">~5 mph<br><small style="font-size:9px;opacity:.7;">Slight</small></div>
+        <div class="speed-chip" data-mph="10" onclick="selectSpeed(this)">~10 mph<br><small style="font-size:9px;opacity:.7;">Light</small></div>
+        <div class="speed-chip" data-mph="15" onclick="selectSpeed(this)">~15 mph<br><small style="font-size:9px;opacity:.7;">Moderate</small></div>
+        <div class="speed-chip" data-mph="20" onclick="selectSpeed(this)">~20 mph<br><small style="font-size:9px;opacity:.7;">Fresh</small></div>
+        <div class="speed-chip" data-mph="25" onclick="selectSpeed(this)">~25 mph<br><small style="font-size:9px;opacity:.7;">Strong</small></div>
+        <div class="speed-chip" data-mph="30" onclick="selectSpeed(this)">30+ mph<br><small style="font-size:9px;opacity:.7;">Very Strong</small></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="card-tag">Step 4 — Shot Shape</span>
+      <h3>Normal Trajectory</h3>
+      <span class="speed-label">Select your typical ball flight</span>
+      <div class="flight-chips">
+        <div class="flight-chip" data-flight="low" onclick="selectFlight(this)">Low</div>
+        <div class="flight-chip selected" data-flight="mid" onclick="selectFlight(this)">Mid</div>
+        <div class="flight-chip" data-flight="high" onclick="selectFlight(this)">High</div>
+      </div>
+    </div>
+
+    <button class="calc-btn" id="calcBtn" onclick="calculate()">Calculate Adjusted Yardage</button>
+
+    <!-- ── RESULT ── -->
+    <div class="result" id="result">
+
+      <div class="result-hero">
+        <div class="result-label">Adjusted Target Yardage</div>
+        <div class="result-yardage" id="adjYards">— <span>yds</span></div>
+        <div class="result-delta" id="delta"></div>
+        <div class="result-club" id="clubRec">—</div>
+      </div>
+
+      <div class="card card-teal">
+        <span class="card-tag">Breakdown</span>
+        <h3>How the Adjustment Was Calculated</h3>
+        <table class="breakdown" id="breakdownTable"></table>
+      </div>
+
+      <div class="card card-gold">
+        <span class="card-tag">Shot Strategy</span>
+        <h3 id="stratTitle">Strategy</h3>
+        <p id="stratText"></p>
+      </div>
+
+      <div id="crosswindAdvice" style="display:none;" class="card card-rust">
+        <span class="card-tag">Crosswind Aim</span>
+        <h3>Where to Aim</h3>
+        <p id="crosswindText"></p>
+      </div>
+
+      <button class="reset-btn" onclick="resetCalc()">↺ New Calculation</button>
+    </div>
+
+  </div><!-- /tab-calculator -->
+
+  <!-- ══ TAB: METHOD ══ -->
+  <div class="tab-pane" id="tab-method">
+
+    <div class="card card-teal">
+      <span class="card-tag">The Algorithm</span>
+      <h3>How Wind Affects Carry Distance</h3>
+      <p>The adjustments in this calculator are based on the Broadie/PGA Tour carry data model, calibrated for the typical amateur ball speed range (140–160 mph ball speed) rather than Tour data. The key principle: a headwind's effect on carry is roughly twice as large as a tailwind's benefit at the same speed — because headwind also increases spin rate.</p>
+    </div>
+
+    <span class="badge">Headwind Rule</span>
+    <div class="card">
+      <span class="card-tag">Into the Wind</span>
+      <h3>1 Club per 10 mph (adjusted for trajectory)</h3>
+      <p style="margin-bottom:10px;">The standard amateur rule of thumb is one extra club per 10 mph of headwind. This calculator refines that based on ball flight:</p>
+      <ul class="steps">
+        <li><span class="step-n">↑</span><div><strong>High ball flight:</strong> +1.5 clubs per 10 mph. Higher flights expose more surface area to the headwind and generate more spin — the effect compounds significantly above 20 mph.</div></li>
+        <li><span class="step-n">→</span><div><strong>Mid ball flight:</strong> +1 club per 10 mph. The standard rule applies. 15 mph headwind adds approximately 15 yards of effective distance.</div></li>
+        <li><span class="step-n">↓</span><div><strong>Low ball flight:</strong> +0.7 clubs per 10 mph. A knockdown or punch shot is markedly less affected by headwind — this is why the shot is invaluable in UK conditions.</div></li>
+      </ul>
+    </div>
+
+    <span class="badge badge-gold">Tailwind Rule</span>
+    <div class="card card-gold">
+      <span class="card-tag">Downwind</span>
+      <h3>Roughly Half the Headwind Effect</h3>
+      <p>Tailwind reduces the required club, but the benefit is smaller than the headwind penalty at the same speed. A 20 mph tailwind saves approximately 1 club, not 2. This asymmetry is consistent across ball-flight research and is why downwind approaches are often easier than they appear — less distance to cover, but the difference is smaller than intuition suggests.</p>
+    </div>
+
+    <span class="badge badge-lime">Crosswind Rule</span>
+    <div class="card card-lime">
+      <span class="card-tag">Left and Right Wind</span>
+      <h3>Aim Adjustment, Not Yardage Adjustment</h3>
+      <p style="margin-bottom:10px;">Crosswinds affect <strong>direction</strong> more than carry distance. The calculator provides aim compensation in yards (lateral drift at the target) rather than a club change:</p>
+      <ul class="steps">
+        <li><span class="step-n">1</span><div>For a 150-yard shot in 15 mph crosswind: aim approximately 10–15 yards into the wind. The ball drifts back to the centre.</div></li>
+        <li><span class="step-n">2</span><div>Always aim to the upwind side of the green — not directly at the flag. Let the wind bring the ball to centre.</div></li>
+        <li><span class="step-n">3</span><div>Diagonal winds (e.g. into-left) have a combined effect: treat the into component for yardage, the left component for aim.</div></li>
+      </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <span class="badge badge-rust">Important Caveat</span>
+    <div class="card card-rust">
+      <span class="card-tag">Calibrate to Yourself</span>
+      <h3>These Are Starting Points — Not Absolutes</h3>
+      <p>Wind effect varies with swing speed, ball type, and individual shot shape. Use this calculator to create a starting decision, then track your results in your practice journal (Guide 17). After 10 rounds of logged wind shots, you will know whether you are an "over-club" or "under-club" player in wind. Adjust the output of this tool accordingly.</p>
+    </div>
+
+  </div><!-- /tab-method -->
+
+  <!-- ══ TAB: REFERENCE ══ -->
+  <div class="tab-pane" id="tab-reference">
+
+    <span class="badge">Club Distance Ladder</span>
+    <div class="card card-teal">
+      <span class="card-tag">Typical Amateur Carry Distances</span>
+      <h3>Edit These to Match Your Own Gapping</h3>
+      <p style="margin-bottom:12px;font-size:12px;">The calculator uses these as defaults. Cross-reference with your Arccos/Mevo data and your own wedge distances from Guide 22.</p>
+      <table class="ref-tbl" id="clubTable">
+        <thead><tr><th>Club</th><th>Typical Carry (yds)</th><th>Your Carry</th></tr></thead>
+        <tbody>
+          <tr><td>Driver</td><td>240</td><td><input type="number" class="custom-dist" data-club="Driver" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>3-Wood</td><td>220</td><td><input type="number" class="custom-dist" data-club="3-Wood" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>5-Wood / 2H</td><td>205</td><td><input type="number" class="custom-dist" data-club="5-Wood" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>3-Iron / 3H</td><td>190</td><td><input type="number" class="custom-dist" data-club="3H" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>4-Iron / 4H</td><td>178</td><td><input type="number" class="custom-dist" data-club="4H" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>5-Iron</td><td>166</td><td><input type="number" class="custom-dist" data-club="5i" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>6-Iron</td><td>154</td><td><input type="number" class="custom-dist" data-club="6i" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>7-Iron</td><td>142</td><td><input type="number" class="custom-dist" data-club="7i" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>8-Iron</td><td>130</td><td><input type="number" class="custom-dist" data-club="8i" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>9-Iron</td><td>118</td><td><input type="number" class="custom-dist" data-club="9i" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>PW</td><td>106</td><td><input type="number" class="custom-dist" data-club="PW" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>GW / 50°</td><td>93</td><td><input type="number" class="custom-dist" data-club="GW" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>SW / 54°</td><td>80</td><td><input type="number" class="custom-dist" data-club="SW" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+          <tr><td>LW / 58°</td><td>68</td><td><input type="number" class="custom-dist" data-club="LW" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:var(--muted);margin-top:10px;">Your custom values are used in calculations during this session. Cross-reference with Guide 22 — Wedge Distances for your precise yardages.</p>
+    </div>
+
+    <span class="badge badge-gold">Wind Speed Estimation</span>
+    <div class="card card-gold">
+      <span class="card-tag">Beaufort Scale — Golf Reference</span>
+      <h3>Estimating Wind Speed Without a Device</h3>
+      <table class="ref-tbl">
+        <thead><tr><th>Description</th><th>Speed</th><th>On-Course Signs</th></tr></thead>
+        <tbody>
+          <tr><td>Slight breeze</td><td>5 mph</td><td>Leaves rustle; flag barely moves</td></tr>
+          <tr><td>Light wind</td><td>10 mph</td><td>Flag extends; feel on face; leaves move constantly</td></tr>
+          <tr><td>Moderate</td><td>15 mph</td><td>Small branches move; flag streams; feel strong on body</td></tr>
+          <tr><td>Fresh</td><td>20 mph</td><td>Large branches sway; steady resistance on backswing</td></tr>
+          <tr><td>Strong</td><td>25 mph</td><td>Whole trees in motion; balance requires effort</td></tr>
+          <tr><td>Very strong</td><td>30 mph+</td><td>Difficult to walk into; drives carry significantly less</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- /tab-reference -->
+
+  <!-- ══ TAB: LINKS MODE ══ -->
+  <div class="tab-pane" id="tab-links">
+
+    <div class="card card-teal">
+      <span class="card-tag">Links Specific</span>
+      <h3>Why Links Wind Needs Different Thinking</h3>
+      <p style="margin-bottom:12px;">Links wind behaves differently to parkland wind for three reasons: there are no trees to shelter approach shots; firmer ground means run-out varies unpredictably with wind direction; and coastal wind gusts are typically stronger and more variable than inland conditions.</p>
+      <ul class="steps">
+        <li><span class="step-n">1</span><div><strong>Add 20% to the calculator output when on exposed links.</strong> The lack of tree shelter means the effective wind speed at ball height is higher than at ground level — where you felt it at address.</div></li>
+        <li><span class="step-n">2</span><div><strong>Downwind on links: always consider running the ball.</strong> A tailwind + firm fairways means drives travel significantly further. More importantly, downwind approach shots land hotter — use the bump-and-run as the primary shot rather than trying to stop the ball.</div></li>
+        <li><span class="step-n">3</span><div><strong>Into-wind approach: always favour long.</strong> Short is dead on links. Every pot bunker, swale, and collection area is in front of the green. A long approach on links is almost always manageable. Short is penalised structurally by the course design.</div></li>
+      </ul>
+    </div>
+
+    <span class="badge badge-lime">Ground Game Integration</span>
+    <div class="card card-lime">
+      <span class="card-tag">Bump and Run in Wind</span>
+      <h3>When to Abandon the Aerial Game Entirely</h3>
+      <p style="margin-bottom:10px;">In winds of 20 mph or above on links or heathland courses, the bump-and-run removes wind as a variable entirely — particularly for shots from 80 yards and in. The low trajectory means:</p>
+      <ul class="steps">
+        <li><span class="step-n">→</span><div>Headwind has minimal effect on a 7-iron bump from 50 yards — the ball is in the air for less than a second.</div></li>
+        <li><span class="step-n">→</span><div>Crosswind cannot push a ball running along the ground. All lateral aim adjustments become irrelevant.</div></li>
+        <li><span class="step-n">→</span><div>The uncertainty of aerial distance control in strong wind is eliminated — the carry variable disappears.</div></li>
+      </ul>
+      <p style="margin-top:10px;">See Guide 50 — Links Golf Strategy for the complete bump-and-run technique system and club selection framework.</p>
+    </div>
+
+    <span class="badge badge-rust">Links Mental Discipline</span>
+    <div class="card card-rust">
+      <span class="card-tag">Accepting the Wind</span>
+      <h3>The Cognitive Shift That Scores</h3>
+      <p>The largest links wind error is not technical — it is psychological. Players who resist the wind by swinging harder, fighting crosswinds, or attacking pins in conditions that do not allow it typically score 4–6 shots worse than their ability. The player who accepts that 20 mph is a feature of today's course — not an obstacle — adjusts targets, plays for centre-green, and trusts the bump-and-run, scores close to their handicap in conditions that defeat others. Use this calculator to make objective decisions before emotion intervenes.</p>
+    </div>
+
+  </div><!-- /tab-links -->
+
+</div><!-- /page -->
+
+<a href="index.html" class="home-btn">&#8962; Home</a>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+let selDir = null;
+let selMph = null;
+let selFlight = 'mid';
+
+// Default carry distances (yards) — overrideable via Reference tab inputs
+const defaultDists = {
+  'Driver':240,'3-Wood':220,'5-Wood':205,'3H':190,'4H':178,
+  '5i':166,'6i':154,'7i':142,'8i':130,'9i':118,'PW':106,'GW':93,'SW':80,'LW':68
+};
+
+function getCarryDistances() {
+  const d = {...defaultDists};
+  document.querySelectorAll('.custom-dist').forEach(inp => {
+    if(inp.value && !isNaN(inp.value)) {
+      d[inp.dataset.club] = parseInt(inp.value);
+    }
+  });
+  return d;
+}
+
+function closestClub(yards) {
+  const dists = getCarryDistances();
+  const clubs = Object.entries(dists);
+  let best = clubs[0];
+  let bestDiff = Math.abs(clubs[0][1] - yards);
+  for(const [club, dist] of clubs) {
+    const diff = Math.abs(dist - yards);
+    if(diff < bestDiff) { best = [club, dist]; bestDiff = diff; }
+  }
+  return best[0];
+}
+
+function selectDir(btn) {
+  document.querySelectorAll('.dir-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selDir = btn.dataset.dir;
+}
+
+function selectSpeed(chip) {
+  document.querySelectorAll('.speed-chip').forEach(c => c.classList.remove('selected'));
+  chip.classList.add('selected');
+  selMph = parseInt(chip.dataset.mph);
+}
+
+function selectFlight(chip) {
+  document.querySelectorAll('.flight-chip').forEach(c => c.classList.remove('selected'));
+  chip.classList.add('selected');
+  selFlight = chip.dataset.flight;
+}
+
+// ── Adjustment factors per 10 mph, by direction component ────────────────
+// Positive = add yards (need more club); negative = subtract yards (less club)
+function calcAdjustment(dist, dir, mph, flight) {
+  // Base into-wind factor per 10 mph by flight
+  const intoFactor = flight === 'high' ? 0.115 : flight === 'low' ? 0.07 : 0.09;
+  // Tailwind factor per 10 mph (roughly half the headwind benefit)
+  const downFactor = flight === 'high' ? 0.055 : flight === 'low' ? 0.035 : 0.045;
+  // Diagonal components (45° = ~70% of full effect)
+  const diagFactor = 0.70;
+
+  let distAdj = 0;   // yards to add to actual distance (effective required carry)
+  let crossAdj = 0;  // lateral aim in yards (positive = aim into wind)
+
+  switch(dir) {
+    case 'into':
+      distAdj = Math.round(dist * intoFactor * (mph / 10));
+      break;
+    case 'down':
+      distAdj = -Math.round(dist * downFactor * (mph / 10));
+      break;
+    case 'left': // wind L→R, ball drifts right, aim left
+      crossAdj = Math.round((mph / 10) * 6);
+      distAdj = 0;
+      break;
+    case 'right': // wind R→L, aim right
+      crossAdj = -Math.round((mph / 10) * 6);
+      distAdj = 0;
+      break;
+    case 'il': // into + left
+      distAdj = Math.round(dist * intoFactor * diagFactor * (mph / 10));
+      crossAdj = Math.round((mph / 10) * 4);
+      break;
+    case 'ir': // into + right
+      distAdj = Math.round(dist * intoFactor * diagFactor * (mph / 10));
+      crossAdj = -Math.round((mph / 10) * 4);
+      break;
+    case 'dl': // down + left
+      distAdj = -Math.round(dist * downFactor * diagFactor * (mph / 10));
+      crossAdj = Math.round((mph / 10) * 4);
+      break;
+    case 'dr': // down + right
+      distAdj = -Math.round(dist * downFactor * diagFactor * (mph / 10));
+      crossAdj = -Math.round((mph / 10) * 4);
+      break;
+  }
+
+  return { distAdj, crossAdj };
+}
+
+function dirLabel(dir) {
+  const labels = {
+    'into':'Headwind','down':'Tailwind','left':'Left→Right crosswind',
+    'right':'Right→Left crosswind','il':'Into + Left diagonal',
+    'ir':'Into + Right diagonal','dl':'Down + Left diagonal','dr':'Down + Right diagonal'
+  };
+  return labels[dir] || dir;
+}
+
+function calculate() {
+  const dist = parseInt(document.getElementById('dist').value);
+  if(!dist || dist < 30 || dist > 320) {
+    alert('Please enter a valid distance (30–320 yards).');
+    return;
+  }
+  if(!selDir) { alert('Please select a wind direction.'); return; }
+  if(!selMph) { alert('Please select a wind speed.'); return; }
+
+  const { distAdj, crossAdj } = calcAdjustment(dist, selDir, selMph, selFlight);
+  const adjYards = Math.max(30, dist + distAdj);
+  const club = closestClub(adjYards);
+
+  // ── Render result ──────────────────────────────────────────────────────
+  document.getElementById('adjYards').innerHTML = `${adjYards} <span>yds</span>`;
+
+  const delta = document.getElementById('delta');
+  if(distAdj > 0) {
+    delta.textContent = `+${distAdj} yds effective (play longer)`;
+    delta.className = 'result-delta add';
+  } else if(distAdj < 0) {
+    delta.textContent = `${distAdj} yds effective (play shorter)`;
+    delta.className = 'result-delta sub';
+  } else {
+    delta.textContent = 'No carry adjustment — aim compensation only';
+    delta.className = 'result-delta none';
+  }
+
+  document.getElementById('clubRec').textContent = club;
+
+  // Breakdown table
+  const tbody = document.getElementById('breakdownTable');
+  tbody.innerHTML = `
+    <tr><td>Actual distance</td><td class="val">${dist} yds</td></tr>
+    <tr><td>Wind direction</td><td class="val">${dirLabel(selDir)}</td></tr>
+    <tr><td>Wind speed</td><td class="val">${selMph} mph</td></tr>
+    <tr><td>Ball flight</td><td class="val">${selFlight.charAt(0).toUpperCase()+selFlight.slice(1)}</td></tr>
+    <tr><td>Distance adjustment</td><td class="val ${distAdj>0?'val-add':distAdj<0?'val-sub':'val-zero'}">${distAdj>0?'+':''}${distAdj} yds</td></tr>
+    <tr><td>Adjusted carry required</td><td class="val">${adjYards} yds</td></tr>
+    <tr><td>Recommended club</td><td class="val" style="color:var(--lime);font-weight:700;">${club}</td></tr>
+    ${crossAdj !== 0 ? `<tr><td>Lateral aim offset</td><td class="val" style="color:var(--gold);">${crossAdj>0?'Aim '+crossAdj+' yds left':'Aim '+Math.abs(crossAdj)+' yds right'}</td></tr>` : ''}
+  `;
+
+  // Strategy advice
+  const stratTitle = document.getElementById('stratTitle');
+  const stratText = document.getElementById('stratText');
+  if(selDir === 'into' || selDir === 'il' || selDir === 'ir') {
+    stratTitle.textContent = 'Playing Into the Wind';
+    stratText.textContent = selMph >= 20
+      ? `Strong headwind (${selMph} mph). Consider a knockdown shot — choke down slightly, ball back in stance, abbreviated follow-through. This reduces effective wind penalty by 30–40% versus a full swing. Aim centre-green or upwind side. Do not attack short-side pins.`
+      : `Moderate headwind. Take the recommended club and make your normal swing — resist the temptation to swing harder, which increases spin and makes the wind effect worse. Smooth tempo beats a forced swing in headwind every time.`;
+  } else if(selDir === 'down' || selDir === 'dl' || selDir === 'dr') {
+    stratTitle.textContent = 'Playing Downwind';
+    stratText.textContent = `Tailwind reduces required carry. Club down and commit fully — a tentative swing into a tailwind produces the worst possible result (low, spinning shot with no wind assistance). On firm links fairways, account for additional run-out; club further down than normal and let the ball run to the flag.`;
+  } else {
+    stratTitle.textContent = 'Crosswind Play';
+    stratText.textContent = `Aim ${Math.abs(crossAdj)} yards into the wind — to the ${crossAdj > 0 ? 'left' : 'right'} of your target. Do not fight the wind with shot shape; let it work for you. Play centre-green or upwind half; the wind will return the ball toward the flag. In very strong crosswinds (25+ mph), consider a half-shot knockdown to reduce lateral drift.`;
+  }
+
+  // Crosswind advice box
+  const cwBox = document.getElementById('crosswindAdvice');
+  const cwText = document.getElementById('crosswindText');
+  if(crossAdj !== 0) {
+    cwBox.style.display = 'block';
+    const aimDir = crossAdj > 0 ? 'left' : 'right';
+    const aimYds = Math.abs(crossAdj);
+    cwText.textContent = `Aim ${aimYds} yards ${aimDir} of your target. Do not aim at the flag — aim at a point ${aimYds} yards to the ${aimDir} and let the wind drift the ball back. On a 150-yard shot this is approximately a 1–2 ball-width aim correction.`;
+  } else {
+    cwBox.style.display = 'none';
+  }
+
+  document.getElementById('result').classList.add('visible');
+  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function resetCalc() {
+  document.getElementById('dist').value = '';
+  document.querySelectorAll('.dir-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelectorAll('.speed-chip').forEach(c => c.classList.remove('selected'));
+  document.querySelectorAll('.flight-chip').forEach(c => c.classList.remove('selected'));
+  document.querySelector('[data-flight="mid"]').classList.add('selected');
+  selDir = null; selMph = null; selFlight = 'mid';
+  document.getElementById('result').classList.remove('visible');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+
+<!-- LEGAL FOOTER -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:18px 20px;text-align:center;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+  <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+</div>
+</body>
+</html>
