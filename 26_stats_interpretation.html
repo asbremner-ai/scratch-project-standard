@@ -253,7 +253,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <button class="tab" onclick="show('practiceplan',this)">Practice Plan</button>
   <button class="tab" onclick="show('samplesize',this)">Sample Size</button>
   <button class="tab" onclick="show('synthesis',this)">Weekly Synthesis</button>
-  <button class="tab" data-tier="elite" onclick="show('elite_trends',this)" style="color:#c8d8e8;border-bottom-color:transparent;">⭐ Multi-Season Analysis</button>
+  
 </div>
 
 <!-- OVERVIEW -->
@@ -622,47 +622,6 @@ function show(id,btn){
   </div>
 </div>
 
-<div class="sec" id="elite_trends" data-tier="elite">
-  <h2 class="sec-title">Multi-Season Trend Analysis</h2>
-  <p class="sec-desc">For players with 8+ quarters of SG data, multi-season analysis is the most valuable analytical work available. Most serious amateurs have the data and never use it at this level. The compound record of quarterly SG deltas is your career's most important performance document.</p>
-  <span class="badge badge-gold">📈 The Three Multi-Season Questions</span>
-  <div class="card card-gold">
-    <span class="card-tag">What 8+ Quarters of Data Reveals</span>
-    <h3>Long-Term Pattern Recognition</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Which category plateaued first?</strong> Most players see ARG and Putting plateau before APP. A category flat for 3+ consecutive quarters despite targeted work needs a coaching intervention, not more of the same practice.</div></li>
-      <li><span class="step-n">2</span><div><strong>Which training blocks produced the largest SG gains?</strong> Cross-reference your Progress Journal (Guide 17) with quarterly SG deltas. The activities that moved the needle most are your highest-return activities — repeat them.</div></li>
-      <li><span class="step-n">3</span><div><strong>Are your seasonal cycles working against you?</strong> Many players show consistent SG variance by season. Knowing your pattern allows you to plan training that counters natural drift.</div></li>
-    </ul>
-  </div>
-  <span class="badge badge-teal">📊 Quarterly SG Tracking Template</span>
-  <div class="card card-teal">
-    <span class="card-tag">Copy to Your Progress Journal</span>
-    <h3>8-Quarter Rolling SG Log</h3>
-    <table class="tbl">
-      <tr><th>Quarter</th><th>SG: OTT</th><th>SG: APP</th><th>SG: ARG</th><th>SG: Putt</th><th>Total</th><th>Primary Training Focus</th></tr>
-      <tr><td>Q1</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>Baseline</td></tr>
-      <tr><td>Q2</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Q3</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Q4</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Q5</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Q6</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Q7</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-      <tr><td>Q8</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    </table>
-    <p>The "Primary Training Focus" column links what you practised to what the SG data shows. With it, you have a personal evidence base for what actually works.</p>
-  </div>
-  <span class="badge badge-lime">🎓 Bringing Data to Your Coach</span>
-  <div class="card">
-    <span class="card-tag">The Pre-Lesson SG Brief Format</span>
-    <h3>Four Steps That Double Lesson Productivity</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Lead with the SG category:</strong> "My SG: APP from 125–175 yards is −0.4 vs. scratch baseline. I need −0.1 to reach +1." The coach identifies the technical cause — that is their job.</div></li>
-      <li><span class="step-n">2</span><div><strong>Show the proximity scatter:</strong> Share your Arccos proximity report for the specific distance band so the coach can see exactly where the ball lands relative to your aim point.</div></li>
-      <li><span class="step-n">3</span><div><strong>Ask the diagnostic question:</strong> "Is this a ball-striking problem, a distance control problem, or a target selection problem?" These have completely different technical interventions.</div></li>
-      <li><span class="step-n">4</span><div><strong>Close the loop:</strong> After the lesson, note in your quarterly log what the coach identified and the expected SG impact. Review at the next quarterly audit.</div></li>
-    </ul>
-  </div>
-</div>
+
 </body>
 </html>

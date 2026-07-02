@@ -258,7 +258,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <button class="tab" onclick="show('drills',this)">Drills</button>
   <button class="tab" onclick="show('plans',this)">Plans</button>
   <button class="tab" onclick="show('preround',this)">Pre-Round</button>
-  <button class="tab" data-tier="elite" onclick="show('elite_shotshape',this)" style="color:#c8d8e8;border-bottom-color:transparent;">⭐ Shape Programming</button>
+  
 </div>
 
 <!-- SG -->
@@ -910,43 +910,6 @@ function show(id,btn){
   </div>
 </div>
 
-<div class="sec" id="elite_shotshape" data-tier="elite">
-  <h2 class="sec-title">Advanced Shot-Shape Programming</h2>
-  <p class="sec-desc">At county and national level, a reliable 5-yard draw and 5-yard fade on demand is the minimum shot-shape library. This covers deliberate shape acquisition, the wind-shape interaction matrix, and how to verify a shape is body-driven using Sportsbox AI data.</p>
-  <span class="badge badge-gold">📐 The Minimum Elite Shape Library</span>
-  <div class="card card-gold">
-    <span class="card-tag">What Must Be Owned — Not Just Attempted</span>
-    <h3>Three Shots, All Clubs</h3>
-    <table class="tbl">
-      <tr><th>Shape</th><th>D-Plane Requirement</th><th>Primary Use Case</th></tr>
-      <tr><td>Controlled 5-yard draw</td><td>Face 2° closed to path; path 2–3° right of target</td><td>OOB right; into right-to-left wind; right-side pins from left rough</td></tr>
-      <tr><td>Controlled 5-yard fade</td><td>Face 1–2° open to path; path 1–2° left of target</td><td>Dogleg right; holding into left-to-right wind; tight left pins with water right</td></tr>
-      <tr><td>Low punch (all clubs)</td><td>Ball back, shaft forward, ¾ swing, abbreviated finish</td><td>Into any wind above 15 mph; tight lies on links and heathland</td></tr>
-    </table>
-  </div>
-  <span class="badge badge-teal">🔨 Shape Acquisition Protocol</span>
-  <div class="card card-teal">
-    <span class="card-tag">How to Add a Shape to Your Library</span>
-    <h3>Four-Stage Process</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Verify the D-Plane numbers:</strong> Use Mevo to confirm the required face-to-path relationship. A consistent 5-yard draw needs approximately 2° closed face to path.</div></li>
-      <li><span class="step-n">2</span><div><strong>Blocked acquisition (50 consecutive shots):</strong> Hit 50 shots of the target shape in a single session. Blocked practice is correct here — building the motor pattern. Do not mix with other shapes.</div></li>
-      <li><span class="step-n">3</span><div><strong>Random consolidation:</strong> After 3–4 blocked sessions, call the shape before each swing and execute randomly. The shape enters your library when you can produce it with 75%+ reliability on call.</div></li>
-      <li><span class="step-n">4</span><div><strong>Pressure test on the course:</strong> The shape is not library-ready until it holds in competition. Continue Guide 16 pressure simulation practice until consistent in both environments.</div></li>
-    </ul>
-  </div>
-  <span class="badge badge-lime">🌬️ Wind-Shape Interaction Matrix</span>
-  <div class="card">
-    <span class="card-tag">When Combining Wind with Shape Produces the Best Result</span>
-    <h3>The Decision Table</h3>
-    <table class="tbl">
-      <tr><th>Wind Direction</th><th>Preferred Shape</th><th>Reasoning</th></tr>
-      <tr><td>Left-to-right (10+ mph)</td><td class="good">Draw into the wind</td><td>Ball rides wind back to target; more controlled than a straight ball pushed by wind</td></tr>
-      <tr><td>Right-to-left (10+ mph)</td><td class="good">Fade into the wind</td><td>Shape working against wind gives most predictable result</td></tr>
-      <tr><td>Into wind (15+ mph)</td><td class="good">Low punch, 2 extra clubs</td><td>Lower trajectory, less wind exposure, more predictable distance</td></tr>
-      <tr><td>Downwind</td><td class="warn">Normal trajectory</td><td>High shapes balloon unpredictably downwind</td></tr>
-    </table>
-  </div>
-</div>
+
 </body>
 </html>

@@ -208,7 +208,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <button class="tab" onclick="show('ball',this)">Ball Fitting</button>
   <button class="tab" onclick="show('shaft',this)">Shaft Fitting</button>
   <button class="tab" onclick="show('cadence',this)">Review Cadence</button>
-  <button class="tab" data-tier="elite" onclick="show('elite_equip',this)" style="color:#c8d8e8;border-bottom-color:transparent;">⭐ Elite Optimisation</button>
+  
 </div>
 
 <!-- WHY FITTING -->
@@ -704,77 +704,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 </div>
 
 <!-- ELITE EQUIPMENT OPTIMISATION -->
-<div class="sec" id="elite_equip" data-tier="elite">
-  <h2 class="sec-title">Elite Equipment Optimisation</h2>
-  <p class="sec-desc">At plus-handicap level, equipment optimisation shifts from correcting fundamentals to marginal gains under pressure. The elite fitting protocol addresses dispersion under fatigue, loft management across conditions, and ball selection verified by data rather than marketing.</p>
 
-  <span class="badge badge-gold">🔬 Marginal Gain Targets at Plus Level</span>
-  <div class="card card-gold">
-    <span class="card-tag">What Changes After Scratch</span>
-    <h3>Three Optimisation Priorities for Sub-Scratch Players</h3>
-    <table class="tbl">
-      <tr><th>Priority</th><th>What It Addresses</th><th>Tool for Verification</th></tr>
-      <tr><td>Dispersion under fatigue</td><td>Shafts that hold dispersion on holes 14–18 when tempo drifts</td><td>Mevo session: 20 shots pre-fatigue vs. 20 shots post-fatigue, same club</td></tr>
-      <tr><td>Loft optimisation by condition</td><td>Dynamic loft settings for cold/wet vs. warm/firm conditions</td><td>Adjustable hosel: note carry difference across a 10°C temperature change</td></tr>
-      <tr><td>Ball validation by data</td><td>New ball releases tested against your Mevo + Golfmetrics baseline before competition adoption</td><td>Mevo: smash factor, spin rate, and carry consistency across 15 shots per ball</td></tr>
-    </table>
-  </div>
-
-  <span class="badge badge-teal">📐 The Fatigue-Dispersion Protocol</span>
-  <div class="card card-teal">
-    <span class="card-tag">Identifying Your Late-Round Equipment Gap</span>
-    <h3>Why Shafts That Feel Fine at Noon Fail at Hole 16</h3>
-    <p>Tempo and transition speed shift as physical fatigue accumulates. Shafts fitted in a 30-minute static session may perform well early and lose accuracy late. Elite players confirm shaft performance matches their fatigued tempo, not just their warm tempo.</p>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Baseline session (fresh):</strong> 20 driver shots from a cold start. Record average smash factor, carry, and left-right dispersion (9-shot median spread). This is your fresh-tempo baseline.</div></li>
-      <li><span class="step-n">2</span><div><strong>Fatigue replication:</strong> Complete 90 minutes of golf or gym work. Then immediately hit another 20 driver shots with the same shaft, same club, same target.</div></li>
-      <li><span class="step-n">3</span><div><strong>Compare dispersion spread:</strong> If lateral dispersion increases by more than 6 yards, the shaft is not matching your fatigued tempo. A shaft that is slightly softer-tipped typically handles tempo drift better than a stiffer profile.</div></li>
-    </ul>
-  </div>
-
-  <span class="badge badge-elite">⭐ Dynamic Loft Management</span>
-  <div class="card card-elite">
-    <span class="card-tag">The Tour Caddie Approach — Multiple Settings Per Club</span>
-    <h3>Loft Adjustment by Condition</h3>
-    <table class="tbl">
-      <tr><th>Condition</th><th>Driver Loft Adjustment</th><th>Effect</th></tr>
-      <tr><td>Cold (below 10°C), wet</td><td class="warn">+0.5° to +1°</td><td>Recovers carry lost to cold air density and slower ball compression</td></tr>
-      <tr><td>Warm, firm, downwind</td><td>Baseline</td><td>Optimal conditions — no adjustment needed</td></tr>
-      <tr><td>Very firm (summer links), helping wind</td><td class="good">−0.5°</td><td>Lower flight for more ground running; prevents ballooning in warm thin air</td></tr>
-      <tr><td>Into headwind (15+ mph)</td><td>Baseline or −0.5°</td><td>Lower spin reduces wind exposure; pair with 3-quarter swing for best control</td></tr>
-    </table>
-    <p style="margin-top:10px;font-size:12px;">Record your loft setting in your caddie card / yardage book for each event. At Brabazon or county level, knowing your carry is 4 yards shorter in cold morning conditions removes a guessing variable at the worst possible moment.</p>
-  </div>
-
-  <span class="badge badge-lime">🎾 Ball Selection Protocol — Data-Driven</span>
-  <div class="card">
-    <span class="card-tag">How to Evaluate a New Ball Before Committing to It in Competition</span>
-    <h3>The 3-Session Validation Protocol</h3>
-    <ul class="steps">
-      <li><span class="step-n">1</span><div><strong>Session 1 — Mevo driver and 7-iron (15 shots each):</strong> Record smash factor, spin rate, carry, and ball speed against your existing ball baseline. The new ball passes if smash factor is within 0.02 and carry is within 2 yards. Anything outside that window is a meaningful change — decide if it is in your favour.</div></li>
-      <li><span class="step-n">2</span><div><strong>Session 2 — Wedge spin test (10 shots each at 60y, 80y, 100y):</strong> Record landing zone dispersion and spin (Mevo). High-compression balls often sacrifice 200–500 RPM wedge spin vs. medium-compression. If your current scoring distance is 60–100y, this trade-off may not be worth any distance gain at driver.</div></li>
-      <li><span class="step-n">3</span><div><strong>Session 3 — On-course round with Arccos tracking:</strong> Play one competitive-pace round with the new ball. Check Arccos SG: ARG output vs. your 6-month baseline. A short game SG regression of more than −0.3 over a single round is a signal to retest before committing.</div></li>
-    </ul>
-  </div>
-
-  <span class="badge badge-gold">🔩 Wedge Grind Selection for Multi-Course Seasons</span>
-  <div class="card card-gold">
-    <span class="card-tag">Elite Players Who Compete Across Multiple Course Types</span>
-    <h3>Matching Bounce and Grind to Your Competition Calendar</h3>
-    <table class="tbl">
-      <tr><th>Course Type</th><th>Preferred Bounce</th><th>Preferred Grind</th><th>Reason</th></tr>
-      <tr><td>Parkland (soft, divot-taking)</td><td class="good">High bounce (12–14°)</td><td>S or K grind</td><td>Prevents digging; maintains consistent leading edge contact in soft turf</td></tr>
-      <tr><td>Links / heathland (firm, shallow)</td><td class="warn">Low bounce (6–10°)</td><td>C or L grind</td><td>Allows thin, sweeping contact through tight lies; high bounce digs out of tight turf</td></tr>
-      <tr><td>Mixed season (parkland + links)</td><td>Mid bounce (10°)</td><td>F grind</td><td>Versatile across conditions; accept being slightly suboptimal in each rather than very wrong in one</td></tr>
-    </table>
-    <p style="margin-top:10px;font-size:12px;">If your season contains both the county championship (parkland, soft) and a links-based open event, two wedge sets or a single mid-bounce versatile setup is the pragmatic choice. Ask your club fitter to test both setups on a sim with an identical lie board to confirm the leading-edge contact difference.</p>
-  </div>
-
-  <div class="info-box" style="background:rgba(200,216,232,0.07);border:1px solid rgba(200,216,232,0.22);margin-top:4px;">
-    <span class="ico">⭐</span>
-    <p><strong>Sportsbox AI integration:</strong> If you have Sportsbox AI data, your shaft fitting should reference your kinematic sequence metrics — specifically peak pelvis velocity and lead arm rotation rate. Players with early pelvis deceleration (a Sportsbox-detectable pattern) often benefit from a lower kick-point shaft. See Guide 46 (Sportsbox AI Integration) for the measurement protocol.</p>
-  </div>
-</div>
 
 
 <div class="footer">
