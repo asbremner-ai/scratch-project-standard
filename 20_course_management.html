@@ -207,7 +207,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   plausible.init()
 </script>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 </head>
 <body>
@@ -255,6 +255,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <button class="tab" onclick="show('holetypes',this)">Hole Types</button>
   <button class="tab" onclick="show('missdir',this)">Approach Miss</button>
   <button class="tab" onclick="show('mgmtdrills',this)">Drills</button>
+  
 </div>
 
 <!-- OVERVIEW -->
@@ -388,6 +389,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <li><span class="step-n">3</span><div><strong>Account for the lie:</strong> A layup that leaves the ball in a divot, rough, or sidehill lie is inferior to a shorter layup on a clean, flat fairway. Always sacrifice 10–15 yards for a perfect lie over an awkward lie at the optimal distance.</div></li>
     </ul>
   </div>
+  
 </div>
 
 <!-- SCORING ZONES -->
@@ -583,6 +585,9 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   </div>
 </div>
 
+<!-- EV WORKED SCENARIOS (Pro) -->
+
+
 <div class="footer">COURSE MANAGEMENT PLAYBOOK · PRO EDITION · SG DECISION FRAMEWORK · ANY HCP → YOUR GOAL · © 2026 The Scratch Project</div>
 <div class="sec" id="mgmtdrills">
   <h2 class="sec-title">On-Course Management Drills</h2>
@@ -632,6 +637,8 @@ function show(id,btn){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
+
+
 
 <!-- RELATED GUIDES PANEL -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">

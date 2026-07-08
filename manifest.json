@@ -1,7 +1,7 @@
 {
   "name": "The Scratch Project",
   "short_name": "Scratch",
-  "description": "The Scratch Project \u2014 37 guides + 6 tools. Strokes gained analytics, SG diagnostic, and structured 24-month improvement programme. Any handicap to your goal. WHS compatible worldwide.",
+  "description": "The Scratch Project \u2014 46 guides + 6 tools. Strokes gained analytics, SG diagnostic, and structured 24-month improvement programme. Any handicap to your goal. WHS compatible worldwide.",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#060c06",
@@ -10,13 +10,13 @@
   "scope": "/",
   "icons": [
     {
-      "src": "icons/icon-192.png",
+      "src": "icon192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "icon512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
@@ -35,7 +35,7 @@
       "url": "/sg_diagnostic.html",
       "icons": [
         {
-          "src": "icons/icon-192.png",
+          "src": "icon192.png",
           "sizes": "192x192"
         }
       ]
@@ -47,7 +47,7 @@
       "url": "/08_pro_round_prep.html",
       "icons": [
         {
-          "src": "icons/icon-192.png",
+          "src": "icon192.png",
           "sizes": "192x192"
         }
       ]
@@ -59,7 +59,7 @@
       "url": "/wind_calculator.html",
       "icons": [
         {
-          "src": "icons/icon-192.png",
+          "src": "icon192.png",
           "sizes": "192x192"
         }
       ]

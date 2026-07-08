@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-24 · 61_short_game_lies.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Short Game by Lie Type — The Scratch Project</title>
+<meta name="description" content="Shot-by-shot short game system for every lie type: tight lies, downslopes, rough, semi-plugged, and bump-and-run. Technique, club selection, and SG-tracked practice for UK conditions.">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:300;font-display:swap;src:url('fonts/inter-latin-300-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/inter-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:900;font-display:swap;src:url('fonts/playfair-display-latin-900-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2')}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#162416;
+  --border:rgba(160,200,80,.14);--border-hi:rgba(160,200,80,.32);
+  --lime:#a0c850;--lime-dim:rgba(160,200,80,.08);
+  --gold:#e0b840;--gold-dim:rgba(224,184,64,.08);--gold-border:rgba(224,184,64,.22);
+  --teal:#48b0a8;--teal-dim:rgba(72,176,168,.08);--teal-border:rgba(72,176,168,.22);
+  --rust:#d86030;--rust-dim:rgba(216,96,48,.08);--rust-border:rgba(216,96,48,.22);
+  --violet:#9878e0;--violet-dim:rgba(152,120,224,.08);--violet-border:rgba(152,120,224,.22);
+  --white:#e8f0d8;--muted:rgba(232,240,216,.6);--faint:rgba(232,240,216,.08);
+  --good:#5ecb3e;--warn:#e0b840;--bad:#d86030;
+  --r:10px;--r-sm:6px;
+}
+html{background:var(--bg) !important;}
+body{background:var(--bg) !important;color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
+
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.topbar a:hover{color:var(--lime);}
+.topbar span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+
+.hero{background:linear-gradient(160deg,#0d1e0e 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.9rem,6vw,2.9rem);font-weight:700;line-height:1.05;margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:540px;margin-bottom:16px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:4px 10px;border-radius:20px;}
+
+.nav{display:flex;gap:0;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);-webkit-overflow-scrolling:touch;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 14px;cursor:pointer;white-space:nowrap;transition:all .15s;margin-bottom:-1px;-webkit-tap-highlight-color:transparent;}
+.tab.active{color:var(--teal);border-bottom-color:var(--teal);}
+
+.page{max-width:680px;margin:0 auto;padding:20px 16px 80px;}
+.sec{display:none;}.sec.active{display:block;}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:6px;line-height:1.2;}
+.sec-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:18px;padding-left:10px;border-left:2px solid var(--teal);}
+
+.badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:10px;}
+.badge-gold{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);}
+.badge-lime{background:var(--lime-dim);border-color:var(--border-hi);color:var(--lime);}
+.badge-rust{background:var(--rust-dim);border-color:var(--rust-border);color:var(--rust);}
+.badge-violet{background:var(--violet-dim);border-color:var(--violet-border);color:var(--violet);}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.25),transparent);}
+.card-teal{border-color:var(--teal-border);}.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.35),transparent);}
+.card-gold{border-color:var(--gold-border);}.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.3),transparent);}
+.card-rust{border-color:var(--rust-border);}.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.3),transparent);}
+.card-lime{border-color:var(--border-hi);}.card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-violet{border-color:var(--violet-border);}.card-violet::before{background:linear-gradient(90deg,transparent,rgba(152,120,224,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-lime .card-tag{color:var(--lime);}
+.card-rust .card-tag{color:var(--rust);}
+.card-violet .card-tag{color:var(--violet);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.75;}
+
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);font-weight:600;}.warn{color:var(--warn);font-weight:600;}.bad{color:var(--bad);font-weight:600;}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-n.gold{color:var(--gold);background:var(--gold-dim);border-color:var(--gold-border);}
+.step-n.rust{color:var(--rust);background:var(--rust-dim);border-color:var(--rust-border);}
+.step-n.lime{color:var(--lime);background:var(--lime-dim);border-color:var(--border-hi);}
+
+.info-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;}
+.info-box .ico{font-size:16px;flex-shrink:0;margin-top:1px;}
+.info-box p{font-size:12px;color:var(--muted);line-height:1.7;}
+.info-box p strong{color:var(--white);}
+.info-box.gold-box{border-color:var(--gold-border);}
+.info-box.rust-box{border-color:var(--rust-border);}
+.info-box.lime-box{border-color:var(--border-hi);}
+
+.lie-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:18px;}
+.lie-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 12px 10px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.lie-card:active{transform:scale(.98);}
+.lie-card .lie-icon{font-size:22px;margin-bottom:6px;}
+.lie-card .lie-name{font-family:'Playfair Display',serif;font-size:.95rem;font-weight:700;color:var(--white);margin-bottom:3px;}
+.lie-card .lie-diff{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;}
+.lie-card.tight{border-color:var(--gold-border);}.lie-card.tight .lie-diff{color:var(--gold);}
+.lie-card.rough{border-color:var(--rust-border);}.lie-card.rough .lie-diff{color:var(--rust);}
+.lie-card.down{border-color:var(--violet-border);}.lie-card.down .lie-diff{color:var(--violet);}
+.lie-card.up{border-color:var(--teal-border);}.lie-card.up .lie-diff{color:var(--teal);}
+.lie-card.bump{border-color:var(--border-hi);}.lie-card.bump .lie-diff{color:var(--lime);}
+.lie-card.plug{border-color:var(--rust-border);}.lie-card.plug .lie-diff{color:var(--rust);}
+
+.pull-quote{border-left:3px solid var(--teal);padding:12px 16px;margin:16px 0;background:var(--teal-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--white);line-height:1.6;}
+.pull-quote cite{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:8px;}
+
+.drill-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 14px;margin:12px 0;}
+.drill-box .drill-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:8px;display:block;}
+.drill-box h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:8px;}
+.drill-box p{font-size:12px;color:var(--muted);line-height:1.7;}
+
+.key-stat{background:linear-gradient(135deg,var(--teal-dim),rgba(72,176,168,.03));border:1.5px solid var(--teal-border);border-radius:var(--r-sm);padding:14px 14px;text-align:center;margin-bottom:10px;}
+.key-stat .stat-val{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--teal);line-height:1;}
+.key-stat .stat-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-top:4px;}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+
+.footer{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);text-align:center;padding:24px 20px;border-top:1px solid var(--border);margin-top:40px;}
+
+a.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--lime);color:var(--bg);font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+
+/* ── Five Pillars Logo (tsp) ── */
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;position:relative;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html">&#8962; All Playbooks</a>
+  <span>The Scratch Project</span>
+</div>
+
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <p class="hero-label">Short Game Playbook · Guide 61</p>
+  <h1>Short Game by<br><em>Lie Type</em></h1>
+  <p class="hero-sub">The specific technique, club selection, and landing zone strategy for every short game lie you will encounter — tight lies, rough, downslopes, upslopes, bump-and-run, and semi-plugged. Built for UK heathland and parkland conditions.</p>
+  <div class="hero-tags">
+    <span class="htag">🏌️ Tight Lies</span>
+    <span class="htag">🌿 Rough Lies</span>
+    <span class="htag">⛰️ Slopes</span>
+    <span class="htag">🏃 Bump &amp; Run</span>
+    <span class="htag">🏖️ Plugged</span>
+    <span class="htag">📊 SG Tracked</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('overview',this)">Overview</button>
+  <button class="tab" onclick="show('tight',this)">Tight Lie</button>
+  <button class="tab" onclick="show('rough',this)">Rough</button>
+  <button class="tab" onclick="show('downslope',this)">Downslope</button>
+  <button class="tab" onclick="show('upslope',this)">Upslope</button>
+  <button class="tab" onclick="show('bump',this)">Bump &amp; Run</button>
+  <button class="tab" onclick="show('plugged',this)">Plugged / Mud</button>
+  <button class="tab" onclick="show('practice',this)">Practice System</button>
+</div>
+
+<div class="page">
+
+<!-- ══ OVERVIEW ══ -->
+<div class="sec active" id="overview">
+  <h2 class="sec-title">Short Game by Lie — Why It Matters</h2>
+  <p class="sec-desc">The short game system in Guide 02 covers the fundamentals. This guide goes further: it gives you a specific, reliable technique for every lie type you encounter, so that your decision on the shot is made before you address the ball — not during the swing.</p>
+
+  <div class="pull-quote">
+    <p>"The difference between a 10-handicapper and a scratch player from 30 yards is not technique on a perfect lie — it is what each player does from a tight lie, a downslope, and bare mud. The scratch player has a pre-programmed response. The 10-handicapper improvises."</p>
+    <cite>Short game principle — The Scratch Project</cite>
+  </div>
+
+  <span class="badge">SG Context</span>
+  <div class="card card-teal">
+    <span class="card-tag">Where You Lose Strokes</span>
+    <h3>SG: ARG Benchmarks by Lie Difficulty</h3>
+    <table class="tbl">
+      <tr><th>Lie Type</th><th>Scratch Save %</th><th>8-HCP Save %</th><th>SG Opportunity</th></tr>
+      <tr><td>Standard fairway chip (15–25 ft)</td><td class="good">72%</td><td class="warn">54%</td><td class="good">+0.25 / shot</td></tr>
+      <tr><td>Tight lie chip (apron/hardpan)</td><td class="warn">60%</td><td class="bad">38%</td><td class="good">+0.30 / shot</td></tr>
+      <tr><td>Light rough chip (15–25 ft)</td><td class="warn">58%</td><td class="bad">40%</td><td class="good">+0.25 / shot</td></tr>
+      <tr><td>Heavy rough chip (&lt;15 ft)</td><td class="warn">48%</td><td class="bad">30%</td><td class="good">+0.22 / shot</td></tr>
+      <tr><td>Downslope chip (15–30 ft)</td><td class="bad">42%</td><td class="bad">24%</td><td class="good">+0.23 / shot</td></tr>
+      <tr><td>Upslope chip (15–30 ft)</td><td class="warn">52%</td><td class="warn">36%</td><td class="good">+0.20 / shot</td></tr>
+      <tr><td>Bump-and-run (fringe/fairway)</td><td class="good">68%</td><td class="warn">46%</td><td class="good">+0.28 / shot</td></tr>
+      <tr><td>Semi-plugged / mud lie</td><td class="bad">38%</td><td class="bad">20%</td><td class="good">+0.22 / shot</td></tr>
+    </table>
+    <p style="margin-top:8px;font-size:12px;">The highest SG opportunity is not from the standard chip — it is from tight lies and bump-and-run situations, where the performance gap between handicaps is largest.</p>
+  </div>
+
+  <span class="badge badge-gold">How to Use This Guide</span>
+  <div class="card card-gold">
+    <span class="card-tag">Navigation Guide</span>
+    <h3>One Lie, One Tab</h3>
+    <p style="margin-bottom:10px;">Each tab contains: the diagnostic (how to identify the lie category), the full technique for that lie, club selection framework, landing zone targeting, the most common error and how to fix it, and a specific practice drill you can do in a 20-minute session.</p>
+    <ul class="steps">
+      <li><span class="step-n gold">1</span><div><strong>Identify the lie before choosing a shot:</strong> Walk to the ball. Assess the lie using the diagnostic in the relevant tab. Make your shot selection before you think about execution — decision first, technique second.</div></li>
+      <li><span class="step-n gold">2</span><div><strong>Use the SG-tracked practice system (Tab 8):</strong> After working through a lie-type tab, practise it using the structured drills in the Practice System tab. Log your save percentage. You need at least 20 shots per lie type before you have meaningful data.</div></li>
+      <li><span class="step-n gold">3</span><div><strong>Cross-reference with Guide 02:</strong> This guide is an extension of the Short Game Playbook, not a replacement. Return to Guide 02 for the fundamental chipping and pitching technique before layering on lie-specific adjustments from this guide.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-rust">The Most Expensive Lie Type</span>
+  <div class="card card-rust">
+    <span class="card-tag">Tight Lies — The Hidden Handicap</span>
+    <h3>Why Mid-Handicappers Fear the Tight Lie</h3>
+    <p>SG data consistently shows that mid-handicap players (5–12) save significantly fewer shots from tight lies than from rough. This seems counterintuitive — a tight lie should be easier than rough. The reason: tight lies require a shallower attack angle and precise low-point control. Players trained on lush parkland turf develop a steep, digging action that works from rough but skulls or chunks from a tight lie. The cure is deliberate practice from tight lies — which most golfers never do because tight lies are uncomfortable and rough feels safer. The tight lies tab addresses this directly.</p>
+  </div>
+
+  <div class="lie-grid">
+    <div class="lie-card tight" onclick="show('tight',document.querySelectorAll('.tab')[1])">
+      <div class="lie-icon">⬜</div>
+      <div class="lie-name">Tight Lie</div>
+      <div class="lie-diff">High difficulty · High value</div>
+    </div>
+    <div class="lie-card rough" onclick="show('rough',document.querySelectorAll('.tab')[2])">
+      <div class="lie-icon">🌿</div>
+      <div class="lie-name">Rough Lie</div>
+      <div class="lie-diff">Variable · Requires reading</div>
+    </div>
+    <div class="lie-card down" onclick="show('downslope',document.querySelectorAll('.tab')[3])">
+      <div class="lie-icon">⛰️</div>
+      <div class="lie-name">Downslope</div>
+      <div class="lie-diff">High difficulty · Common error</div>
+    </div>
+    <div class="lie-card up" onclick="show('upslope',document.querySelectorAll('.tab')[4])">
+      <div class="lie-icon">🏔️</div>
+      <div class="lie-name">Upslope</div>
+      <div class="lie-diff">Easier · Easy to overcompensate</div>
+    </div>
+    <div class="lie-card bump" onclick="show('bump',document.querySelectorAll('.tab')[5])">
+      <div class="lie-icon">🏃</div>
+      <div class="lie-name">Bump &amp; Run</div>
+      <div class="lie-diff">Underused · High percentage</div>
+    </div>
+    <div class="lie-card plug" onclick="show('plugged',document.querySelectorAll('.tab')[6])">
+      <div class="lie-icon">🪨</div>
+      <div class="lie-name">Plugged / Mud</div>
+      <div class="lie-diff">Survival shot · Defined technique</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TIGHT LIE ══ -->
+<div class="sec" id="tight">
+  <h2 class="sec-title">Tight Lie — Hardpan, Apron, Bare Ground</h2>
+  <p class="sec-desc">A tight lie has no grass cushion between ball and clubface. The common error is too steep an attack angle — the leading edge catches the ground before the ball. The fix is a shallower approach and precise low-point control.</p>
+
+  <span class="badge">Diagnostic</span>
+  <div class="card card-gold">
+    <span class="card-tag">Is This a Tight Lie?</span>
+    <h3>How to Identify It</h3>
+    <ul class="steps">
+      <li><span class="step-n gold">?</span><div>The ball sits directly on bare soil, compacted mud, sandy hardpan, or very short tight grass (apron / collar of green, summer-baked fairway).</div></li>
+      <li><span class="step-n gold">?</span><div>No grass fibres visible between ball and ground. The ball has no cushion — it is sitting on a hard surface.</div></li>
+      <li><span class="step-n gold">?</span><div>If you place your finger horizontally next to the ball, the ball equator is at or below ground level.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-teal">Core Technique</span>
+  <div class="card card-teal">
+    <span class="card-tag">The Tight Lie Method</span>
+    <h3>Shallow Arc, Forward Lean, Leading Edge Priority</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Club selection:</strong> Use less loft than you think. From 15–25 yards on a tight lie, a 9-iron or PW is frequently better than a lob wedge. Less loft = shallower attack angle = less risk of the leading edge digging. Use a lob wedge only if you need to stop the ball quickly with a short carry.</div></li>
+      <li><span class="step-n">2</span><div><strong>Setup:</strong> Ball position middle of stance (not back, not forward). Weight slightly forward — 55%. Hands neutral to very slightly ahead. Do not press the shaft forward excessively — this adds loft back in while increasing the risk of blading.</div></li>
+      <li><span class="step-n">3</span><div><strong>The key thought: brush the surface.</strong> On a tight lie your low point needs to be precisely at the ball — not behind it (chunk) and not above it (skull/thin). Think of brushing the surface rather than hitting down into it. The swing arc must be shallow enough that the club skims the hard surface.</div></li>
+      <li><span class="step-n">4</span><div><strong>Eyes on the front edge of the ball:</strong> Focus your eyes on the front edge (target-side) of the ball rather than the back. This small cognitive shift moves your low point slightly forward and reduces the instinct to hit behind the ball.</div></li>
+      <li><span class="step-n">5</span><div><strong>Abbreviated backswing, full follow-through:</strong> A short, controlled backswing followed by a complete follow-through maintains the arc and prevents deceleration — which on tight lies causes the club to bounce into the ball.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-gold">Club Selection Matrix</span>
+  <div class="card card-gold">
+    <span class="card-tag">Tight Lie — Club Guide</span>
+    <h3>Which Club for Which Situation</h3>
+    <table class="tbl">
+      <tr><th>Distance</th><th>Obstacle-Free Path</th><th>Must Carry Hazard</th></tr>
+      <tr><td>5–12 yds</td><td>8i or 9i bump-and-run</td><td>PW — open face slightly</td></tr>
+      <tr><td>12–20 yds</td><td>PW or GW standard chip</td><td>54° with shortened swing</td></tr>
+      <tr><td>20–30 yds</td><td>54° with forward lean</td><td>58° — maximum care</td></tr>
+      <tr><td>30–50 yds</td><td>54° or 58° pitch</td><td>58° bump into green</td></tr>
+    </table>
+    <p style="font-size:12px;margin-top:8px;">On links and heathland courses, the 8i or 9i bump is the primary shot for distances up to 20 yards from a tight lie — higher loft increases the risk of the leading edge catching.</p>
+  </div>
+
+  <span class="badge badge-rust">The Most Common Error</span>
+  <div class="card card-rust">
+    <span class="card-tag">Tight Lie Error Pattern</span>
+    <h3>Too Much Loft + Too Steep = Skull or Chunk</h3>
+    <p style="margin-bottom:10px;">The natural instinct on a tight lie is to try to "help" the ball into the air by adding loft and scooping. This produces the opposite — a steep, digging swing arc that either buries the leading edge (chunk) or skips the leading edge across the ball (skull). The fix:</p>
+    <ul class="steps">
+      <li><span class="step-n rust">!</span><div>Use one less club of loft than feels comfortable.</div></li>
+      <li><span class="step-n rust">!</span><div>Think "brush the surface" not "hit down."</div></li>
+      <li><span class="step-n rust">!</span><div>If you chipped fat, the fix is not more weight forward — it is shallower attack angle. More weight forward often makes steep steeper.</div></li>
+    </ul>
+  </div>
+
+  <div class="drill-box">
+    <span class="drill-label">📋 Tight Lie Drill — 20 Minutes</span>
+    <h4>The Tee Peg Drill</h4>
+    <p>Place a tee peg in the ground flush with the surface (no height). Place a ball on top of it so the ball sits at exactly ground level. Chip 20 balls in sets of 5 to a target 15–20 yards away. The tee peg forces you to enter at the correct shallow angle — too steep and you snap the peg; too shallow and you contact only air. Track how many shots in each set feel "pure" (zero feedback, clean flight). Target: 4/5 clean contacts before moving to balls on bare ground with no tee.</p>
+  </div>
+</div>
+
+<!-- ══ ROUGH LIE ══ -->
+<div class="sec" id="rough">
+  <h2 class="sec-title">Rough Lie — Light, Medium, Heavy</h2>
+  <p class="sec-desc">Rough is not one lie — it is three, each requiring a different club and technique. The most expensive rough error is playing light-rough technique from heavy rough, or vice versa. Correct classification before club selection.</p>
+
+  <span class="badge">Diagnostic — The Three Rough Types</span>
+  <div class="card">
+    <span class="card-tag">Read the Lie Before Selecting the Shot</span>
+    <h3>Rough Classification</h3>
+    <table class="tbl">
+      <tr><th>Type</th><th>What It Looks Like</th><th>Ball Position</th><th>Grass on Clubface Risk</th></tr>
+      <tr><td class="good">Light rough</td><td>Ball visible, sitting up slightly on thin grass</td><td>Ball sitting up or level</td><td>Low — some grass between club and ball</td></tr>
+      <tr><td class="warn">Medium rough</td><td>Ball half-buried, grass up to equator of ball</td><td>Ball at ground level, grass visible behind</td><td>Medium — grass wraps clubface at impact</td></tr>
+      <tr><td class="bad">Heavy rough</td><td>Ball mostly buried, only top visible</td><td>Ball below grass level</td><td>High — grass grabs hosel and twists face</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-lime">Light Rough</span>
+  <div class="card card-lime">
+    <span class="card-tag">Light Rough Technique</span>
+    <h3>Similar to Standard Chip — One Adjustment</h3>
+    <p style="margin-bottom:10px;">Light rough gives a slightly cushioned lie that can actually help — the ball launches slightly higher with less spin than from a tight lie. One key adjustment:</p>
+    <ul class="steps">
+      <li><span class="step-n lime">1</span><div><strong>Expect less spin and slightly more run.</strong> The grass between club and ball reduces spin rate — land the ball slightly shorter than normal and allow more run.</div></li>
+      <li><span class="step-n lime">2</span><div><strong>Normal chip technique applies.</strong> No major setup change required. Play the shot with your standard chipping motion.</div></li>
+      <li><span class="step-n lime">3</span><div><strong>Club selection:</strong> Standard club for the distance. The slight flier effect (reduced spin, faster ball speed) is modest from light rough and does not require a significant club change.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-gold">Medium Rough</span>
+  <div class="card card-gold">
+    <span class="card-tag">Medium Rough Technique</span>
+    <h3>Open Face, Steep Arc, Commit</h3>
+    <ul class="steps">
+      <li><span class="step-n gold">1</span><div><strong>Open the clubface 10–15 degrees before gripping:</strong> Opening the face before gripping (not rotating the grip) adds effective bounce and prevents the hosel from snagging in the grass.</div></li>
+      <li><span class="step-n gold">2</span><div><strong>Steeper attack angle:</strong> Ball back of centre, weight more forward (65%). The steeper approach gets through the grass rather than being deflected by it.</div></li>
+      <li><span class="step-n gold">3</span><div><strong>Accelerate firmly through impact:</strong> Deceleration in medium rough is fatal — the grass absorbs club speed and the ball dies well short. Commit to the shot. A firm, decisive strike through the grass is required.</div></li>
+      <li><span class="step-n gold">4</span><div><strong>Expect a "flier" — more run than normal:</strong> Medium rough reduces spin. Plan for 20–30% more run than a standard chip. Land shorter and play for the run.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-rust">Heavy Rough</span>
+  <div class="card card-rust">
+    <span class="card-tag">Heavy Rough Technique</span>
+    <h3>Survival Mode — Loft, Steepness, Commitment</h3>
+    <p style="margin-bottom:10px;">From heavy rough close to the green, the priority shifts from proximity to getting the ball on the green. Setting a specific proximity target from heavy rough creates unrealistic expectations and hesitation in the swing.</p>
+    <ul class="steps">
+      <li><span class="step-n rust">1</span><div><strong>Maximum loft — always a 58° or 60° wedge:</strong> Heavy rough requires the most bounce and most loft to get the ball out. No exceptions.</div></li>
+      <li><span class="step-n rust">2</span><div><strong>Ball back, face open, wrists firm:</strong> Ball well back of centre. Face open 20–25 degrees. Grip pressure firm — heavy rough twists the face at impact; grip firmness maintains face angle.</div></li>
+      <li><span class="step-n rust">3</span><div><strong>Very steep, committed swing:</strong> Virtually straight down into the back of the ball. The grass is cut through rather than swept through. There is no follow-through in the conventional sense — the club decelerates in the grass.</div></li>
+      <li><span class="step-n rust">4</span><div><strong>Manage expectations — "on the green" is success:</strong> A save from heavy rough is a bonus. The primary target is a two-putt opportunity anywhere on the green. Proximity is secondary. Do not manufacture expectations that change the swing.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══ DOWNSLOPE ══ -->
+<div class="sec" id="downslope">
+  <h2 class="sec-title">Downslope Chip</h2>
+  <p class="sec-desc">The downslope chip is the most technically demanding standard short game shot. The slope delofts the club and produces a low, running trajectory — the opposite of what most players attempt by trying to help the ball into the air.</p>
+
+  <span class="badge badge-rust">Why It's Difficult</span>
+  <div class="card card-rust">
+    <span class="card-tag">The Physics of the Downslope</span>
+    <h3>The Ball Will Run — Plan for It</h3>
+    <p>A downslope reduces effective loft by the angle of the slope. A 56° wedge on a 10° downslope has an effective loft of approximately 46°. The ball launches lower and runs further than on flat ground. The instinct to "help" the ball up by hanging back produces a thin, low, running shot that runs through the green. The correct response is to accept the trajectory and manage the landing zone accordingly.</p>
+  </div>
+
+  <span class="badge badge-teal">Core Technique</span>
+  <div class="card card-teal">
+    <span class="card-tag">Downslope Method</span>
+    <h3>Match the Slope — Lean Into It</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Align shoulders to the slope:</strong> The single most important downslope adjustment. Tilt your upper body so your shoulders follow the angle of the ground — lead shoulder down, trail shoulder higher. This aligns your swing arc to the slope rather than fighting it.</div></li>
+      <li><span class="step-n">2</span><div><strong>Ball position back of centre:</strong> Ball further back than normal — roughly below the trail armpit. This ensures the club reaches the ball before it reaches the bottom of the slope.</div></li>
+      <li><span class="step-n">3</span><div><strong>Weight forward and stay forward:</strong> 65–70% weight on lead foot at address. Stay there through the swing. The temptation to hang back and scoop is the primary fault — resist it completely.</div></li>
+      <li><span class="step-n">4</span><div><strong>Use less loft:</strong> The slope delofts your club. A PW or 9-iron on a mild downslope achieves the effective loft of a SW or PW on flat ground. Using a lob wedge on a steep downslope risks the sole bouncing off the slope rather than the leading edge entering the ball.</div></li>
+      <li><span class="step-n">5</span><div><strong>Land short, play for the run:</strong> The ball will run significantly further than on flat ground. Select a landing zone well short of the flag and plan for run-out. On steep downslopes, landing on the fringe or even short of the green is correct — let the ball run to the hole.</div></li>
+    </ul>
+  </div>
+
+  <div class="two-col">
+    <div class="key-stat">
+      <div class="stat-val">50%</div>
+      <div class="stat-label">Extra run vs flat chip on typical downslope</div>
+    </div>
+    <div class="key-stat" style="background:linear-gradient(135deg,var(--rust-dim),rgba(216,96,48,.03));border-color:var(--rust-border);">
+      <div class="stat-val" style="color:var(--rust);">42%</div>
+      <div class="stat-label">Scratch save rate from downslope (vs 72% standard)</div>
+    </div>
+  </div>
+
+  <div class="drill-box">
+    <span class="drill-label">📋 Downslope Drill — 20 Minutes</span>
+    <h4>The Slope Confirmation Drill</h4>
+    <p>Find a genuine downslope on the chipping green or fairway edge. Drop 10 balls on the slope. Before each shot, set up with shoulders matching the slope, ball back, weight forward — then deliberately look at where you expect the ball to land and how far it will run. Hit the shot and observe whether the actual outcome matches your prediction. The drill trains your prediction model for downslope shots — after 5–6 sessions your anticipation of run-out from a given slope angle becomes accurate.</p>
+  </div>
+</div>
+
+<!-- ══ UPSLOPE ══ -->
+<div class="sec" id="upslope">
+  <h2 class="sec-title">Upslope Chip</h2>
+  <p class="sec-desc">The upslope chip is the most forgiving non-standard lie in short game. The slope adds effective loft, produces a higher launch, and stops the ball faster. The primary error is over-compensation — using too much loft for a shot that already has excess loft built in by the slope.</p>
+
+  <span class="badge badge-teal">Core Technique</span>
+  <div class="card card-teal">
+    <span class="card-tag">Upslope Method</span>
+    <h3>De-Loft, Match the Slope, Commit</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Use less loft than you think:</strong> A 10° upslope adds approximately 10° of effective loft. A PW on a moderate upslope behaves like a GW. A 58° on an upslope produces a near-vertical shot — useful only for very short distances.</div></li>
+      <li><span class="step-n">2</span><div><strong>Match shoulders to the slope:</strong> As with the downslope, align your shoulder line to the slope — trail shoulder down, lead shoulder up. This prevents the club digging into the upslope at impact.</div></li>
+      <li><span class="step-n">3</span><div><strong>Ball forward in stance:</strong> Ball position slightly forward of centre on upslopes. The bottom of the swing arc is further back than on flat ground; ball forward compensates for this.</div></li>
+      <li><span class="step-n">4</span><div><strong>Expect less run, more height:</strong> The upslope ball stops faster. Plan your landing zone closer to the pin than on flat ground — the ball will not run out as far. This is the advantage of an upslope lie: you can be more aggressive with landing zone selection.</div></li>
+      <li><span class="step-n">5</span><div><strong>Commit — upslope is forgiving:</strong> The higher launch from an upslope means small errors in contact are less costly. The ball lands softer. Make a confident, full-tempo swing — tentative swings produce the only real fault available on an upslope: the sclaff (fat contact into the hill).</div></li>
+    </ul>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">Club Selection on Upslopes</span>
+    <h3>De-Loft by Slope Angle</h3>
+    <table class="tbl">
+      <tr><th>Normal Club</th><th>Mild Upslope (~5°)</th><th>Moderate Upslope (~10°)</th><th>Steep Upslope (&gt;15°)</th></tr>
+      <tr><td>58° wedge</td><td>54° equivalent</td><td>48° equivalent</td><td>Go to PW — 58° unusable</td></tr>
+      <tr><td>54° wedge</td><td>50° equivalent</td><td>44° equivalent</td><td>Use 9i or PW</td></tr>
+      <tr><td>PW (46°)</td><td>41° equivalent</td><td>36° equivalent</td><td>Use 8i or 7i</td></tr>
+    </table>
+    <p style="font-size:12px;margin-top:8px;">On very steep upslopes close to the green, a low-lofted club (7i, 8i) run up the face of the slope and onto the green is frequently the highest-percentage shot — it removes the risk of the steep loft producing too high a trajectory and landing short of the crest.</p>
+  </div>
+</div>
+
+<!-- ══ BUMP AND RUN ══ -->
+<div class="sec" id="bump">
+  <h2 class="sec-title">Bump-and-Run — Close Range System</h2>
+  <p class="sec-desc">The bump-and-run is the most underused shot in amateur golf at UK parkland courses and virtually the only shot used by experienced links players from within 30 yards. It removes variables — no loft, no backspin, ground control all the way.</p>
+
+  <div class="info-box lime-box">
+    <span class="ico">💡</span>
+    <p><strong>When to choose bump-and-run over a chip:</strong> Any time the path from ball to flag is clear of obstacles (no bunker, no significant rough strip, no steep bank). On UK courses this describes the majority of chip shots from around the green — yet most mid-handicap players instinctively reach for loft every time. The bump removes the strike variable and the spin variable simultaneously.</p>
+  </div>
+
+  <span class="badge badge-lime">The Club System</span>
+  <div class="card card-lime">
+    <span class="card-tag">7-8-9 Club Framework</span>
+    <h3>Less Loft = More Run — Match to Carry Needed</h3>
+    <table class="tbl">
+      <tr><th>Distance to Flag</th><th>Fringe / Apron Carry</th><th>Recommended Club</th><th>Carry : Run Ratio</th></tr>
+      <tr><td>5–10 yds</td><td>Minimal — putt distance</td><td>Putter from fringe</td><td>N/A — putt if in doubt</td></tr>
+      <tr><td>10–20 yds</td><td>1–3 yards to green</td><td>9-iron or 8-iron</td><td>1:4 (land early, run to hole)</td></tr>
+      <tr><td>20–30 yds</td><td>3–6 yards to green</td><td>8-iron or 7-iron</td><td>1:3</td></tr>
+      <tr><td>30–50 yds</td><td>5–10 yards to green</td><td>7-iron or 6-iron</td><td>1:2.5</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-teal">Technique</span>
+  <div class="card card-teal">
+    <span class="card-tag">Bump-and-Run Setup and Stroke</span>
+    <h3>Putting Stroke with a Lofted Club</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Narrow stance, ball back:</strong> Feet closer than shoulder width. Ball position 3–4cm back of centre. Weight 60% forward.</div></li>
+      <li><span class="step-n">2</span><div><strong>Hands forward, shaft lean:</strong> Hands ahead of ball — 5–10 degrees of shaft lean. This de-lofts the club and promotes a low, skimming contact.</div></li>
+      <li><span class="step-n">3</span><div><strong>Putting-style arms and shoulders stroke — no wrist break:</strong> The bump-and-run is executed exactly like a long putt. Arms and shoulders move together; wrists stay passive throughout. No breaking of the wrists either way.</div></li>
+      <li><span class="step-n">4</span><div><strong>Target: land on the fairway or fringe — not the green:</strong> Select a landing spot on firm, short grass. The ball runs from there. Avoid landing directly on the green surface — the ball arrives too hot and runs past the hole.</div></li>
+      <li><span class="step-n">5</span><div><strong>Acceleration through impact:</strong> Maintain tempo and acceleration through the ball. The deceleration instinct produces a fluffed contact. The swing should be the same length back and through.</div></li>
+    </ul>
+  </div>
+
+  <div class="drill-box">
+    <span class="drill-label">📋 Bump-and-Run Drill — 20 Minutes</span>
+    <h4>Distance Ladder</h4>
+    <p>Place three coins or targets at 10, 20, and 30 yards from a fringe area. Using a 7-iron, hit 5 balls to each target in sequence. Then randomise — call your target before hitting. The goal is accurate landing zone selection, not accuracy to the pin. Track how often your ball stops within 3 feet of each target after rolling out. This calibrates your carry-to-run ratio for the specific conditions of the day — which changes with firmness and temperature.</p>
+  </div>
+</div>
+
+<!-- ══ PLUGGED / MUD ══ -->
+<div class="sec" id="plugged">
+  <h2 class="sec-title">Plugged Lie &amp; Mud Ball</h2>
+  <p class="sec-desc">Plugged lies from soft ground and mud balls from winter conditions are survival situations — not scoring opportunities. The correct technique is defined, consistent, and counterintuitive. Follow it precisely.</p>
+
+  <span class="badge badge-rust">Plugged Lie — Greenside</span>
+  <div class="card card-rust">
+    <span class="card-tag">Buried Ball — Soft Ground</span>
+    <h3>The Plugged Lie Technique</h3>
+    <ul class="steps">
+      <li><span class="step-n rust">1</span><div><strong>Close the clubface:</strong> The counterintuitive move. A closed face (toe pointing down) prevents the leading edge from bouncing off the compressed soil. An open face — the standard chip setup — will skip over the top of a plugged ball.</div></li>
+      <li><span class="step-n rust">2</span><div><strong>Steep, chopping action — straight down:</strong> The swing is almost vertical. The club must dig under the plugged ball, not sweep through it. There is no follow-through in the conventional sense — the club decelerates into the soil after extracting the ball.</div></li>
+      <li><span class="step-n rust">3</span><div><strong>Expect a low, running ball — no spin:</strong> A ball extracted from a plug has almost zero backspin. It comes out low and runs hard. Do not aim at the flag. Plan for significant run-out and target a landing zone well short of the flag — the front third of the green as a maximum.</div></li>
+      <li><span class="step-n rust">4</span><div><strong>Success = on the green:</strong> A plugged ball on the green is a successful shot. The target is anywhere on the putting surface, preferably the front half. Do not create expectations of proximity that change the swing.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-gold">Mud Ball on Approach</span>
+  <div class="card card-gold">
+    <span class="card-tag">Mud Adhering to Ball</span>
+    <h3>Adjusting for Mud — Direction and Distance</h3>
+    <ul class="steps">
+      <li><span class="step-n gold">1</span><div><strong>Mud on the back of the ball (facing you at address):</strong> Ball curves toward the mud. Mud on the left side = ball curves left. Aim right to compensate.</div></li>
+      <li><span class="step-n gold">2</span><div><strong>Mud on the front of the ball:</strong> Reduces spin and launch angle — ball typically flies lower and shorter. Take an extra half-club and allow for less stopping.</div></li>
+      <li><span class="step-n gold">3</span><div><strong>Mud on the top or bottom:</strong> Minimal lateral effect but trajectory is altered. Top mud = lower launch; bottom mud = higher launch. Adjust club accordingly.</div></li>
+      <li><span class="step-n gold">4</span><div><strong>Cannot predict precisely — aim for the fat part of the green:</strong> Mud ball direction is not perfectly predictable even with a known position. Centre-green targeting is always correct on a mud ball approach — do not attack pins.</div></li>
+    </ul>
+  </div>
+
+  <div class="info-box rust-box">
+    <span class="ico">📜</span>
+    <p><strong>Rules note:</strong> Under preferred lies (winter rules / "lift, clean and place") in force, you may lift a ball, clean mud from it, and place it within the defined distance — typically 6 inches or one club length, no nearer the hole. Always check whether preferred lies are in effect before your round. When in force, mud ball adjustments become irrelevant.</p>
+  </div>
+</div>
+
+<!-- ══ PRACTICE SYSTEM ══ -->
+<div class="sec" id="practice">
+  <h2 class="sec-title">Practice System — SG Tracked by Lie Type</h2>
+  <p class="sec-desc">Generic chipping practice does not build lie-specific skill. This system is structured around the six lie types in this guide — one focused session per lie type, with save percentage tracking that feeds into your monthly SG review.</p>
+
+  <span class="badge badge-lime">Session Structure</span>
+  <div class="card card-lime">
+    <span class="card-tag">20-Minute Lie-Specific Session</span>
+    <h3>One Session Per Lie Type Per Week</h3>
+    <ul class="steps">
+      <li><span class="step-n lime">1</span><div><strong>Warm-up (3 min):</strong> 10 balls from a standard fairway lie. These are not tracked. They establish feel for the day.</div></li>
+      <li><span class="step-n lime">2</span><div><strong>Technique block (10 min):</strong> 20 balls from the target lie type, focused entirely on technique — not outcome. Refer to the relevant tab for the specific technique checklist. Note which element of the technique felt cleanest.</div></li>
+      <li><span class="step-n lime">3</span><div><strong>Performance block (7 min):</strong> 15 balls from the same lie type, tracking save percentage. A save is defined as the chip finishing within the length of a flagstick from the hole (approximately 7 feet). Record: shots hit / saves.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-teal">Save % Targets</span>
+  <div class="card card-teal">
+    <span class="card-tag">Benchmark Progression</span>
+    <h3>Where to Aim Over 3, 6, and 12 Months</h3>
+    <table class="tbl">
+      <tr><th>Lie Type</th><th>Current (5–10 HCP)</th><th>3-Month Target</th><th>Scratch Standard</th></tr>
+      <tr><td>Tight lie chip</td><td class="bad">35–45%</td><td class="warn">52%</td><td class="good">60%</td></tr>
+      <tr><td>Light rough</td><td class="warn">50–58%</td><td class="warn">62%</td><td class="good">68%</td></tr>
+      <tr><td>Medium rough</td><td class="bad">38–46%</td><td class="warn">52%</td><td class="good">60%</td></tr>
+      <tr><td>Downslope</td><td class="bad">28–38%</td><td class="warn">44%</td><td class="good">52%</td></tr>
+      <tr><td>Upslope</td><td class="warn">45–55%</td><td class="warn">60%</td><td class="good">68%</td></tr>
+      <tr><td>Bump-and-run</td><td class="warn">44–52%</td><td class="warn">58%</td><td class="good">68%</td></tr>
+      <tr><td>Plugged lie</td><td class="bad">22–32%</td><td class="warn">38%</td><td class="good">46%</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-gold">6-Week Programme</span>
+  <div class="card card-gold">
+    <span class="card-tag">Structured Progression</span>
+    <h3>Lie Type Rotation — One Per Week Per Cycle</h3>
+    <table class="tbl">
+      <tr><th>Week</th><th>Lie Type Focus</th><th>Session Goal</th></tr>
+      <tr><td>Week 1</td><td>Tight lie</td><td>Baseline save % — record and compare to 3-month target</td></tr>
+      <tr><td>Week 2</td><td>Bump-and-run</td><td>Distance ladder drill — calibrate carry:run ratio</td></tr>
+      <tr><td>Week 3</td><td>Downslope</td><td>Slope confirmation drill — train prediction accuracy</td></tr>
+      <tr><td>Week 4</td><td>Medium rough</td><td>Commit drill — 15 balls all with firm, decisive accelerating swing</td></tr>
+      <tr><td>Week 5</td><td>Upslope</td><td>Club de-loft drill — verify correct club choice for your local slopes</td></tr>
+      <tr><td>Week 6</td><td>Mixed rotation</td><td>Random lie type — call your club before you see the lie to test instinct</td></tr>
+    </table>
+    <p style="font-size:12px;margin-top:8px;">Repeat the 6-week cycle. In the second cycle, your Week 1 tight lie save% should show meaningful improvement over the first cycle. If it does not, review your technique against the Tight Lie tab and identify which element is breaking down.</p>
+  </div>
+
+  <div class="info-box gold-box">
+    <span class="ico">📓</span>
+    <p><strong>Log in Guide 17 — Progress Journal:</strong> Record your save percentage per lie type in your monthly practice log. Over 6 months you will be able to see clearly which lie type has improved most and which remains your ARG weakness — directing your practice allocation to the highest SG return.</p>
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<div class="footer">STANDARD PLAYBOOK · GUIDE 61 v1.0 · SHORT GAME BY LIE TYPE · THE SCRATCH PROJECT · © 2026 The Scratch Project</div>
+
+<a href="index.html" class="home-btn">&#8962; Home</a>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(btn && btn.classList) btn.classList.add('active');
+  window.scrollTo({ top: document.querySelector('.nav').offsetTop, behavior: 'smooth' });
+}
+</script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="02_shortgame_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🌊</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Short Game Playbook</span>
+    </a>
+    <a href="58_bunker_play.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏖️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Bunker Play System</span>
+    </a>
+    <a href="59_practice_green_protocol.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">⛳</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Practice Green Protocol</span>
+    </a>
+    <a href="18_training_aids_2.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🛠️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Training Arsenal</span>
+    </a>
+    <a href="22_wedge_distances.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📏</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Wedge Distance Matrix</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  </div>
+</div>
+</body>
+</html>

@@ -207,7 +207,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   plausible.init()
 </script>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 </head>
 <body>
@@ -254,6 +254,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <button class="tab" onclick="show('samplesize',this)">Sample Size</button>
   <button class="tab" onclick="show('synthesis',this)">Weekly Synthesis</button>
   
+
 </div>
 
 <!-- OVERVIEW -->
@@ -581,7 +582,11 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     <tr><td>Up-and-down rate</td><td>Arccos/Shot Scope</td><td>Percentage</td><td>Increasing toward 35%+</td></tr></table>
     <div class="info-box elite"><span class="ico">⭐</span><p><strong>The longitudinal value:</strong> A single month of data tells you very little. Twelve months of consistent monthly data tells you everything — which training blocks produced speed gains, which technique changes improved spin axis, which practice structure changes improved SG: APP transfer, and whether HRV-guided training produced better adaptation than the prior fixed-schedule approach. The monthly review is the compound interest mechanism of the entire programme. Skipping it is the equivalent of investing without ever checking returns.</p></div>
   </div>
+  
 </div>
+
+<!-- BAYESIAN UPDATING (Pro) -->
+
 
 <div class="footer">STATS INTERPRETATION PLAYBOOK · PRO EDITION · SG + MULTI-TOOL SYNTHESIS · 10 HCP → SCRATCH · © 2026 The Scratch Project</div>
 <script>
@@ -594,6 +599,11 @@ function show(id,btn){
 }
 </script>
 
+
+
+
+
+
 <!-- RELATED GUIDES PANEL -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
   <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
@@ -602,17 +612,23 @@ function show(id,btn){
       <span style="font-size:1.3rem;flex-shrink:0;">🤖</span>
       <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Launch Monitor Coach</span>
     </a>
-      <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+    <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
       <span style="font-size:1.3rem;flex-shrink:0;">📓</span>
       <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Progress Journal</span>
     </a>
     <a href="10_scratch_plan.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
       <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
-      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">24-Month Scratch Plan</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Your Milestone Plan</span>
+    </a>
+    <a href="11_shot_dispersion.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📊</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Shot Dispersion Mapping</span>
+    </a>
+    <a href="04_complete_golfer.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🧭</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">The Complete Golfer</span>
     </a>
   </div>
-    <a href="11_shot_dispersion.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🎯</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Shot Dispersion</span></a>
-    <a href="04_complete_golfer.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;"><span style="font-size:1.3rem;flex-shrink:0;">🏌️</span><span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">The Complete Golfer</span></a>
   <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
     <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
     <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
@@ -621,7 +637,5 @@ function show(id,btn){
     <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
   </div>
 </div>
-
-
 </body>
 </html>

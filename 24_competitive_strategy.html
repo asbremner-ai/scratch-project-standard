@@ -126,7 +126,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   plausible.init()
 </script>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 </head>
 <body>
@@ -173,6 +173,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <button class="tab" onclick="show('formats',this)">Team Formats</button>
   <button class="tab" onclick="show('handicap',this)">Handicap</button>
   <button class="tab" onclick="show('bogey',this)">Medal & Bogey</button>
+  
 </div>
 
 <!-- OVERVIEW -->
@@ -282,6 +283,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <li><span class="step-n">6</span><div><strong>Never add up the score before hole 17:</strong> Score awareness on the 14th hole shifts focus from process to outcome and consistently degrades performance on the final holes. Play hole by hole. Your score is whatever it is when you sign the card.</div></li>
     </ul>
   </div>
+  
 </div>
 
 <!-- STABLEFORD -->
@@ -510,15 +512,24 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   </div>
 </div>
 
+<!-- MATCH PLAY DEEP STRATEGY (Pro) -->
+
+
 <div class="footer">COMPETITIVE STRATEGY & TOURNAMENT PREP — PRO EDITION · STROKE PLAY · STABLEFORD · MATCHPLAY · TEAM FORMATS · © 2026 The Scratch Project</div>
 <script>
 function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
 </script>
 
+
+
 <!-- RELATED GUIDES PANEL -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
   <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
   <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="52_matchplay_formats.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🤝</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Matchplay Format Strategies</span>
+    </a>
     <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
       <span style="font-size:1.3rem;flex-shrink:0;">🧘</span>
       <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mental Game Mastery</span>

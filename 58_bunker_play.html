@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-20 · 58_bunker_play.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bunker Play System — The Scratch Project</title>
+<meta name="description" content="A complete bunker play system covering greenside, fairway, plugged, wet, and upslope lies. Technique, setup, practice protocols, and decision frameworks for all sand conditions.">
+<meta name="keywords" content="golf bunker play, sand shots, greenside bunker, fairway bunker, golf improvement, The Scratch Project">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:300;font-display:swap;src:url('fonts/inter-latin-300-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/inter-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/inter-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-italic.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:900;font-display:swap;src:url('fonts/playfair-display-latin-900-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:300;font-display:swap;src:url('fonts/dm-mono-latin-300-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/dm-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/dm-mono-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:300;font-display:swap;src:url('fonts/dm-sans-latin-300-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/dm-sans-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/dm-sans-latin-500-normal.woff2') format('woff2')}
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/dm-sans-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/ibm-plex-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/ibm-plex-mono-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/ibm-plex-mono-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Libre Baskerville';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/libre-baskerville-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Libre Baskerville';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/libre-baskerville-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'Libre Baskerville';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/libre-baskerville-latin-700-normal.woff2') format('woff2')}
+:root{--bg:#0a160a;--surface:#111e11;--surface2:#182818;--surface3:#1e321e;--border:rgba(160,200,80,0.16);--border-hi:rgba(160,200,80,0.36);--lime:#a0c850;--lime-hi:#c0e060;--lime-dim:rgba(160,200,80,0.09);--gold:#e0b840;--gold-hi:#f0d070;--gold-dim:rgba(224,184,64,0.09);--teal:#48b0a8;--teal-hi:#70ccc4;--teal-dim:rgba(72,176,168,0.09);--rust:#d86030;--rust-hi:#f08050;--rust-dim:rgba(216,96,48,0.09);--white:#e8f0d8;--muted:rgba(232,240,216,0.45);--faint:rgba(232,240,216,0.12);--good:#5fc8a0;--warn:#e0b840;--bad:#e05030;--r:12px;--r-sm:8px;}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{background:#0a160a;background:var(--bg);color:#e8f0d8;color:var(--white);font-family:'Inter',sans-serif;min-height:100vh;overflow-x:hidden;font-size:15px;line-height:1.6;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 10%,rgba(160,200,80,0.05) 0%,transparent 50%),radial-gradient(ellipse at 80% 90%,rgba(72,176,168,0.04) 0%,transparent 50%);pointer-events:none;z-index:0;}
+.hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),var(--lime),var(--teal),transparent);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:14px;opacity:.8;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
+.hero h1 em{color:var(--teal-hi);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--muted);max-width:520px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
+.hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.nav{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab:hover{color:var(--teal-hi);}.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.sec{display:none;padding:28px 16px 60px;max-width:720px;margin:0 auto;position:relative;z-index:1;animation:rise .3s ease;}
+.sec.active{display:block;}
+@keyframes rise{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
+.sec-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--teal);font-weight:300;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge-lime{background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.badge-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
+.badge-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
+.badge-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:20px 18px;margin-bottom:14px;position:relative;overflow:hidden;transition:border-color .2s;}
+.card:hover{border-color:var(--border-hi);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(72,176,168,.3),transparent);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;display:block;}
+.card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
+.card p{font-size:13px;color:var(--muted);line-height:1.8;}
+.card-gold{border-color:rgba(224,184,64,.2);}.card-gold .card-tag{color:var(--gold);}
+.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
+.card-teal{border-color:rgba(72,176,168,.2);}.card-teal .card-tag{color:var(--teal);}
+.card-teal::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
+.card-rust{border-color:rgba(216,96,48,.2);}.card-rust .card-tag{color:var(--rust);}
+.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.25),transparent);}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}.tbl td:first-child{color:var(--white);}
+.good{color:var(--good);font-weight:600;}.good::before{content:"▲ ";font-size:.75em;opacity:.85;}.warn{color:var(--warn);font-weight:600;}.warn::before{content:"◆ ";font-size:.75em;opacity:.85;}.bad{color:var(--bad);font-weight:600;}.bad::before{content:"▼ ";font-size:.75em;opacity:.85;}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
+.steps li{display:flex;gap:12px;align-items:flex-start;}
+.step-n{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--teal-dim);border:1px solid rgba(72,176,168,.3);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--teal-hi);margin-top:2px;}
+.steps li div{font-size:13px;color:var(--muted);line-height:1.75;}
+.steps li div strong{color:var(--white);}
+.info-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 16px;margin:14px 0;display:flex;gap:10px;font-size:13px;color:var(--muted);line-height:1.7;}
+.info-box .ico{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+.info-box p strong{color:var(--white);}
+.info-box.tip{border-color:rgba(72,176,168,.2);background:var(--teal-dim);}
+.info-box.warn-box{border-color:rgba(224,184,64,.2);background:var(--gold-dim);}
+/* SVG diagrams */
+.svg-wrap{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:16px;margin:14px 0;text-align:center;}
+.svg-cap{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:10px;}
+/* Video card */
+.vid-card{background:var(--surface2);border:1px solid rgba(72,176,168,.25);border-radius:var(--r);padding:16px 18px;margin:14px 0;display:flex;gap:14px;align-items:flex-start;text-decoration:none;transition:border-color .2s;}
+.vid-card:hover{border-color:var(--teal);}
+.vid-thumb{width:60px;height:42px;background:linear-gradient(135deg,#0a1a0a,#182818);border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+.vid-meta{flex:1;}
+.vid-label{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:4px;}
+.vid-title{font-size:13px;color:var(--white);font-weight:500;line-height:1.4;margin-bottom:3px;}
+.vid-desc{font-size:11px;color:var(--muted);line-height:1.5;}
+/* Setup diagram */
+.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+.setup-box{background:var(--surface3);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;}
+.setup-box-label{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.setup-box p{font-size:12px;color:var(--muted);line-height:1.6;}
+.setup-box strong{color:var(--white);}
+@media(max-width:480px){.setup-grid{grid-template-columns:1fr;}}
+
+/* ── Five Pillars Logo (tsp) ── */
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;position:relative;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+<body>
+<!-- HOME NAV -->
+<div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+    <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
+  </a>
+  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+  <button onclick="history.back()" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:0;">
+    <span style="font-size:14px;line-height:1;">&#8592;</span> Back
+  </button>
+</div>
+
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <div class="hero-label">Guide 58 · Score Pillar</div>
+  <h1>Bunker Play<br><em>System</em></h1>
+  <p class="hero-sub">A complete framework for every sand lie you will encounter. Greenside, fairway, plugged, wet, and upslope. Technique, decision-making, and practice protocols.</p>
+  <div class="hero-tags">
+    <span class="htag">🏖️ All Sand Lies</span>
+    <span class="htag">📐 Setup Variables</span>
+    <span class="htag">🎯 Practice Protocols</span>
+    <span class="htag">📊 SG Impact</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="tab active" onclick="show('why',this)">Why Sand</button>
+  <button class="tab" onclick="show('greenside',this)">Greenside</button>
+  <button class="tab" onclick="show('lies',this)">Difficult Lies</button>
+  <button class="tab" onclick="show('fairway',this)">Fairway</button>
+  <button class="tab" onclick="show('practice',this)">Practice</button>
+  <button class="tab" onclick="show('video',this)">Watch</button>
+</div>
+
+<!-- WHY SAND -->
+<div class="sec active" id="why">
+  <h2 class="sec-title">The Bunker Shot Opportunity</h2>
+  <p class="sec-desc">Most amateur golfers fear bunkers. Most professionals prefer them to certain rough lies. That gap in psychology — and in technique — is one of the most recoverable scoring gaps at any handicap level.</p>
+
+  <span class="badge badge-teal">📊 The SG Reality</span>
+  <div class="card card-teal">
+    <span class="card-tag">Why Sand Matters More Than You Think</span>
+    <h3>Bunker Performance by Handicap</h3>
+    <p>Strokes Gained data consistently shows bunker play as one of the highest-variance skills between amateur handicap brackets. The difference between a 10-handicapper and a scratch golfer from greenside sand is not power or athleticism — it is technique and confidence born from repetition.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Handicap Level</th><th>Avg Proximity (Greenside)</th><th>Up-and-Down %</th><th>SG: ARG Bunker</th></tr>
+      <tr><td>Scratch / Plus</td><td class="good">16–20 ft</td><td class="good">55–65%</td><td class="good">+0.1 to +0.3</td></tr>
+      <tr><td>5–10 HCP</td><td class="warn">22–30 ft</td><td class="warn">35–45%</td><td class="warn">−0.1 to −0.3</td></tr>
+      <tr><td>10–18 HCP</td><td class="bad">30–45 ft</td><td class="bad">20–30%</td><td class="bad">−0.4 to −0.8</td></tr>
+      <tr><td>18+ HCP</td><td class="bad">40+ ft or miss</td><td class="bad">10–20%</td><td class="bad">−0.8 to −1.5</td></tr>
+    </table>
+    <p style="margin-top:10px;font-size:12px;">Improving from 10-handicap bunker performance to scratch standard is worth approximately 0.5 strokes per round in SG: ARG alone — before accounting for the confidence effect on nearby hole management.</p>
+  </div>
+
+  <span class="badge badge-gold">🔑 The Core Physics</span>
+  <div class="card card-gold">
+    <span class="card-tag">What Actually Happens in Sand</span>
+    <h3>The Splash Shot Mechanism</h3>
+    <p>A greenside bunker shot is unique in golf: you are intentionally not making contact with the ball. You are entering the sand 2–3 inches behind the ball and using the bounce of the wedge to displace a divot of sand that carries the ball out. Understanding this changes everything about how you approach the shot.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>The bounce is your friend:</strong> The bounce angle on your sand wedge (typically 10–14°) prevents the leading edge from digging. Open the face to increase effective bounce. Closing the face reduces it — a mistake in soft sand.</div></li>
+      <li><span class="step-n">2</span><div><strong>Entry point controls distance:</strong> Enter 2 inches behind the ball for a standard shot. Move to 3 inches for more height and softness. Move to 1 inch for running bunker shots when you need distance.</div></li>
+      <li><span class="step-n">3</span><div><strong>Speed controls everything else:</strong> The most common amateur fault is deceleration. The club must accelerate through the sand. Think of the follow-through as the shot, not the entry point.</div></li>
+    </ul>
+  </div>
+
+  <!-- SVG: Splash shot entry diagram -->
+  <div class="svg-wrap">
+    <svg viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:340px;">
+      <!-- Sand surface -->
+      <rect x="0" y="90" width="340" height="50" fill="#2a1a08" rx="0"/>
+      <!-- Sand texture dots -->
+      <circle cx="30" cy="100" r="1.5" fill="#5a3a18" opacity="0.6"/>
+      <circle cx="60" cy="105" r="1" fill="#5a3a18" opacity="0.5"/>
+      <circle cx="90" cy="98" r="1.5" fill="#5a3a18" opacity="0.6"/>
+      <circle cx="130" cy="103" r="1" fill="#5a3a18" opacity="0.5"/>
+      <circle cx="180" cy="99" r="1.5" fill="#5a3a18" opacity="0.6"/>
+      <circle cx="220" cy="104" r="1" fill="#5a3a18" opacity="0.5"/>
+      <circle cx="260" cy="101" r="1.5" fill="#5a3a18" opacity="0.6"/>
+      <circle cx="300" cy="98" r="1" fill="#5a3a18" opacity="0.5"/>
+      <!-- Sand surface line -->
+      <line x1="0" y1="90" x2="340" y2="90" stroke="#5a3a18" stroke-width="1.5"/>
+      <!-- Golf ball -->
+      <circle cx="180" cy="83" r="9" fill="#e8f0d8" stroke="#c0c8a8" stroke-width="1"/>
+      <!-- Entry point marker - 2 inches behind -->
+      <line x1="148" y1="85" x2="148" y2="100" stroke="#48b0a8" stroke-width="1.5" stroke-dasharray="3,2"/>
+      <circle cx="148" cy="90" r="3" fill="#48b0a8"/>
+      <!-- Club path arrow -->
+      <path d="M 80 40 Q 100 70 148 90" stroke="#a0c850" stroke-width="2" fill="none" marker-end="url(#arrowG)"/>
+      <!-- Follow through arrow -->
+      <path d="M 148 90 Q 200 95 260 60" stroke="#a0c850" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arrowG2)"/>
+      <!-- Sand divot arc -->
+      <path d="M 140 90 Q 165 110 195 90" stroke="#e0b840" stroke-width="1.5" fill="rgba(224,184,64,0.12)"/>
+      <!-- Labels -->
+      <text x="148" y="78" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#48b0a8">ENTRY</text>
+      <text x="148" y="70" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="rgba(72,176,168,0.7)">2″ BEHIND</text>
+      <text x="180" y="78" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="7" fill="#e8f0d8" opacity="0.6">BALL</text>
+      <text x="165" y="120" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="8" fill="#e0b840">SAND DIVOT</text>
+      <text x="75" y="35" font-family="JetBrains Mono,monospace" font-size="8" fill="#a0c850">CLUB PATH</text>
+      <defs>
+        <marker id="arrowG" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#a0c850"/>
+        </marker>
+        <marker id="arrowG2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#a0c850" opacity="0.6"/>
+        </marker>
+      </defs>
+    </svg>
+    <p class="svg-cap">Greenside bunker entry: club enters 2 inches behind ball — sand carries ball out</p>
+  </div>
+</div>
+
+<!-- GREENSIDE -->
+<div class="sec" id="greenside">
+  <h2 class="sec-title">Greenside Bunker</h2>
+  <p class="sec-desc">The standard greenside splash shot. Master this one setup and one technique and you will handle 80% of all bunker situations you encounter on a course.</p>
+
+  <span class="badge badge-teal">📐 The Setup</span>
+  <div class="card card-teal">
+    <span class="card-tag">Standard Greenside Setup — Every Time</span>
+    <h3>Build the Setup from the Ground Up</h3>
+    <div class="setup-grid">
+      <div class="setup-box">
+        <div class="setup-box-label">Feet</div>
+        <p><strong>Open stance</strong> — both feet aimed 20–30° left of target (right-handed). <strong>Dig in slightly</strong> — 1–2cm to lower centre of gravity and test sand firmness.</p>
+      </div>
+      <div class="setup-box">
+        <div class="setup-box-label">Ball Position</div>
+        <p><strong>Forward</strong> — off the inside of the lead heel. Further forward than any other shot in your bag. This ensures the low point is behind the ball.</p>
+      </div>
+      <div class="setup-box">
+        <div class="setup-box-label">Face Angle</div>
+        <p><strong>Open the face first</strong>, then grip the club. 15–30° open for standard conditions. The face aims right of target; the body aims left. These two combine to send the ball at the target.</p>
+      </div>
+      <div class="setup-box">
+        <div class="setup-box-label">Weight</div>
+        <p><strong>60–65% lead side</strong> and stay there throughout. This promotes the descending path into the sand. Unlike a pitch, weight does not shift to trail side on the backswing.</p>
+      </div>
+      <div class="setup-box">
+        <div class="setup-box-label">Hands</div>
+        <p><strong>Lower than normal</strong> — choke down 1–2 inches. This shortens the effective shaft length to match your dug-in foot position and improves control.</p>
+      </div>
+      <div class="setup-box">
+        <div class="setup-box-label">Grip Pressure</div>
+        <p><strong>Light on the trail hand</strong> — 4/10 pressure. This allows the face to stay open through impact rather than rotating closed as it would in a normal chip.</p>
+      </div>
+    </div>
+  </div>
+
+  <span class="badge badge-gold">🎯 Distance Control</span>
+  <div class="card card-gold">
+    <span class="card-tag">Controlling How Far It Goes</span>
+    <h3>The Three Distance Variables</h3>
+    <p>Most amateur golfers think distance in bunkers is controlled by swing length. It is primarily controlled by sand depth and swing speed, with swing length as the secondary variable.</p>
+    <table class="tbl" style="margin-top:12px;">
+      <tr><th>Distance</th><th>Entry Point</th><th>Face Angle</th><th>Swing Feel</th></tr>
+      <tr><td>Under 10 yards</td><td>3″ behind ball</td><td>Very open (45°)</td><td>Wristy, steep, short finish</td></tr>
+      <tr><td>10–20 yards</td><td>2″ behind ball</td><td>Open (20–25°)</td><td>Sweeping, full follow-through</td></tr>
+      <tr><td>20–30 yards</td><td>1.5″ behind ball</td><td>Slightly open (10°)</td><td>Bigger swing, less face open</td></tr>
+      <tr><td>30+ yards</td><td>1″ behind ball</td><td>Square or slightly open</td><td>Full swing, compress the ball</td></tr>
+    </table>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>The clock system for greenside:</strong> Rather than thinking about distances, many tour players use a clock system — how far back the lead arm goes on the backswing (9 o'clock, 10 o'clock, 11 o'clock) at a consistent swing tempo. This removes the "how hard do I swing?" question entirely.</p>
+    </div>
+  </div>
+
+  <span class="badge badge-lime">⚡ The Three Fatal Errors</span>
+  <div class="card">
+    <span class="card-tag">Why Amateurs Leave Balls in Bunkers</span>
+    <h3>Diagnose and Fix the Most Common Faults</h3>
+    <table class="tbl">
+      <tr><th>Fault</th><th>What Happens</th><th>Fix</th></tr>
+      <tr><td>Decelerating into impact</td><td>Club stalls in sand; ball barely moves or stays in bunker</td><td>Commit to a full finish — if you can't follow through, you didn't swing hard enough</td></tr>
+      <tr><td>Hitting the ball first</td><td>Thin, screaming shot; ball rockets over the green</td><td>Draw a line 2 inches behind the ball and train yourself to enter there — never at the ball</td></tr>
+      <tr><td>Closing the face through impact</td><td>Leading edge digs; ball goes nowhere or hard left</td><td>Keep the logo of the glove facing skyward through impact; feel the face "looking up" at finish</td></tr>
+      <tr><td>Aiming body at target</td><td>Club path cuts across ball — no power through sand</td><td>Open body 20–30° left — the open body is what makes the open face work</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- DIFFICULT LIES -->
+<div class="sec" id="lies">
+  <h2 class="sec-title">Difficult Lies</h2>
+  <p class="sec-desc">Four specific situations that require significant technique adjustment from the standard greenside shot. Each has a distinct setup and swing thought. Knowing the adjustments eliminates the guesswork under pressure.</p>
+
+  <span class="badge badge-rust">⚠️ Plugged / Buried Lie</span>
+  <div class="card card-rust">
+    <span class="card-tag">The Fried Egg</span>
+    <h3>When the Ball Is Half-Buried in Sand</h3>
+    <p>A plugged lie removes the ability to use the bounce. The ball is sitting below the sand surface, so you need the leading edge — not the bounce — to dig under it. Everything about the setup reverses from the standard shot.</p>
+    <ul class="steps" style="margin-top:10px;">
+      <li><span class="step-n">1</span><div><strong>Close the face:</strong> Square or even slightly closed — this engages the leading edge and promotes digging. The opposite of the standard shot.</div></li>
+      <li><span class="step-n">2</span><div><strong>Narrow, square stance:</strong> No open stance. Feet roughly shoulder-width, aimed at the target, weight heavily on the lead side (70%).</div></li>
+      <li><span class="step-n">3</span><div><strong>Steep backswing:</strong> Pick the club up sharply with the hands. Think V-shaped swing, not U-shaped.</div></li>
+      <li><span class="step-n">4</span><div><strong>Drive the leading edge down:</strong> Aim to enter 1 inch behind the ball and drive the club down hard. There is no follow-through — the club stops in the sand.</div></li>
+      <li><span class="step-n">5</span><div><strong>Manage expectations:</strong> A plugged lie produces zero backspin. The ball will run significantly on landing. Aim for the front of the green and allow for 15–20 feet of roll.</div></li>
+    </ul>
+    <div class="info-box warn-box" style="margin-top:10px;">
+      <span class="ico">⚠️</span>
+      <p><strong>Realistic outcome:</strong> From a plugged lie, getting the ball on the green is the success metric — not proximity. A 12-handicapper making a bogey from a plugged lie has played the shot correctly. Accept the situation before you swing.</p>
+    </div>
+  </div>
+
+  <span class="badge badge-gold">💧 Wet / Firm Sand</span>
+  <div class="card card-gold">
+    <span class="card-tag">After Rain or Compacted Bunkers</span>
+    <h3>When Sand Conditions Change Everything</h3>
+    <p>Wet or compacted sand dramatically reduces the effectiveness of the bounce. The club will not glide through — it will bounce off the firm surface and hit the ball thin if you use a standard setup. Three adjustments required.</p>
+    <ul class="steps" style="margin-top:10px;">
+      <li><span class="step-n">1</span><div><strong>Reduce face opening:</strong> In wet sand, open the face only 10–15° rather than 20–30°. The extra bounce is not needed — the sand provides the resistance.</div></li>
+      <li><span class="step-n">2</span><div><strong>Enter closer to the ball:</strong> Move entry point from 2 inches behind to 1–1.5 inches. The firm sand will not absorb a divot; you need to get under the ball sooner.</div></li>
+      <li><span class="step-n">3</span><div><strong>Consider chipping the ball:</strong> If sand is extremely firm (almost like turf), a standard chip shot off the front of the ball may produce a better outcome than a splash. Pick the lower-risk option based on what you see and feel when you dig your feet in.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-teal">⛰️ Upslope / Downslope</span>
+  <div class="card card-teal">
+    <span class="card-tag">When the Bunker Floor Isn't Flat</span>
+    <h3>Slope Adjustments for Bunker Shots</h3>
+    <table class="tbl">
+      <tr><th>Lie</th><th>Ball Flight</th><th>Adjustment</th><th>Common Error</th></tr>
+      <tr><td>Upslope (ball above feet)</td><td>Higher, shorter, pulls left</td><td>Aim right of target, take more club (less loft), swing with the slope</td><td>Hitting into the slope — take a shallower entry</td></tr>
+      <tr><td>Downslope (ball below feet)</td><td>Lower, longer, pushes right</td><td>Aim left, open face more, accept the lower trajectory</td><td>Thinning the ball — lean into the slope, commit to a steep entry</td></tr>
+      <tr><td>Ball above feet</td><td>Tendency to hook and go longer</td><td>Choke down on the club, aim right, soft grip pressure</td><td>Losing balance on the backswing</td></tr>
+      <tr><td>Ball below feet</td><td>Tendency to slice and go shorter</td><td>Widen stance significantly, bend more at the knees, maintain spine angle</td><td>Standing up through impact</td></tr>
+    </table>
+  </div>
+
+  <span class="badge badge-lime">🌊 Long Greenside (20–30 yd)</span>
+  <div class="card">
+    <span class="card-tag">The Forgotten Shot</span>
+    <h3>When You Need Distance From Sand Without a Full Swing</h3>
+    <p>The 20–30 yard greenside bunker shot is one of the most challenging in golf because neither the standard splash technique nor the fairway bunker technique applies cleanly. Most amateurs either splash it too softly and come up short, or try to pick it clean and thin it. The correct technique is a hybrid.</p>
+    <ul class="steps" style="margin-top:10px;">
+      <li><span class="step-n">1</span><div><strong>Use a gap wedge or pitching wedge:</strong> The extra distance comes from less loft — not more speed with a sand wedge. Drop to a GW or PW rather than swinging harder.</div></li>
+      <li><span class="step-n">2</span><div><strong>Reduce face opening:</strong> Square the face almost completely. You need forward roll, not height, to cover the distance.</div></li>
+      <li><span class="step-n">3</span><div><strong>Enter 1 inch behind the ball:</strong> Minimal sand — just enough to avoid the leading edge catching.</div></li>
+      <li><span class="step-n">4</span><div><strong>Full follow-through:</strong> Commit to swinging all the way through. The biggest mistake is checking at impact — the ball will die in the sand.</div></li>
+    </ul>
+  </div>
+</div>
+
+<!-- FAIRWAY BUNKER -->
+<div class="sec" id="fairway">
+  <h2 class="sec-title">Fairway Bunker</h2>
+  <p class="sec-desc">The fairway bunker is a completely different shot from the greenside splash. The goal is to make clean contact with the ball — not the sand. Technique, club selection, and decision-making all change.</p>
+
+  <span class="badge badge-teal">🎯 The Primary Rule</span>
+  <div class="card card-teal">
+    <span class="card-tag">Get Out in One — Every Time</span>
+    <h3>Decision Framework Before You Pick a Club</h3>
+    <p>The most expensive bunker mistake in amateur golf is not the poor execution — it is the poor decision. Choosing a club that hits the lip is almost always worse than a safe exit with a wedge, regardless of how far back the bunker is. Run this decision sequence before touching your clubs.</p>
+    <ul class="steps" style="margin-top:12px;">
+      <li><span class="step-n">1</span><div><strong>Check the lip height:</strong> Stand behind the ball and assess the front lip. If the lip is high, this immediately limits the loft of club you can use. Never choose a club that requires the ball to fly on a trajectory that clips the lip.</div></li>
+      <li><span class="step-n">2</span><div><strong>Add one club minimum:</strong> Because you will be choking down 1–2 inches and making slightly less-than-full contact, take one more club than the yardage suggests. From 150 yards, hit the club you would normally use at 160–165.</div></li>
+      <li><span class="step-n">3</span><div><strong>Only attempt maximum club if lie is perfect:</strong> If there is any sand below the ball (not sitting clean on top), move to a higher-lofted club. A slightly bad lie in a fairway bunker is the most likely scenario for a double or worse.</div></li>
+    </ul>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>Strokes Gained rationale:</strong> Taking a wedge out and pitching to 80 yards from a fairway bunker at 160 yards produces a better expected score than attempting a 6-iron and making imperfect contact. The SG cost of a toe-strike into the bunker lip is severe — and the risk is very real. Play the percentages.</p>
+    </div>
+  </div>
+
+  <span class="badge badge-gold">⚙️ Fairway Bunker Technique</span>
+  <div class="card card-gold">
+    <span class="card-tag">How the Technique Differs from a Standard Fairway Shot</span>
+    <h3>Four Critical Adjustments</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Choke down 1–2 inches:</strong> This compensates for the lower stance (feet dug in) and promotes a shallower, cleaner strike. This is the single most important adjustment and the most commonly skipped.</div></li>
+      <li><span class="step-n">2</span><div><strong>Stand taller, minimal knee flex:</strong> Unlike greenside where digging in is useful, in a fairway bunker you want a quieter lower body. Quiet legs reduce the chance of entering the sand before the ball.</div></li>
+      <li><span class="step-n">3</span><div><strong>Ball position back half an inch:</strong> Move the ball back slightly from normal position. This ensures the low point of the swing occurs at or just after the ball — not before it.</div></li>
+      <li><span class="step-n">4</span><div><strong>Grip tight:</strong> Firmer grip pressure than normal (7/10) helps maintain the club on the desired path when the club meets firm sand on the follow-through. The biggest fairway bunker fault is the club twisting at impact.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-lime">📊 Club Selection Reference</span>
+  <div class="card">
+    <span class="card-tag">What Club Can You Actually Use?</span>
+    <h3>Minimum Loft Required by Lip Height</h3>
+    <table class="tbl">
+      <tr><th>Lip Height (approx)</th><th>Minimum Loft Required</th><th>Maximum Club</th><th>Notes</th></tr>
+      <tr><td>Low (6–12 inches)</td><td>12–15°</td><td>3-wood or 3-hybrid</td><td>Only from a perfect lie — still high risk</td></tr>
+      <tr><td>Medium (12–24 inches)</td><td>18–22°</td><td>5-iron / 5-hybrid</td><td>Standard fairway bunker situation</td></tr>
+      <tr><td>High (24–36 inches)</td><td>26–30°</td><td>7 or 8-iron</td><td>Focus entirely on clean contact</td></tr>
+      <tr><td>Very high (36+ inches)</td><td>40°+</td><td>PW or GW exit only</td><td>Take your medicine — get on grass</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- PRACTICE -->
+<div class="sec" id="practice">
+  <h2 class="sec-title">Practice Protocols</h2>
+  <p class="sec-desc">Bunker practice is only useful if it simulates real on-course situations. Random, pressure-based practice formats — not blocked repetition — produce skill that transfers. These four protocols are ordered from foundational to competitive.</p>
+
+  <span class="badge badge-lime">📋 Protocol 1 — Entry Point Training</span>
+  <div class="card">
+    <span class="card-tag">Foundational — Build Technique First</span>
+    <h3>The Line Drill (20 minutes)</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div>Draw a line in the sand perpendicular to your target line. Place no ball yet. Set up to the line as if it were the ball.</div></li>
+      <li><span class="step-n">2</span><div>Swing and try to enter the sand 2 inches behind the line — not on it, not in front of it. Do 10 practice swings looking only at entry point. You are grooving the low point position, not hitting shots.</div></li>
+      <li><span class="step-n">3</span><div>Now place a ball 2 inches ahead of where you have been entering. Without changing anything, hit the shot. The ball will come out cleanly because you have already established the correct entry point.</div></li>
+      <li><span class="step-n">4</span><div>Do 10 repetitions this way. Then remove the line and try to replicate the same entry by feel alone. The line drill re-calibrates the most fundamental skill in greenside bunker play.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-gold">📋 Protocol 2 — Distance Ladder</span>
+  <div class="card card-gold">
+    <span class="card-tag">Distance Control — 30 minutes</span>
+    <h3>Three-Target Ladder</h3>
+    <p>Place three targets at 10 yards, 20 yards, and 30 yards from the bunker. Hit 5 balls to each target in rotation. The goal is not accuracy but the feel of calibrating between the three distances using the technique variables above (entry point, face angle, swing length).</p>
+    <ul class="steps" style="margin-top:10px;">
+      <li><span class="step-n">1</span><div>Hit 5 balls to 10 yards — very open face, 3 inches behind, quiet swing.</div></li>
+      <li><span class="step-n">2</span><div>Hit 5 balls to 20 yards — standard setup, 2 inches behind, full follow-through.</div></li>
+      <li><span class="step-n">3</span><div>Hit 5 balls to 30 yards — less open face, 1.5 inches behind, bigger swing.</div></li>
+      <li><span class="step-n">4</span><div>Now randomise — pick a target without a pattern. This is the skill transfer element. 15 random shots to the three distances, calling the target before you swing.</div></li>
+    </ul>
+  </div>
+
+  <span class="badge badge-teal">📋 Protocol 3 — Consequence Game</span>
+  <div class="card card-teal">
+    <span class="card-tag">Competitive Pressure Practice</span>
+    <h3>Up-and-Down Streak</h3>
+    <p>This protocol adds pressure that transfers to on-course performance. You must make a set number of consecutive up-and-downs before you are allowed to leave the practice bunker.</p>
+    <ul class="steps" style="margin-top:10px;">
+      <li><span class="step-n">1</span><div><strong>Start target:</strong> 3 consecutive up-and-downs from a flat, good lie. The streak resets if you miss a putt or fail to get out in one.</div></li>
+      <li><span class="step-n">2</span><div><strong>Progress target:</strong> 3 consecutive up-and-downs from different positions around the bunker — change position and distance after each successful shot.</div></li>
+      <li><span class="step-n">3</span><div><strong>Elite target:</strong> Make 2 consecutive up-and-downs from a plugged lie. Plugged lies make standard lies feel routine by comparison.</div></li>
+    </ul>
+    <div class="info-box tip" style="margin-top:10px;">
+      <span class="ico">💡</span>
+      <p><strong>The streak mechanic:</strong> The moment you add a streak requirement, your heart rate changes. That is the point. You are training the mental state that matches on-course bunker situations, not just the physical skill.</p>
+    </div>
+  </div>
+
+  <span class="badge badge-rust">📋 Protocol 4 — Monthly Benchmark</span>
+  <div class="card card-rust">
+    <span class="card-tag">Track Your Progress</span>
+    <h3>The 20-Ball Bunker Test</h3>
+    <p>Once a month, run this standardised test to track your bunker improvement objectively. Record results in your progress journal (Guide 17).</p>
+    <table class="tbl">
+      <tr><th>Test</th><th>Balls</th><th>Success Criterion</th><th>Track</th></tr>
+      <tr><td>Standard greenside, 15 yards</td><td>10</td><td>Ball on green, within 20 ft</td><td>% on green / avg proximity</td></tr>
+      <tr><td>Plugged lie, 10 yards</td><td>5</td><td>Ball on green (any proximity)</td><td>% out in one</td></tr>
+      <tr><td>Fairway bunker, 130 yards</td><td>5</td><td>Ball on fairway or green</td><td>% clean strike</td></tr>
+    </table>
+    <p style="font-size:12px;color:var(--muted);margin-top:10px;">Scratch benchmark: 85%+ on green from standard greenside, 80%+ out from plugged, 80%+ clean from fairway.</p>
+  </div>
+</div>
+
+<!-- VIDEO -->
+<div class="sec" id="video">
+  <h2 class="sec-title">Curated Video Resources</h2>
+  <p class="sec-desc">The best freely available video instruction on bunker play, curated by concept. Watch in order if you are building the technique from scratch. Return to individual videos when working on specific faults.</p>
+
+  <span class="badge badge-teal">▶ Watch First</span>
+
+  <a class="vid-card" href="https://www.youtube.com/results?search_query=greenside+bunker+technique+open+face+bounce" target="_blank" rel="noopener">
+    <div class="vid-thumb">🏖️</div>
+    <div class="vid-meta">
+      <div class="vid-label">Foundation · YouTube Search</div>
+      <div class="vid-title">Greenside Bunker — Open Face & Bounce Fundamentals</div>
+      <div class="vid-desc">Search: "greenside bunker technique open face bounce" — look for Athletic Motion Golf or Titleist Instruction videos. These cover the physics of why the splash shot works.</div>
+    </div>
+  </a>
+
+  <a class="vid-card" href="https://www.youtube.com/results?search_query=bunker+distance+control+clock+system" target="_blank" rel="noopener">
+    <div class="vid-thumb">🕐</div>
+    <div class="vid-meta">
+      <div class="vid-label">Distance Control · YouTube Search</div>
+      <div class="vid-title">Bunker Distance Control — The Clock System</div>
+      <div class="vid-desc">Search: "bunker distance control clock system" — the clock-face method for calibrating greenside distance through arm position rather than perceived effort.</div>
+    </div>
+  </a>
+
+  <a class="vid-card" href="https://www.youtube.com/results?search_query=plugged+bunker+lie+technique+fried+egg" target="_blank" rel="noopener">
+    <div class="vid-thumb">🥚</div>
+    <div class="vid-meta">
+      <div class="vid-label">Difficult Lies · YouTube Search</div>
+      <div class="vid-title">Plugged Lie (Fried Egg) — Closed Face Technique</div>
+      <div class="vid-desc">Search: "plugged bunker lie fried egg technique" — the setup reversal from standard bunker play that makes the plugged lie manageable rather than mysterious.</div>
+    </div>
+  </a>
+
+  <a class="vid-card" href="https://www.youtube.com/results?search_query=fairway+bunker+shot+technique+club+selection" target="_blank" rel="noopener">
+    <div class="vid-thumb">🏌️</div>
+    <div class="vid-meta">
+      <div class="vid-label">Fairway Bunker · YouTube Search</div>
+      <div class="vid-title">Fairway Bunker — Clean Contact & Club Selection</div>
+      <div class="vid-desc">Search: "fairway bunker shot technique club selection" — the choke-down, stand-taller approach that produces clean ball-first contact from distance.</div>
+    </div>
+  </a>
+
+  <div class="info-box tip" style="margin-top:14px;">
+    <span class="ico">💡</span>
+    <p><strong>How to use these links:</strong> The links search YouTube for the best current videos on each topic. Results change over time — the search terms are calibrated to consistently surface high-quality instruction. AMG Golf, Titleist Tips, and Performance Golf produce consistently excellent bunker content.</p>
+  </div>
+</div>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="02_shortgame_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🌊</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Short Game Playbook</span>
+    </a>
+    <a href="59_practice_green_protocol.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">⛳</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Practice Green Protocol</span>
+    </a>
+    <a href="01_putting_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🎯</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Putting Playbook</span>
+    </a>
+    <a href="60_100_ball_session.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏌️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">The 100-Ball Session</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+    <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+    <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+    <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+    <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+  </div>
+</div>
+</body>
+</html>

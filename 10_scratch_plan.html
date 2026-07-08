@@ -609,7 +609,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 })(window);
 </script>
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 </head>
 <body>
@@ -991,34 +991,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <span style="display:block;margin-top:6px;opacity:0.5;">Review this plan quarterly &middot; Update your numbers &middot; Trust the data, not the feeling</span> &middot; &copy; 2026 The Scratch Project
 </div>
 
-<!-- RELATED GUIDES PANEL -->
-<div style="background:var(--surface);border-top:1px solid var(--border);padding:24px 18px 32px;position:relative;z-index:1;">
-  <p style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--lime);opacity:.7;margin-bottom:14px;">Related Playbooks</p>
-  <div style="display:flex;flex-wrap:wrap;gap:8px;">
-    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;text-decoration:none;flex:1;min-width:130px;max-width:210px;">
-      <span style="font-size:1.1rem;flex-shrink:0;">&#128202;</span><span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--white);line-height:1.3;">SG Diagnostic (Guide 26)</span>
-    </a>
-    <a href="27_six_month_plan.html" style="display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;text-decoration:none;flex:1;min-width:130px;max-width:210px;">
-      <span style="font-size:1.1rem;flex-shrink:0;">&#128197;</span><span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--white);line-height:1.3;">Months 1&ndash;6 Plan</span>
-    </a>
-    <a href="28_months_7_12_plan.html" style="display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;text-decoration:none;flex:1;min-width:130px;max-width:210px;">
-      <span style="font-size:1.1rem;flex-shrink:0;">&#128198;</span><span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--white);line-height:1.3;">Months 7&ndash;12 Plan</span>
-    </a>
-    <a href="06_golf_fitness.html" style="display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;text-decoration:none;flex:1;min-width:130px;max-width:210px;">
-      <span style="font-size:1.1rem;flex-shrink:0;">&#128170;</span><span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--white);line-height:1.3;">Golf Fitness Plan</span>
-    </a>
-    <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;text-decoration:none;flex:1;min-width:130px;max-width:210px;">
-      <span style="font-size:1.1rem;flex-shrink:0;">&#128211;</span><span style="font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--white);line-height:1.3;">Progress Journal</span>
-    </a>
-  </div>
-  <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--faint);text-align:center;">
-    <a href="index.html" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint);text-decoration:none;">&#8962; All Playbooks &mdash; Home</a>
-    <span style="color:rgba(26,18,8,0.32);margin:0 10px;">&#183;</span>
-    <a href="privacy.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(26,18,8,0.32);text-decoration:none;">Privacy</a>
-    <span style="color:rgba(26,18,8,0.32);margin:0 10px;">&#183;</span>
-    <a href="terms.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(26,18,8,0.32);text-decoration:none;">Terms</a>
-  </div>
-</div>
+
 <script>
 // ─── TAB NAVIGATION ───────────────────────────────────────────────────────────
 function showTab(id, btn) {
@@ -1706,5 +1679,47 @@ function assessGoal(startHcp, goalHcp) {
   buildPlan(p.startHcp, p.startDate, assessment.effectiveGoal, p.country, assessment.overridden, goalHcp, p.schedule);
 })();
 </script>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#ede5d4;border-top:1px solid rgba(26,18,8,0.12);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:#b54a22;margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="27_six_month_plan.html" style="display:flex;align-items:center;gap:12px;background:#f5efe4;border:1px solid rgba(26,18,8,0.12);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📅</span>
+      <span style="font-family:'Libre Baskerville',Georgia,serif;font-size:12.5px;font-weight:600;color:#1a1208;line-height:1.35;">Months 1–6 Plan</span>
+    </a>
+    <a href="28_months_7_12_plan.html" style="display:flex;align-items:center;gap:12px;background:#f5efe4;border:1px solid rgba(26,18,8,0.12);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📆</span>
+      <span style="font-family:'Libre Baskerville',Georgia,serif;font-size:12.5px;font-weight:600;color:#1a1208;line-height:1.35;">Months 7–12 Plan</span>
+    </a>
+    <a href="29_months_13_18_plan.html" style="display:flex;align-items:center;gap:12px;background:#f5efe4;border:1px solid rgba(26,18,8,0.12);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🎯</span>
+      <span style="font-family:'Libre Baskerville',Georgia,serif;font-size:12.5px;font-weight:600;color:#1a1208;line-height:1.35;">Months 13–18 Plan</span>
+    </a>
+    <a href="30_months_19_24_plan.html" style="display:flex;align-items:center;gap:12px;background:#f5efe4;border:1px solid rgba(26,18,8,0.12);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏆</span>
+      <span style="font-family:'Libre Baskerville',Georgia,serif;font-size:12.5px;font-weight:600;color:#1a1208;line-height:1.35;">Months 19–24 Plan</span>
+    </a>
+    <a href="26_stats_interpretation.html" style="display:flex;align-items:center;gap:12px;background:#f5efe4;border:1px solid rgba(26,18,8,0.12);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🔢</span>
+      <span style="font-family:'Libre Baskerville',Georgia,serif;font-size:12.5px;font-weight:600;color:#1a1208;line-height:1.35;">Stats & SG Interpretation</span>
+    </a>
+    <a href="06_golf_fitness.html" style="display:flex;align-items:center;gap:12px;background:#f5efe4;border:1px solid rgba(26,18,8,0.12);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">💪</span>
+      <span style="font-family:'Libre Baskerville',Georgia,serif;font-size:12.5px;font-weight:600;color:#1a1208;line-height:1.35;">Golf Fitness Plan</span>
+    </a>
+    <a href="17_progress_journal.html" style="display:flex;align-items:center;gap:12px;background:#f5efe4;border:1px solid rgba(26,18,8,0.12);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📓</span>
+      <span style="font-family:'Libre Baskerville',Georgia,serif;font-size:12.5px;font-weight:600;color:#1a1208;line-height:1.35;">Progress Journal</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(26,18,8,0.12);text-align:center;">
+    <a href="index.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(26,18,8,0.32);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+    <span style="color:rgba(26,18,8,0.32);margin:0 10px;">&#183;</span>
+    <a href="privacy.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(26,18,8,0.32);text-decoration:none;">Privacy</a>
+    <span style="color:rgba(26,18,8,0.32);margin:0 10px;">&#183;</span>
+    <a href="terms.html" style="font-family:'Courier Prime','Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(26,18,8,0.32);text-decoration:none;">Terms</a>
+  </div>
+</div>
 </body>
 </html>

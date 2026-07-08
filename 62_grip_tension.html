@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-06-25 · 62_grip_tension.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Grip Pressure & Tension Management — The Scratch Project</title>
+<meta name="description" content="How grip pressure, tension accumulation, and physical arousal affect ball-striking and putting — with specific protocols for measuring, reducing, and resetting tension across 18 holes.">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#162416;
+  --border:rgba(160,200,80,.14);--border-hi:rgba(160,200,80,.32);
+  --lime:#a0c850;--lime-dim:rgba(160,200,80,.08);
+  --gold:#e0b840;--gold-dim:rgba(224,184,64,.08);--gold-border:rgba(224,184,64,.22);
+  --teal:#48b0a8;--teal-dim:rgba(72,176,168,.08);--teal-border:rgba(72,176,168,.22);
+  --rust:#d86030;--rust-dim:rgba(216,96,48,.08);--rust-border:rgba(216,96,48,.22);
+  --white:#e8f0d8;--muted:rgba(232,240,216,.6);--faint:rgba(232,240,216,.08);
+  --r:10px;--r-sm:6px;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.topbar a:hover{color:var(--lime);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+.hero{background:linear-gradient(160deg,#0f2010 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.6rem);font-weight:700;line-height:1.05;margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:500px;margin-bottom:14px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:4px 10px;border-radius:20px;}
+.nav{display:flex;gap:0;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);-webkit-overflow-scrolling:touch;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 14px;cursor:pointer;white-space:nowrap;transition:all .15s;margin-bottom:-1px;-webkit-tap-highlight-color:transparent;}
+.tab.active{color:var(--teal);border-bottom-color:var(--teal);}
+.page{max-width:680px;margin:0 auto;padding:20px 16px 80px;}
+.sec{display:none;}.sec.active{display:block;}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.sec-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:18px;padding-left:10px;border-left:2px solid var(--teal);}
+.badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:10px;}
+.badge-gold{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);}
+.badge-rust{background:var(--rust-dim);border-color:var(--rust-border);color:var(--rust);}
+.badge-lime{background:var(--lime-dim);border-color:var(--border-hi);color:var(--lime);}
+.card{background:linear-gradient(145deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(72,176,168,.3),transparent);}
+.card-gold{border-color:var(--gold-border);}.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.3),transparent);}
+.card-rust{border-color:var(--rust-border);}.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.3),transparent);}
+.card-lime{border-color:var(--border-hi);}.card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-teal{border-color:var(--teal-border);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-rust .card-tag{color:var(--rust);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:10px;}
+.card p{font-size:13px;color:var(--muted);line-height:1.75;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:6px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-n.gd{color:var(--gold);background:var(--gold-dim);border-color:var(--gold-border);}
+.step-n.rs{color:var(--rust);background:var(--rust-dim);border-color:var(--rust-border);}
+.step-n.lm{color:var(--lime);background:var(--lime-dim);border-color:var(--border-hi);}
+/* Grip scale */
+.grip-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:12px 0;}
+.grip-cell{border-radius:6px;padding:10px 6px;text-align:center;}
+.grip-cell .gn{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;}
+.grip-cell .gl{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.3;}
+.g1{background:rgba(72,176,168,.15);border:1px solid rgba(72,176,168,.3);}
+.g2{background:rgba(94,203,62,.15);border:1px solid rgba(94,203,62,.3);}
+.g3{background:rgba(160,200,80,.15);border:1px solid rgba(160,200,80,.3);}
+.g4{background:rgba(224,184,64,.15);border:1px solid rgba(224,184,64,.3);}
+.g5{background:rgba(216,96,48,.15);border:1px solid rgba(216,96,48,.3);}
+.pull-quote{border-left:3px solid var(--teal);padding:12px 16px;margin:16px 0;background:var(--teal-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--white);line-height:1.6;}
+.pull-quote cite{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:8px;}
+.drill-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;margin:12px 0;}
+.drill-box .dl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.drill-box h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.drill-box p{font-size:12px;color:var(--muted);line-height:1.7;}
+.footer{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);text-align:center;padding:24px 20px;border-top:1px solid var(--border);margin-top:40px;}
+a.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--lime);color:var(--bg);font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+
+/* ── Five Pillars Logo (tsp) ── */
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;position:relative;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+<body>
+<div class="topbar"><a href="index.html">&#8962; All Playbooks</a><span class="tsp-mini" aria-hidden="true"><span class="tsp-mini-bar" style="width:4px;height:9px;background:#e0a830;"></span><span class="tsp-mini-bar" style="width:4px;height:13px;background:#a0c850;"></span><span class="tsp-mini-bar" style="width:4px;height:16px;background:#4cb8c4;"></span><span class="tsp-mini-bar" style="width:4px;height:7px;background:#c8d8e8;"></span><span class="tsp-mini-bar" style="width:4px;height:11px;background:#c87830;"></span></span><span class="topbar-brand">The Scratch Project</span></div>
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <p class="hero-label">Compete Pillar · Guide 62</p>
+  <h1>Grip Pressure &amp;<br><em>Tension Management</em></h1>
+  <p class="hero-sub">Grip pressure and physical tension are among the most overlooked variables in ball-striking and putting — yet they change measurably across 18 holes, under pressure, and between shots. This guide gives you the measurement framework and the protocols to manage them.</p>
+  <div class="hero-tags"><span class="htag">✋ Grip Pressure</span><span class="htag">💆 Tension Reset</span><span class="htag">⛳ 18-Hole Protocol</span><span class="htag">🎯 Putting Stability</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('why',this)">Why It Matters</button>
+  <button class="tab" onclick="show('scale',this)">The Scale</button>
+  <button class="tab" onclick="show('swing',this)">Swing Tension</button>
+  <button class="tab" onclick="show('putting',this)">Putting</button>
+  <button class="tab" onclick="show('round',this)">18-Hole Protocol</button>
+  <button class="tab" onclick="show('reset',this)">Reset Methods</button>
+</div>
+<div class="page">
+
+<div class="sec active" id="why">
+  <h2 class="sec-title">Why Grip Pressure Changes Everything</h2>
+  <p class="sec-desc">Grip pressure is the single most accessible variable in the golf swing — you can change it right now, on the course, without a coach, without technology. Yet almost no golfer monitors it systematically.</p>
+  <div class="pull-quote"><p>"Hold the club as though you are holding a small bird. Firm enough to keep it from flying away, but gentle enough not to crush it."</p><cite>Sam Snead — seven-time major champion</cite></div>
+  <div class="badge">The Science</div>
+  <div class="card card-teal">
+    <span class="card-tag">How Tension Affects Ball Flight</span>
+    <h3>The Tighter You Hold, the Less You Feel</h3>
+    <table class="tbl">
+      <tr><th>Tension Level</th><th>What Happens in the Swing</th><th>Typical Ball Flight Result</th></tr>
+      <tr><td>Too tight (7–10)</td><td>Forearm muscles lock → restricts wrist hinge and forearm rotation → arms dominate, body stalls</td><td>Push/block right; loss of club speed; thin contact from early extension</td></tr>
+      <tr><td>Optimal (3–5)</td><td>Arms feel the clubhead; wrists hinge freely; body and arms synchronise naturally</td><td>Consistent, centred contact; natural draw or fade shape; maximum speed for effort</td></tr>
+      <tr><td>Too light (1–2)</td><td>Club can shift at impact; loss of face angle control; unreliable on full shots</td><td>Wild misses left and right; inconsistent contact</td></tr>
+    </table>
+  </div>
+  <div class="badge badge-gold">The Pressure Problem</div>
+  <div class="card card-gold">
+    <span class="card-tag">Tension Under Competition</span>
+    <h3>Why Your Grip Gets Tighter as Stakes Rise</h3>
+    <p>Under stress, the sympathetic nervous system (fight-or-flight response) increases muscle tension automatically and unconsciously. A player who holds the club at 4/10 on the practice range may be at 7/10 on the 18th hole in a medal without realising it. This is not a mental weakness — it is physiology. The solution is a systematic check-and-reset protocol, not willpower.</p>
+  </div>
+</div>
+
+<div class="sec" id="scale">
+  <h2 class="sec-title">The 1–10 Grip Pressure Scale</h2>
+  <p class="sec-desc">Develop an internal reference for your grip pressure using this scale. The goal is to play all full shots at 3–5 and all putts and chips at 2–4.</p>
+  <div class="grip-scale">
+    <div class="grip-cell g1"><div class="gn" style="color:var(--teal);">1–2</div><div class="gl">Too light — club can shift</div></div>
+    <div class="grip-cell g2"><div class="gn" style="color:#5ecb3e;">3</div><div class="gl">Ideal putting & chipping</div></div>
+    <div class="grip-cell g3"><div class="gn" style="color:var(--lime);">4–5</div><div class="gl">Ideal full shots</div></div>
+    <div class="grip-cell g4"><div class="gn" style="color:var(--gold);">6–7</div><div class="gl">Elevated — common under pressure</div></div>
+    <div class="grip-cell g5"><div class="gn" style="color:var(--rust);">8–10</div><div class="gl">Locked — ruins the swing</div></div>
+  </div>
+  <div class="drill-box">
+    <span class="dl">📋 Calibration Drill</span>
+    <h4>Learning Your Personal Scale</h4>
+    <p>Hold the club as tight as you physically can — that is 10. Now hold it so lightly that it would fall if you tilted it — that is 1. Now aim for the midpoint: 5. Feel the difference between 4, 5, and 6. Do this before every practice session for two weeks until the numbers feel instinctive. From then on, you can check and adjust your grip on the course using the scale as an internal reference.</p>
+  </div>
+  <div class="badge badge-rust">The Tension Check Trigger</div>
+  <div class="card card-rust">
+    <span class="card-tag">When to Check</span>
+    <h3>Four Automatic Check Points Per Round</h3>
+    <ul class="steps">
+      <li><span class="step-n rs">1</span><div><strong>After any bad shot:</strong> Before taking your next shot, consciously check and reset your grip pressure. Bad shots frequently increase grip tension for the next shot — compounding the problem.</div></li>
+      <li><span class="step-n rs">2</span><div><strong>On any tee shot over 200 yards:</strong> The desire to hit hard increases tension automatically. Check before waggling. If you are at 7+, squeeze tighter to 10 and consciously release to your target level before starting the swing.</div></li>
+      <li><span class="step-n rs">3</span><div><strong>Before any putt inside 8 feet:</strong> Putting tension degrades fine motor control faster than any other shot. Check grip pressure at address before each significant putt.</div></li>
+      <li><span class="step-n rs">4</span><div><strong>On holes 14–18:</strong> Tension accumulates across a round. The back nine is where unconscious tension peaks. Build a specific check into your pre-shot routine for the final five holes.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="swing">
+  <h2 class="sec-title">Tension in the Full Swing</h2>
+  <p class="sec-desc">Full-swing tension manifests differently by body region. The grip is the most common culprit, but shoulder, jaw, and forearm tension are equally destructive and less often noticed.</p>
+  <div class="badge">The Four Tension Zones</div>
+  <div class="card">
+    <span class="card-tag">Where Tension Accumulates</span>
+    <h3>Body Region → Effect → Fix</h3>
+    <table class="tbl">
+      <tr><th>Zone</th><th>Tension Effect</th><th>Reset Method</th></tr>
+      <tr><td>Hands / Forearms</td><td>Restricts wrist hinge and forearm rotation — most direct speed killer</td><td>Shake both hands like you are flicking water. Regrip at target pressure.</td></tr>
+      <tr><td>Shoulders</td><td>Raises shoulders → steepens plane → out-to-in path → slice pattern</td><td>Shrug shoulders to ears then drop completely before address.</td></tr>
+      <tr><td>Jaw / Neck</td><td>Jaw clenching under pressure is automatic and unconscious — signals amygdala activation</td><td>Unclench jaw. Deliberately breathe through slightly open mouth during address.</td></tr>
+      <tr><td>Knees / Thighs</td><td>Locked knees prevent hip turn — blocks power transfer</td><td>Flex knees twice before settling into address. Keep a light, athletic bend.</td></tr>
+    </table>
+  </div>
+  <div class="badge badge-lime">The Waggle as a Tension Release</div>
+  <div class="card card-lime">
+    <span class="card-tag">Pre-Shot Tension Management</span>
+    <h3>The Functional Waggle</h3>
+    <p style="margin-bottom:10px;">The waggle — the small back-and-forth movement of the club before the swing — is not a nervous habit. In skilled players it serves a specific biomechanical function: keeping the muscles loose, rehearsing the early swing movement, and preventing the static address position from increasing tension before the swing starts.</p>
+    <ul class="steps">
+      <li><span class="step-n lm">1</span><div><strong>Waggle intentionally:</strong> Make two or three light waggles before every shot. Focus on feeling the clubhead weight — this requires a light grip. If you cannot feel the clubhead, your grip is too tight.</div></li>
+      <li><span class="step-n lm">2</span><div><strong>Forward press as a tension signal:</strong> A small forward press of the hands before the swing triggers the backswing. If the forward press feels stiff or jerky, tension is too high. A smooth, flowing forward press indicates appropriate grip pressure.</div></li>
+    </ul>
+  </div>
+  <div class="drill-box">
+    <span class="dl">📋 Tension Check Drill</span>
+    <h4>The Halfway Back Check</h4>
+    <p>During practice sessions, stop your backswing at hip height and consciously check your grip pressure. Most players discover they have increased from their starting level during the backswing. The goal is to maintain target pressure (4–5) throughout the entire swing. Practise this on 20 shots per session until the check becomes automatic.</p>
+  </div>
+</div>
+
+<div class="sec" id="putting">
+  <h2 class="sec-title">Putting Tension</h2>
+  <p class="sec-desc">Putting requires the lightest grip of any golf shot — and is typically performed under the most psychological pressure. The conflict between light grip requirement and high-tension environment is the primary cause of short-putt misses under pressure.</p>
+  <div class="badge">The Putting Pressure Target</div>
+  <div class="card card-teal">
+    <span class="card-tag">Optimal Putting Grip</span>
+    <h3>2–3 Out of 10 — Far Lighter Than You Think</h3>
+    <p style="margin-bottom:10px;">Research on putting accuracy consistently shows that grip pressures above 5/10 produce measurably worse face angle control at impact. The optimal putting grip is light enough that you can feel the putter head moving independently of your hands.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Start light and stay light:</strong> Many players start their putting grip correctly (3/10) but squeeze tighter just before the backstroke as anxiety kicks in. The squeeze happens in the 1–2 seconds before the putter moves. Check again at that moment.</div></li>
+      <li><span class="step-n">2</span><div><strong>Consistent grip pressure throughout the stroke:</strong> Grip pressure that changes during the stroke (tightening at impact to "guide" the ball) is the most common cause of face angle deviation. Maintain identical pressure from address through follow-through.</div></li>
+      <li><span class="step-n">3</span><div><strong>Pressure putting protocol:</strong> In any putt inside 6 feet, before starting your routine, consciously set grip pressure at 3/10. Check again at address. Start the stroke only when the pressure feels correct. Do not start if you feel tight — regrip and start the routine again.</div></li>
+    </ul>
+  </div>
+  <div class="drill-box">
+    <span class="dl">📋 Putting Tension Drill</span>
+    <h4>The Putter-Drop Test</h4>
+    <p>Hold the putter in your normal grip and tilt it slightly toward the ground. If it slides or falls, your grip is too light (under 2/10). If it stays firmly in place when tilted 45 degrees, your grip is too tight (over 5/10). The correct grip allows the putter to slide very slightly under gravity at a 45-degree tilt — you can feel its weight but it is not immovably locked. Practise this test before every putting session to re-calibrate your target pressure.</p>
+  </div>
+</div>
+
+<div class="sec" id="round">
+  <h2 class="sec-title">18-Hole Tension Protocol</h2>
+  <p class="sec-desc">A complete round protocol — how to manage tension from the warm-up through the final putt. Tension is cumulative across 18 holes without active management; this protocol prevents the back-nine deterioration that affects most amateur golfers.</p>
+  <div class="badge badge-gold">Pre-Round</div>
+  <div class="card card-gold">
+    <span class="card-tag">Warm-Up Tension Baseline</span>
+    <h3>Establish Your Reference Point Before the Round</h3>
+    <ul class="steps">
+      <li><span class="step-n gd">1</span><div><strong>First 5 wedge shots of warm-up:</strong> Notice your grip pressure. This is your natural resting level for today. It will change across the round — knowing your baseline lets you notice the drift.</div></li>
+      <li><span class="step-n gd">2</span><div><strong>Finish warm-up with 10 putts from 5 feet:</strong> Specifically at your target putting pressure (2–3/10). Enter the round with the putting grip calibrated.</div></li>
+    </ul>
+  </div>
+  <div class="badge badge-teal">During the Round</div>
+  <div class="card card-teal">
+    <span class="card-tag">Hole-by-Hole Management</span>
+    <h3>Three Check Points Per Hole</h3>
+    <ul class="steps">
+      <li><span class="step-n">T</span><div><strong>On the tee:</strong> Before waggling, consciously set grip pressure. Walk to the ball at the correct pressure level — do not reach for the club and immediately grip tight.</div></li>
+      <li><span class="step-n">A</span><div><strong>Before approach shot:</strong> Walk-in time is reset time. Use the walk between tee and fairway ball to shake out tension. Arrive at the ball relaxed, then grip at target pressure.</div></li>
+      <li><span class="step-n">G</span><div><strong>On the green:</strong> Before crouching to read the putt, shake both hands loosely. Read the putt, then set grip pressure immediately before standing over the ball. Don't let address tension build during the read.</div></li>
+    </ul>
+  </div>
+  <div class="badge badge-rust">Holes 14–18 — Special Protocol</div>
+  <div class="card card-rust">
+    <span class="card-tag">Back Nine Tension Management</span>
+    <h3>When Accumulated Tension Peaks</h3>
+    <p>By holes 14–18, most players are operating at a 1–2 point higher grip pressure than their baseline without realising it. The combination of physical fatigue, decision fatigue, and competitive stakes compounds tension. A specific intervention at hole 14:</p>
+    <ul class="steps" style="margin-top:10px;">
+      <li><span class="step-n rs">14</span><div><strong>At the 14th tee:</strong> Stop before reaching the tee. Take two slow breaths (4 seconds in, 6 seconds out). Physically shake both arms loose. Then walk to the tee and set your grip. This single reset has a disproportionate effect on the quality of your final five holes.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="reset">
+  <h2 class="sec-title">Reset Methods — Between Shots</h2>
+  <p class="sec-desc">The most effective tension management happens between shots — not at address. By the time you are over the ball, it is too late to significantly reduce tension. These methods work in the 30–90 seconds between shots.</p>
+  <div class="badge">Five Proven Reset Methods</div>
+  <ul class="steps" style="margin-bottom:20px;">
+    <li><span class="step-n">1</span><div><strong>Hand shake:</strong> Physically shake both hands as if flicking water off them. Three to four shakes is enough to release forearm muscle tension. Takes 3 seconds. Works anywhere on the course without being visible to playing partners.</div></li>
+    <li><span class="step-n">2</span><div><strong>Diaphragmatic breathing:</strong> Breathe in through the nose for 4 counts, hold for 2, out through the mouth for 6. The extended exhale activates the parasympathetic nervous system — the physiological opposite of the tension response. One breath is sufficient between shots; two is better after a bad hole.</div></li>
+    <li><span class="step-n">3</span><div><strong>Jaw unclench:</strong> Deliberately relax your jaw and let your mouth open slightly. Jaw tension is one of the most reliable indicators of sympathetic nervous system activation — and releasing it produces systemic tension reduction.</div></li>
+    <li><span class="step-n">4</span><div><strong>Shoulder drop:</strong> Shrug shoulders to maximum height (3 seconds), hold (2 seconds), then drop completely. The contrast between maximum tension and release makes the relaxed state more accessible than trying to relax from a neutral position.</div></li>
+    <li><span class="step-n">5</span><div><strong>Slow walk:</strong> Deliberate slowing of walking pace between shots activates the parasympathetic system. The act of walking slightly slower than feels natural is a direct counter to the anxiety-driven tendency to rush. Players who walk at calm, measured pace between shots consistently show better tension management across 18 holes than players who move quickly.</div></li>
+  </ul>
+  <div class="card card-lime">
+    <span class="card-tag">The One-Method Rule</span>
+    <h3>Pick One Method and Use It Consistently</h3>
+    <p>The most effective reset method is whichever one you practise most consistently — not the one with the most physiological evidence. Choose one method from the list above, use it after every bad shot and at every check point for four consecutive rounds, and it will become automatic. An automatic reset is far more valuable than a theoretically superior one you remember only sometimes.</p>
+  </div>
+</div>
+
+</div>
+<div class="footer">STANDARD PLAYBOOK · GUIDE 62 v1.0 · GRIP PRESSURE & TENSION · THE SCRATCH PROJECT · © 2026</div>
+<a href="index.html" class="home-btn">&#8962; Home</a>
+<script>function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});}</script>
+
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="05_pre_shot_routine.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🔁</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Pre-Shot Routine</span>
+    </a>
+    <a href="21_mental_game.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🧘</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Mental Game Mastery</span>
+    </a>
+    <a href="01_putting_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🎯</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Putting Playbook</span>
+    </a>
+    <a href="18_training_aids_2.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🛠️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Training Arsenal</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+    <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+    <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+    <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+    <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+  </div>
+</div>
+</body></html>
