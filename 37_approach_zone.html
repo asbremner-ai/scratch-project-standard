@@ -194,6 +194,14 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <div class="sec" id="matrix">
   <h2 class="sec-title">Building Your Distance Matrix</h2>
   <p class="sec-desc">A distance matrix for the 100–175 yard zone maps every 10-yard increment to a specific club and swing combination. Most players know their full-swing distance per club. Very few know their three-quarter distance per club. Building this matrix turns every "in-between" yardage from a guess into a known shot.</p>
+  <span class="badge badge-gold">🎯 Personalised · New</span>
+  <div class="card card-gold">
+    <span class="card-tag">Personalised · Reads &amp; Saves Your Profile</span>
+    <h3>Your Approach-Zone Carries</h3>
+    <p style="font-size:12.5px;color:rgba(232,240,216,0.62);line-height:1.7;margin-bottom:12px;">Set your gender and driver speed — the reference recalculates to your game, and your band highlights automatically. The 100–175 framing throughout this guide is a male-reference default; at your speed the real zone may sit 40+ yards lower, while the clubs and method stay identical. A profile set here is shared with every other guide.</p>
+    <div data-scratch-carry data-clubs="5-iron,6-iron,7-iron,8-iron,9-iron,PW,GW" data-zone="100–175"></div>
+  </div>
+
   <span class="badge badge-teal">📐 Your Personal Matrix</span>
   <div class="card card-teal">
     <span class="card-tag">The Build Session — What You Need</span>
@@ -384,5 +392,12 @@ function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.r
     <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
   </div>
 </div>
+<script src="scratch_profile.js"></script>
+<!-- ONWARD NAV -->
+<div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
+  <button type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(160,200,80,0.35);background:#111e11;color:rgba(232,240,216,0.9);font-size:18px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8593;</button>
+  <a href="index.html" aria-label="All guides" style="width:44px;height:44px;border-radius:50%;border:1px solid #2d7a1c;background:#2d7a1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8962;</a>
+</div>
+<style>@media print{.onward-nav{display:none!important;}}</style>
 </body>
 </html>

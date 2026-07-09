@@ -259,6 +259,11 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <div class="sec active" id="overview">
   <h2 class="sec-title">The Speed Training Framework</h2>
   <p class="sec-desc">Club speed is the most impactful single physical variable in golf. Every additional 1 mph of driver speed adds approximately 2.5–3 yards of carry distance. Going from 95 mph to 110 mph — a realistic 12-month target — adds 37–45 yards off the tee. No technique change produces that return.</p>
+  <div style="background:rgba(224,184,64,0.08);border:1px solid rgba(224,184,64,0.28);border-left:3px solid #e0b840;border-radius:8px;padding:13px 15px;margin:16px 0;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#e0b840;margin-bottom:6px;">♀ For Female Golfers</div>
+    <p style="font-size:12.5px;color:#e8f0d8;line-height:1.7;margin:0;">The swing-speed targets in this guide are referenced to male norms (a male club golfer averages ~90–95 mph; LPGA tour ~94 mph; a female club golfer is typically 65–85 mph). The training method — overspeed protocols, periodisation, progression — is identical and equally effective. Scale the target numbers to your own baseline and track gains relative to your starting speed, not an absolute figure. See Guide 69 (The Female Golfer) for the strength-and-power side of speed development.</p>
+  </div>
+
   <span class="badge badge-lime">⚡ Speed = Distance = Scoring</span>
   <div class="card card-gold">
     <span class="card-tag">The Neurological Basis of Overspeed Training</span>
@@ -572,6 +577,12 @@ function show(id,btn){
 }
 </script>
 
+<!-- ONWARD NAV -->
+<div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
+  <button type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(160,200,80,0.35);background:#111e11;color:rgba(232,240,216,0.9);font-size:18px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8593;</button>
+  <a href="index.html" aria-label="All guides" style="width:44px;height:44px;border-radius:50%;border:1px solid #2d7a1c;background:#2d7a1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8962;</a>
+</div>
+<style>@media print{.onward-nav{display:none!important;}}</style>
 
 <!-- RELATED GUIDES PANEL -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">

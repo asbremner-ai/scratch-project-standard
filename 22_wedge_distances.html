@@ -293,6 +293,14 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <div class="sec active" id="overview">
   <h2 class="sec-title">The Wedge Matrix System</h2>
   <p class="sec-desc">The wedge matrix converts the 30–115 yard scoring zone from a guessing game into a precise, repeatable system. Four clubs, four swing lengths, sixteen known distances — every yardage covered by a rehearsed, calibrated shot.</p>
+  <span class="badge badge-gold">🎯 Personalised · New</span>
+  <div class="card card-gold">
+    <span class="card-tag">Personalised · Reads &amp; Saves Your Profile</span>
+    <h3>Your Full-Wedge Carries</h3>
+    <p style="font-size:12.5px;color:rgba(232,240,216,0.62);line-height:1.7;margin-bottom:12px;">Your wedge matrix is personal by definition — but the example distances in this guide assume a male-reference swing speed. Set your profile to anchor the numbers to your game before you build your own matrix below.</p>
+    <div data-scratch-carry data-clubs="PW,GW,SW" data-zone="full-wedge"></div>
+  </div>
+
   <span class="badge badge-gold">📐 The 4×4 Scoring System</span>
   <div class="card">
     <span class="card-tag">Why the Matrix Exists</span>
@@ -575,6 +583,13 @@ function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.r
 })();
 </script>
 
+<script src="scratch_profile.js"></script>
+<!-- ONWARD NAV -->
+<div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
+  <button type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(160,200,80,0.35);background:#111e11;color:rgba(232,240,216,0.9);font-size:18px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8593;</button>
+  <a href="index.html" aria-label="All guides" style="width:44px;height:44px;border-radius:50%;border:1px solid #2d7a1c;background:#2d7a1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8962;</a>
+</div>
+<style>@media print{.onward-nav{display:none!important;}}</style>
 
 <!-- RELATED GUIDES PANEL -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">

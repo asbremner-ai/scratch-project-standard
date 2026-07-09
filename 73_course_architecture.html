@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-07-09 · 73_course_architecture.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Reading the Architect's Mind — The Scratch Project</title>
+<meta name="description" content="How golf course architects use design and optical illusion to manipulate your decisions — the three schools of design, the deceptions that make you under-club and aim at trouble, and a method for reading a hole&#39;s true intent and beating the trap.">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#162416;
+  --border:rgba(160,200,80,.14);--border-hi:rgba(160,200,80,.32);
+  --lime:#a0c850;--lime-dim:rgba(160,200,80,.08);
+  --gold:#e0b840;--gold-dim:rgba(224,184,64,.08);--gold-border:rgba(224,184,64,.22);
+  --teal:#48b0a8;--teal-dim:rgba(72,176,168,.08);--teal-border:rgba(72,176,168,.22);
+  --rust:#d86030;--rust-dim:rgba(216,96,48,.08);--rust-border:rgba(216,96,48,.22);
+  --white:#e8f0d8;--muted:rgba(232,240,216,.6);--faint:rgba(232,240,216,.08);
+  --r:10px;--r-sm:6px;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.topbar a:hover{color:var(--lime);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+.hero{background:linear-gradient(160deg,#0f2010 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.6rem);font-weight:700;line-height:1.05;margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:500px;margin-bottom:14px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:4px 10px;border-radius:20px;}
+.nav{display:flex;gap:0;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);-webkit-overflow-scrolling:touch;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 14px;cursor:pointer;white-space:nowrap;transition:all .15s;margin-bottom:-1px;-webkit-tap-highlight-color:transparent;}
+.tab.active{color:var(--teal);border-bottom-color:var(--teal);}
+.page{max-width:680px;margin:0 auto;padding:20px 16px 80px;}
+.sec{display:none;}.sec.active{display:block;}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.sec-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:18px;padding-left:10px;border-left:2px solid var(--teal);}
+.badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:10px;}
+.badge-gold{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);}
+.badge-rust{background:var(--rust-dim);border-color:var(--rust-border);color:var(--rust);}
+.badge-lime{background:var(--lime-dim);border-color:var(--border-hi);color:var(--lime);}
+.card{background:linear-gradient(145deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(72,176,168,.3),transparent);}
+.card-gold{border-color:var(--gold-border);}.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.3),transparent);}
+.card-rust{border-color:var(--rust-border);}.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.3),transparent);}
+.card-lime{border-color:var(--border-hi);}.card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-teal{border-color:var(--teal-border);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-rust .card-tag{color:var(--rust);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:10px;}
+.card p{font-size:13px;color:var(--muted);line-height:1.75;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:6px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-n.gd{color:var(--gold);background:var(--gold-dim);border-color:var(--gold-border);}
+.step-n.rs{color:var(--rust);background:var(--rust-dim);border-color:var(--rust-border);}
+.step-n.lm{color:var(--lime);background:var(--lime-dim);border-color:var(--border-hi);}
+/* Grip scale */
+.grip-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:12px 0;}
+.grip-cell{border-radius:6px;padding:10px 6px;text-align:center;}
+.grip-cell .gn{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;}
+.grip-cell .gl{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.3;}
+.g1{background:rgba(72,176,168,.15);border:1px solid rgba(72,176,168,.3);}
+.g2{background:rgba(94,203,62,.15);border:1px solid rgba(94,203,62,.3);}
+.g3{background:rgba(160,200,80,.15);border:1px solid rgba(160,200,80,.3);}
+.g4{background:rgba(224,184,64,.15);border:1px solid rgba(224,184,64,.3);}
+.g5{background:rgba(216,96,48,.15);border:1px solid rgba(216,96,48,.3);}
+.pull-quote{border-left:3px solid var(--teal);padding:12px 16px;margin:16px 0;background:var(--teal-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--white);line-height:1.6;}
+.pull-quote cite{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:8px;}
+.drill-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;margin:12px 0;}
+.drill-box .dl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.drill-box h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.drill-box p{font-size:12px;color:var(--muted);line-height:1.7;}
+.footer{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);text-align:center;padding:24px 20px;border-top:1px solid var(--border);margin-top:40px;}
+a.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--lime);color:var(--bg);font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+
+/* ── Five Pillars Logo (tsp) ── */
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;position:relative;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+<body>
+<div class="topbar"><a href="index.html">&#8962; All Playbooks</a><span class="tsp-mini" aria-hidden="true"><span class="tsp-mini-bar" style="width:4px;height:9px;background:#e0a830;"></span><span class="tsp-mini-bar" style="width:4px;height:13px;background:#a0c850;"></span><span class="tsp-mini-bar" style="width:4px;height:16px;background:#4cb8c4;"></span><span class="tsp-mini-bar" style="width:4px;height:7px;background:#c8d8e8;"></span><span class="tsp-mini-bar" style="width:4px;height:11px;background:#c87830;"></span></span><span class="topbar-brand">The Scratch Project</span></div>
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <p class="hero-label">Score Pillar · Guide 73</p>
+  <h1>Reading the<br><em>Architect&#39;s Mind</em></h1>
+  <p class="hero-sub">Great golf holes are designed to test your judgement and deceive your eye — a good architect is quietly trying to talk you into the wrong shot. This guide reveals how they do it: the three schools of design, the optical tricks that cause you to under-club and aim at trouble, and a step-by-step method for reading a hole&#39;s true intent and turning the designer&#39;s trap to your advantage. Course Management (Guide 20) is about executing your plan; this is about seeing through the design before you make one.</p>
+  <div class="hero-tags"><span class="htag">🏗️ Design Schools</span><span class="htag">👁️ Optical Deception</span><span class="htag">🗺️ Reading a Hole</span><span class="htag">♟️ Beat the Trap</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('why',this)">The Hidden Test</button>
+  <button class="tab" onclick="show('schools',this)">Three Schools</button>
+  <button class="tab" onclick="show('deception',this)">Optical Deception</button>
+  <button class="tab" onclick="show('reading',this)">Reading a Hole</button>
+  <button class="tab" onclick="show('counter',this)">Beating the Trap</button>
+  <button class="tab" onclick="show('examples',this)">Worked Examples</button>
+</div>
+<div class="page">
+
+<div class="sec active" id="why">
+  <h2 class="sec-title">The Hidden Test in Every Hole</h2>
+  <p class="sec-desc">A golf hole is an argument between you and the person who designed it. Their tools are angles, hazards, mounding and illusion; their aim is to tempt you into a decision that feels right and plays wrong. Understanding this changes how you stand on a tee.</p>
+  <div class="pull-quote"><p>"The chief object of every golf-course architect worth his salt is to imitate the beauties of nature so closely as to make his work indistinguishable from nature herself."</p><cite>Dr Alister MacKenzie — <em>Golf Architecture</em>, 1920</cite></div>
+  <div class="badge">Two Tests at Once</div>
+  <div class="card card-teal">
+    <span class="card-tag">Physical vs. Mental</span>
+    <h3>The Architect Is Testing Your Judgement, Not Just Your Swing</h3>
+    <p>Anyone can build a hard hole by making it long and narrow. A <em>great</em> architect makes a hole that is fair but constantly asks you to choose — and then dresses those choices up so the tempting option is the dangerous one and the sensible option looks dull. The best players are not just better ball-strikers; they are better at reading what the designer wants them to do, and declining. Once you can see the design intent, you have taken the hole&#39;s main weapon away.</p>
+  </div>
+  <div class="badge badge-gold">Why It Is Worth Learning</div>
+  <div class="card card-gold">
+    <span class="card-tag">Free Shots</span>
+    <h3>You Can Save Strokes Without Improving Your Swing</h3>
+    <p>Every hole you play, an architect is trying to add half a shot to your score through deception. Learn to spot the trick — the bunker that looks at the green but sits thirty yards short, the fat side of the fairway the design steers you away from, the sucker pin cut behind a false front — and you reclaim those half-shots with the swing you already own. This is among the cheapest improvements in golf.</p>
+  </div>
+</div>
+
+<div class="sec" id="schools">
+  <h2 class="sec-title">The Three Schools of Design</h2>
+  <p class="sec-desc">Almost every hole ever built belongs to one of three philosophies. Naming the school you are standing on tells you instantly how the designer wants you to think.</p>
+  <div class="card card-rust">
+    <span class="card-tag">Penal</span>
+    <h3>One Route, Punished if You Miss</h3>
+    <p>Penal design offers no real alternative: there is a correct shot, trouble on both sides, and a heavy price for failure — forced carries over water, a green ringed by deep bunkers, an island green. It rewards nerve and precise execution and punishes everything else. When you recognise a penal hole, the plan is simple and conservative: identify the single safe target, take enough club to reach it comfortably, and accept a bogey as a good score rather than gambling into the punishment.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Strategic — the Golden Age ideal</span>
+    <h3>Many Routes, the Bravest Rewarded</h3>
+    <p>Strategic design — the philosophy of MacKenzie, Colt and the great Golden Age architects — gives you options. There is a safe line and an aggressive line, and the aggressive line, flirting with a hazard, is rewarded with a far easier next shot and a better angle to the flag. The key skill is to <strong style="color:var(--white);">plan the hole backwards from the pin</strong>: decide where you want to play your approach from, and let that dictate your tee shot. A strategic hole does not force you to take on risk — it simply makes the reward tempting.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Heroic</span>
+    <h3>Bite Off As Much As You Dare</h3>
+    <p>Heroic design straddles the other two: a diagonal carry — usually water or waste — that you can challenge as much or as little as you like. Cut off more of the corner and you shorten the hole dramatically; bail out and you are safe but long. The classic "cape" hole and the reachable par 5 over water are heroic. The discipline here is honest self-assessment: take on only the carry you would make eight times out of ten, not the one you would make on your best day.</p>
+  </div>
+  <div class="card card-lime">
+    <span class="card-tag">The Names Behind the Ground</span>
+    <h3>Template Holes &amp; the Golden Age</h3>
+    <p>Many classic holes are variations on famous "template" designs — the Redan (a long, diagonal, back-to-front-and-left green fronted by a devouring bunker), the Road hole, the Cape, the Biarritz. Architects from Macdonald and Raynor to Ross and Tillinghast reused these because they are proven puzzles. Recognising a template — "ah, this is a Redan" — tells you the intended shot before you have even seen the green: on a Redan, the design wants you to land short-right and let the slope feed the ball down to the pin, not fire straight at it.</p>
+  </div>
+</div>
+
+<div class="sec" id="deception">
+  <h2 class="sec-title">The Optical Deceptions</h2>
+  <p class="sec-desc">This is the architect&#39;s sharpest tool. The land is shaped, and the hazards placed, so that your eyes report something untrue — usually to make you club wrong or aim wrong. Here are the tricks, and what they are really doing to you.</p>
+  <table class="tbl">
+    <tr><th>The illusion</th><th>How it&#39;s built</th><th>What it makes you do</th></tr>
+    <tr><td>Foreshortening</td><td>A bunker or mound placed well short of the green, in line with it, so the two appear joined</td><td>Under-club — you play the front bunker as if it were at the green and come up short</td></tr>
+    <tr><td>The hidden run-off &amp; false front</td><td>A green that slopes away at the front edge, invisible from the fairway</td><td>Land it just short of the flag and watch it trickle back off the front — a "good" shot rejected</td></tr>
+    <tr><td>Level-lip bunkers</td><td>Greenside bunker whose top edge appears level with the putting surface, hiding the gap between</td><td>You misjudge the true distance to the pin and leave it short</td></tr>
+    <tr><td>Framing</td><td>Layered or staggered bunkering, or mounding, that squeezes the visual width of a landing area</td><td>The fairway looks far narrower than it is — you steer, tense up, or lay back needlessly</td></tr>
+    <tr><td>The false aiming line</td><td>A distant tree, steeple or bunker that draws the eye but is not the correct line</td><td>You aim at the obvious feature and end up out of position</td></tr>
+    <tr><td>Blind shots</td><td>A hazard or the green hidden behind a crest or dune</td><td>Doubt and under-commitment; you leave the shot or bail to the visible side</td></tr>
+    <tr><td>Deceptive contour / swales</td><td>A dip or upslope short of the target that flattens depth perception</td><td>The target looks closer than it is — again, under-clubbing</td></tr>
+  </table>
+  <div class="card card-gold">
+    <span class="card-tag">The Common Thread</span>
+    <h3>Almost Every Trick Makes You Under-Club</h3>
+    <p>Notice the pattern: foreshortening, level-lip bunkers, deceptive swales and hidden run-offs all push you toward taking too little club and coming up short. That is not an accident — most greens are best defended at the front, so architects have spent a century perfecting illusions that leave you short. Simply knowing this — and taking one more club when a hole "looks" a certain distance — defeats the majority of golf&#39;s optical traps on its own.</p>
+  </div>
+</div>
+
+<div class="sec" id="reading">
+  <h2 class="sec-title">Reading a Hole — The Method</h2>
+  <p class="sec-desc">A repeatable routine for stepping onto a tee, seeing past the illusion, and identifying what the designer actually wants — and what you will actually do instead.</p>
+  <ul class="steps">
+    <li><span class="step-n">1</span><div><strong>Find the intended line first.</strong> Ask "where does the designer want the brave player to go, and what does that earn them?" The reward line usually flirts with a hazard and opens the best angle to the green. You do not have to take it — but you must identify it, because everything else on the hole is arranged around it.</div></li>
+    <li><span class="step-n gd">2</span><div><strong>Separate where trouble</strong> is <strong>from where it looks.</strong> Consult your yardage book, GPS or rangefinder, not your eyes. Check the real carry over that "greenside" bunker (it may be well short of the green), the true distance to a fairway trap that looks in range, and whether the fairway is genuinely as narrow as it appears.</div></li>
+    <li><span class="step-n rs">3</span><div><strong>Read the green&#39;s defences and tilt.</strong> Which side is the false front or run-off on? Where is the fat, safe portion? A green that tilts back-to-front and is guarded front-left is telling you to approach from the right and favour the middle — the pin behind the bunker is a trap.</div></li>
+    <li><span class="step-n lm">4</span><div><strong>Identify the sucker pin.</strong> On most holes there is one flag position the design dares you to attack — tucked behind a hazard, on a shelf, near a run-off. Recognise it and aim at the fat of the green instead, taking your medicine of a longer putt for a much lower chance of disaster.</div></li>
+    <li><span class="step-n">5</span><div><strong>On a blind or unfamiliar shot, assume the trouble is on the tempting side.</strong> Architects hide hazards where the aggressive player would go. Until you know a course, trust the yardage, aim at the visible safe target, and never chase a line you cannot see.</div></li>
+  </ul>
+  <div class="drill-box">
+    <span class="dl">🗺️ Pre-Round Habit</span>
+    <h4>Study the Card and the Yardage Book on the First Tee</h4>
+    <p>Five minutes with the course planner or app before you play reveals the design intent of the holes you have not seen — dog-leg directions, cross-hazards, green depths. Depth is the number that beats optical illusion: a 35-yard-deep green means a front and back pin can be three clubs apart, and knowing that stops the eye fooling you. See Guide 31 (On-Course Notes) and Guide 08 (Pro Round Prep).</p>
+  </div>
+</div>
+
+<div class="sec" id="counter">
+  <h2 class="sec-title">Beating the Trap — Playing Principles</h2>
+  <p class="sec-desc">Turn the reading into scoring. These principles convert an understanding of design into fewer shots.</p>
+  <div class="card card-teal">
+    <span class="card-tag">Principle 1</span>
+    <h3>Trust the Number, Never the Picture</h3>
+    <p>When your eye and your yardage disagree, the yardage is right and your eye is being manipulated — that is literally the architect&#39;s job. Commit to the measured distance and the club it calls for, especially when a target "looks" shorter than the book says. This single discipline neutralises most foreshortening and depth-perception tricks.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Principle 2</span>
+    <h3>Club for the Back of the Trouble</h3>
+    <p>Because the design wants you short, take enough club to carry comfortably past the front hazard and reach the middle of the green — not just enough to "just" get there. Being pin-high or slightly long is very often safer than the front edge the hole is defending. Middle-of-the-green is the answer to most sucker pins.</p>
+  </div>
+  <div class="card card-rust">
+    <span class="card-tag">Principle 3</span>
+    <h3>Play to the Fat Side, From the Right Angle</h3>
+    <p>Strategic holes reward angle. If challenging the hazard off the tee opens the green and you can carry it eight times in ten, take it. If not, play the safe side and accept a harder — but still manageable — approach. Either way, aim your approach at the largest part of the green that leaves an uphill putt, not at the flag the designer has hidden.</p>
+  </div>
+  <div class="card card-lime">
+    <span class="card-tag">Principle 4</span>
+    <h3>Decline the Duel You Can&#39;t Win</h3>
+    <p>A heroic carry or a penal forced shot is only worth taking on when the odds genuinely favour you. Golf&#39;s architects bank on ego. Knowing you have read the trap and chosen the smart line — even when it looks timid — is the mark of a player who scores. The bravest-looking shot and the best-scoring shot are frequently not the same shot.</p>
+  </div>
+</div>
+
+<div class="sec" id="examples">
+  <h2 class="sec-title">Worked Examples</h2>
+  <p class="sec-desc">Four archetypal situations you will meet, and the read that beats each.</p>
+  <div class="card">
+    <span class="card-tag">The False Front</span>
+    <h3>The Green That Spits Back Good Shots</h3>
+    <p>A par 4 where the green slopes away toward you at the front. Landing short of the flag — normally a safe miss — sees the ball trickle twenty yards back down the fairway. <strong style="color:var(--white);">The read:</strong> the front is a rejection zone, not a bail-out. Take one more club, land the ball on the middle or back of the green, and let a longer putt be your "miss." Never aim at a front pin on a false-front green.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">The Redan</span>
+    <h3>The Green That Wants a Bank Shot</h3>
+    <p>A long par 3 with the green angled away, sloping from front-right to back-left, guarded by a deep bunker front-left. <strong style="color:var(--white);">The read:</strong> the design does not want a shot fired at the flag — it wants you to land the ball short and right on the higher ground and let the slope feed it down toward the pin. Aim at the front-right of the green, play enough club, and use the architecture instead of fighting it.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">The Cape / Heroic Carry</span>
+    <h3>The Diagonal That Tempts Your Ego</h3>
+    <p>A dog-leg where a diagonal carry over water or waste lets you bite off as much as you dare. <strong style="color:var(--white);">The read:</strong> pick your carry honestly. The extra thirty yards from cutting the corner is real, but so is the penalty. Choose the line you would successfully carry eight times in ten from this exact lie and wind — not the hero line you would make once. Then commit fully; a half-hearted heroic shot is the worst of both worlds.</p>
+  </div>
+  <div class="card card-rust">
+    <span class="card-tag">The Blind Tee Shot</span>
+    <h3>The Crest That Hides the Landing</h3>
+    <p>A tee shot over a rise where you cannot see where the ball lands. <strong style="color:var(--white);">The read:</strong> the trouble is almost always on the aggressive side of the hidden landing area — that is why it is hidden. Find the marker post or aiming feature the course provides, trust the yardage book for the safe carry, aim at the visible target line, and do not chase distance into ground you cannot see. Position beats power on every blind hole.</p>
+  </div>
+  <div class="card card-lime">
+    <span class="card-tag">Related Playbooks</span>
+    <h3>Where to Go Next</h3>
+    <p>Guide 20 (Course Management) to turn these reads into a shot plan; Guide 50 (Links Golf Strategy) for the ground-game and wind that classic architecture demands; Guide 31 (On-Course Notes) and Guide 08 (Pro Round Prep) for building a course-planning routine that defeats the eye before you tee off.</p>
+  </div>
+</div>
+
+</div>
+<div class="footer">STANDARD PLAYBOOK · GUIDE 73 v1.0 · READING THE ARCHITECT&#39;S MIND · THE SCRATCH PROJECT · © 2026</div>
+<a href="index.html" class="home-btn">&#8962; Home</a>
+<script>function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});}</script>
+
+<!-- ONWARD NAV -->
+<div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
+  <button type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(160,200,80,0.35);background:#111e11;color:rgba(232,240,216,0.9);font-size:18px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8593;</button>
+  <a href="index.html" aria-label="All guides" style="width:44px;height:44px;border-radius:50%;border:1px solid #2d7a1c;background:#2d7a1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8962;</a>
+</div>
+<style>@media print{.onward-nav{display:none!important;}}</style>
+</body></html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-07-09 · 70_grip_fundamentals.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Grip Fundamentals — The Scratch Project</title>
+<meta name="description" content="The full-swing grip (strong, neutral, weak), overlap vs interlock vs ten-finger, and the putting grips that fix pulls, pushes and the yips — with a framework for matching your grip to your miss.">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#162416;
+  --border:rgba(160,200,80,.14);--border-hi:rgba(160,200,80,.32);
+  --lime:#a0c850;--lime-dim:rgba(160,200,80,.08);
+  --gold:#e0b840;--gold-dim:rgba(224,184,64,.08);--gold-border:rgba(224,184,64,.22);
+  --teal:#48b0a8;--teal-dim:rgba(72,176,168,.08);--teal-border:rgba(72,176,168,.22);
+  --rust:#d86030;--rust-dim:rgba(216,96,48,.08);--rust-border:rgba(216,96,48,.22);
+  --white:#e8f0d8;--muted:rgba(232,240,216,.6);--faint:rgba(232,240,216,.08);
+  --r:10px;--r-sm:6px;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.topbar a:hover{color:var(--lime);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+.hero{background:linear-gradient(160deg,#0f2010 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.6rem);font-weight:700;line-height:1.05;margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:500px;margin-bottom:14px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:4px 10px;border-radius:20px;}
+.nav{display:flex;gap:0;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);-webkit-overflow-scrolling:touch;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 14px;cursor:pointer;white-space:nowrap;transition:all .15s;margin-bottom:-1px;-webkit-tap-highlight-color:transparent;}
+.tab.active{color:var(--teal);border-bottom-color:var(--teal);}
+.page{max-width:680px;margin:0 auto;padding:20px 16px 80px;}
+.sec{display:none;}.sec.active{display:block;}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.sec-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:18px;padding-left:10px;border-left:2px solid var(--teal);}
+.badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:10px;}
+.badge-gold{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);}
+.badge-rust{background:var(--rust-dim);border-color:var(--rust-border);color:var(--rust);}
+.badge-lime{background:var(--lime-dim);border-color:var(--border-hi);color:var(--lime);}
+.card{background:linear-gradient(145deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(72,176,168,.3),transparent);}
+.card-gold{border-color:var(--gold-border);}.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.3),transparent);}
+.card-rust{border-color:var(--rust-border);}.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.3),transparent);}
+.card-lime{border-color:var(--border-hi);}.card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-teal{border-color:var(--teal-border);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-rust .card-tag{color:var(--rust);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:10px;}
+.card p{font-size:13px;color:var(--muted);line-height:1.75;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:6px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-n.gd{color:var(--gold);background:var(--gold-dim);border-color:var(--gold-border);}
+.step-n.rs{color:var(--rust);background:var(--rust-dim);border-color:var(--rust-border);}
+.step-n.lm{color:var(--lime);background:var(--lime-dim);border-color:var(--border-hi);}
+/* Grip scale */
+.grip-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:12px 0;}
+.grip-cell{border-radius:6px;padding:10px 6px;text-align:center;}
+.grip-cell .gn{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;}
+.grip-cell .gl{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.3;}
+.g1{background:rgba(72,176,168,.15);border:1px solid rgba(72,176,168,.3);}
+.g2{background:rgba(94,203,62,.15);border:1px solid rgba(94,203,62,.3);}
+.g3{background:rgba(160,200,80,.15);border:1px solid rgba(160,200,80,.3);}
+.g4{background:rgba(224,184,64,.15);border:1px solid rgba(224,184,64,.3);}
+.g5{background:rgba(216,96,48,.15);border:1px solid rgba(216,96,48,.3);}
+.pull-quote{border-left:3px solid var(--teal);padding:12px 16px;margin:16px 0;background:var(--teal-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--white);line-height:1.6;}
+.pull-quote cite{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:8px;}
+.drill-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;margin:12px 0;}
+.drill-box .dl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.drill-box h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.drill-box p{font-size:12px;color:var(--muted);line-height:1.7;}
+.footer{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);text-align:center;padding:24px 20px;border-top:1px solid var(--border);margin-top:40px;}
+a.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--lime);color:var(--bg);font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+
+/* ── Five Pillars Logo (tsp) ── */
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;position:relative;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+<body>
+<div class="topbar"><a href="index.html">&#8962; All Playbooks</a><span class="tsp-mini" aria-hidden="true"><span class="tsp-mini-bar" style="width:4px;height:9px;background:#e0a830;"></span><span class="tsp-mini-bar" style="width:4px;height:13px;background:#a0c850;"></span><span class="tsp-mini-bar" style="width:4px;height:16px;background:#4cb8c4;"></span><span class="tsp-mini-bar" style="width:4px;height:7px;background:#c8d8e8;"></span><span class="tsp-mini-bar" style="width:4px;height:11px;background:#c87830;"></span></span><span class="topbar-brand">The Scratch Project</span></div>
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <p class="hero-label">Strike Pillar · Guide 70</p>
+  <h1>Grip<br><em>Fundamentals</em></h1>
+  <p class="hero-sub">The grip is your only physical connection to the club — and the single biggest influence on clubface angle, which controls roughly three-quarters of where the ball starts. This guide covers the full-swing grip (strong, neutral, weak), the three ways to join your hands, and the putting grips that fix the most common stroke faults. Grip pressure has its own guide (62); this one is about hand position and shape.</p>
+  <div class="hero-tags"><span class="htag">🤝 Hand Position</span><span class="htag">🎯 Face Control</span><span class="htag">⛳ Putting Grips</span><span class="htag">🔧 Fault Fixes</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('why',this)">Why Grip Rules</button>
+  <button class="tab" onclick="show('strength',this)">Strong / Neutral / Weak</button>
+  <button class="tab" onclick="show('join',this)">Joining the Hands</button>
+  <button class="tab" onclick="show('putting',this)">Putting Grips</button>
+  <button class="tab" onclick="show('choose',this)">Choosing Yours</button>
+  <button class="tab" onclick="show('drills',this)">Check & Drills</button>
+</div>
+<div class="page">
+
+<div class="sec active" id="why">
+  <h2 class="sec-title">Why the Grip Governs Ball Flight</h2>
+  <p class="sec-desc">Modern launch data changed how we understand ball flight. The clubface — not the swing path — is the dominant factor in where the ball starts and a major factor in how it curves. And the face is controlled, more than anything else, by the hands.</p>
+  <div class="pull-quote"><p>"Good golf begins with a good grip."</p><cite>Ben Hogan — the first fundamental of <em>Five Lessons</em></cite></div>
+  <div class="badge">The Ball-Flight Law</div>
+  <div class="card card-teal">
+    <span class="card-tag">Face vs. Path</span>
+    <h3>The Face Starts the Ball, and Your Hands Own the Face</h3>
+    <p>Under the modern ball-flight model, the ball starts roughly 75–85% in the direction the clubface is pointing at impact, and curves away from the swing path relative to that face. This means a slice, hook, push or pull is very often a face problem — and the face is set, first and foremost, by where your hands sit on the club. Fix the grip and you often fix the flight without touching the swing itself.</p>
+  </div>
+  <div class="badge badge-gold">The Cost of a Bad Grip</div>
+  <div class="card card-gold">
+    <span class="card-tag">Compensations</span>
+    <h3>A Poor Grip Forces the Body to Compensate</h3>
+    <p>If the grip delivers a face that is chronically open or closed, the golfer unconsciously builds compensating moves — flipping the hands, holding off the release, stalling the body — to square it up in time. These compensations must be re-timed on every swing, which is why grip-driven ball flights are so inconsistent under pressure. A sound grip removes the need to compensate, and is the cheapest, fastest improvement available to most amateurs.</p>
+  </div>
+</div>
+
+<div class="sec" id="strength">
+  <h2 class="sec-title">Strong, Neutral &amp; Weak</h2>
+  <p class="sec-desc">"Strong" and "weak" describe rotation, not effort. They refer to how far your hands are turned around the grip — which sets the tendency of the clubface to close or open through impact. This is the setting that changes ball flight independent of your swing path.</p>
+  <div class="card">
+    <span class="card-tag">How to Read Your Own Grip</span>
+    <h3>Knuckles &amp; the "V"s</h3>
+    <p>Take your normal grip and look down. Count the knuckles you can see on your lead hand (left hand for a right-hander), and note where the "V" formed by thumb and forefinger of each hand points. These two checkpoints tell you instantly whether your grip is strong, neutral or weak.</p>
+    <table class="tbl">
+      <tr><th>Grip</th><th>Lead-hand knuckles visible</th><th>"V"s point toward</th><th>Face tendency &amp; typical flight</th></tr>
+      <tr><td>Strong</td><td>3 (or more)</td><td>Trail shoulder</td><td>Closes the face → draw/hook bias; de-lofts slightly; helps a slicer</td></tr>
+      <tr><td>Neutral</td><td>2</td><td>Between trail ear and shoulder</td><td>Square tendency; straightest ball flight for most</td></tr>
+      <tr><td>Weak</td><td>1 (or none)</td><td>Chin / lead side</td><td>Opens the face → fade/slice bias; adds loft; helps a hooker</td></tr>
+    </table>
+  </div>
+  <div class="badge badge-lime">The Practical Point</div>
+  <div class="card card-lime">
+    <span class="card-tag">Grip as a Cure</span>
+    <h3>Match the Grip to Your Miss</h3>
+    <p>Fighting a slice? Strengthen the grip — rotate both hands slightly away from the target until you see a third knuckle. Fighting a hook? Weaken it toward neutral. Change one increment at a time (a quarter-turn), hit ten balls, and read the result. Most amateurs slice, and most amateurs hold the club too weak — the single most common grip fault in the game.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Palm vs. Fingers</span>
+    <h3>Where the Handle Sits in the Lead Hand</h3>
+    <p>Independent of strength, the club should run across the base of the fingers of the lead hand, not up through the palm. A grip seated in the fingers lets the wrists hinge freely — which is where clubhead speed comes from. A grip buried in the palm restricts the hinge and leaks power. Check: when you close the lead hand, the pad of the hand should sit on top of the grip, and you should feel the handle under the fingers, not in the palm.</p>
+  </div>
+</div>
+
+<div class="sec" id="join">
+  <h2 class="sec-title">Joining the Hands: Overlap, Interlock, Ten-Finger</h2>
+  <p class="sec-desc">This is a separate decision from strong/neutral/weak. How you connect the two hands affects how unified they feel and where power comes from — but it does not, on its own, change the face angle. Pick the one that lets your hands work as a single unit.</p>
+  <div class="card">
+    <span class="card-tag">Vardon / Overlap</span>
+    <h3>The Most Common Choice</h3>
+    <p>The trail-hand little finger rests on top of, or in the channel between, the lead-hand index and middle fingers. Named after Harry Vardon, it unifies the hands and is the default for most players with average-to-large hands and reasonable hand strength. If in doubt, start here.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Interlock</span>
+    <h3>Locked Together</h3>
+    <p>The trail-hand little finger and lead-hand index finger interlock. It creates a more connected, "welded" feel and suits players with smaller hands, shorter fingers, or less grip strength — it stops the hands separating. Both Jack Nicklaus and Tiger Woods used it. The trade-off: it can encourage a slightly weaker lead-hand position if not monitored.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Ten-Finger / Baseball</span>
+    <h3>All Ten on the Club</h3>
+    <p>Every finger sits on the grip with no overlap or interlock. It gives the trail hand maximum leverage and is genuinely useful for juniors, players with small or weak hands, seniors, and anyone with arthritis or hand-joint pain. The watch-out is trail-hand dominance — the stronger hand can take over and flip the face closed. If you use it, keep the hand pressures matched.</p>
+  </div>
+  <div class="drill-box">
+    <span class="dl">📋 Quick Test</span>
+    <h4>Which Join Suits You?</h4>
+    <p>Grip the club each way and make three slow half-swings with each. The correct one for you is whichever lets both hands feel like a single unit with no gap opening at the top of the backswing — not the one a particular tour player uses. Hand size and strength decide this, not fashion.</p>
+  </div>
+</div>
+
+<div class="sec" id="putting">
+  <h2 class="sec-title">Putting Grips — Fixing the Stroke at the Source</h2>
+  <p class="sec-desc">The full-swing grip is about power and face control. The putting grip is about the opposite: removing the small muscles and wrist action that cause misses. Each putting grip below solves a specific problem — the skill is matching the grip to your fault, not copying a favourite pro.</p>
+  <div class="card">
+    <span class="card-tag">The Baseline</span>
+    <h3>Conventional Reverse Overlap</h3>
+    <p>Lead-hand index finger lies over the fingers of the trail hand (the reverse of the full-swing overlap). Palms face each other so the hands work together and the wrists stay quiet. It is the standard, feel-friendly starting point and works well for players whose stroke is already reliable. If your putting is not broken, there is no need to change from this.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Fixes: pulls, wristy strokes, breakdown</span>
+    <h3>Cross-Hand (Left-Hand-Low)</h3>
+    <p>The lead hand goes below the trail hand on the grip. This levels the shoulders at address, quiets the lead wrist, and stops it "breaking down" (flipping) through impact — the cause of pulled putts and inconsistent pace. It promotes a stroke driven by the rocking of the shoulders rather than the hands. If you pull short putts or feel handsy over the ball, this is the first change to try. Widely used on tour; Jordan Spieth is a well-known example.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Fixes: yips, pushes, deceleration, pressure twitch</span>
+    <h3>The Claw (Pencil / Saw)</h3>
+    <p>The lead hand holds the grip conventionally at the top; the trail hand is turned so it holds the putter lightly like a pencil or claw, off to the side. This largely removes the trail hand's small muscles from the stroke — the muscles responsible for the yips and for pushing or flicking the face. It stabilises the face beautifully under pressure. If you have a nervous, twitchy trail hand or the yips, the claw is the classic answer. Used by Justin Rose, Sergio Garcia, and (in his own variant) Phil Mickelson.</p>
+  </div>
+  <div class="card card-rust">
+    <span class="card-tag">Fixes: everything wrist-related — the maximum-stability option</span>
+    <h3>Arm-Lock</h3>
+    <p>The grip is pressed against the lead forearm and the shaft leans forward, effectively taking the wrists out of the stroke entirely. This is legal under the anchoring ban as long as the club is held against the forearm and not anchored to the body. It delivers the most stable face of any method, but requires a purpose-built arm-lock putter — longer, with more loft and a stronger shaft lean built in. Bryson DeChambeau, Matt Kuchar and Webb Simpson are notable users. Consider it if you have tried everything else and still lack a repeatable stroke.</p>
+  </div>
+  <table class="tbl">
+    <tr><th>Your putting miss</th><th>Grip to try first</th></tr>
+    <tr><td>Pull left / wristy / breaks down</td><td>Cross-hand (left-hand-low)</td></tr>
+    <tr><td>Push right / decelerate / yips / pressure twitch</td><td>Claw</td></tr>
+    <tr><td>No repeatable stroke, wrists too active everywhere</td><td>Arm-lock (needs a special putter)</td></tr>
+    <tr><td>Nothing wrong — good feel and pace</td><td>Stay conventional reverse overlap</td></tr>
+  </table>
+</div>
+
+<div class="sec" id="choose">
+  <h2 class="sec-title">Choosing Your Grip — A Decision Framework</h2>
+  <p class="sec-desc">Grip is not a matter of copying; it is a matter of matching your grip to your body and your misses. Work through the three decisions in order, changing one thing at a time.</p>
+  <ul class="steps">
+    <li><span class="step-n">1</span><div><strong>Set the strength to fight your miss.</strong> Slice or push-fade → strengthen toward three knuckles. Hook or pull → weaken toward one. No consistent curve → neutral, two knuckles. This is the setting that changes your ball flight, so change it first and in quarter-turns.</div></li>
+    <li><span class="step-n gd">2</span><div><strong>Pick the join by hand size and strength.</strong> Average/large hands, decent strength → overlap. Small hands, short fingers, weaker grip → interlock. Very weak hands, juniors, arthritis → ten-finger. This does not affect flight, so choose purely on which feels unified.</div></li>
+    <li><span class="step-n rs">3</span><div><strong>Match the putting grip to your stroke fault,</strong> using the table in the previous tab. Only change from conventional if you have an actual, repeating miss to solve.</div></li>
+    <li><span class="step-n lm">4</span><div><strong>Give any change four rounds before judging it.</strong> A new grip always feels wrong for the first two sessions because your hands have a strong memory. Feel is a liar here; ball flight and made-putt count are the only honest referees. Cross-reference <strong>Guide 62 — Grip Pressure &amp; Tension</strong> for how hard to hold once the position is right.</div></li>
+  </ul>
+  <div class="card card-lime">
+    <span class="card-tag">For Every Handicap</span>
+    <h3>Where This Pays Off Most</h3>
+    <p>For a 24-handicapper, correcting a chronically weak, slice-inducing grip is often worth several shots a round on its own — it is the highest-leverage change available. For a low-handicap or scratch player, the grip is usually already sound, so the value shifts to the putting grip: switching to a claw or cross-hand under competitive pressure can be the difference between holing and missing inside ten feet when it matters.</p>
+  </div>
+</div>
+
+<div class="sec" id="drills">
+  <h2 class="sec-title">Checking &amp; Grooving Your Grip</h2>
+  <p class="sec-desc">The grip degrades slowly and invisibly — it drifts a little every few weeks until, months later, a fault has appeared "from nowhere." These checks keep it honest.</p>
+  <div class="drill-box">
+    <span class="dl">🪞 Drill 1 — The Mirror &amp; Photo Check</span>
+    <h4>See What You Actually Do</h4>
+    <p>Once a month, take your grip and photograph it from face-on and down-the-line, or check it in a mirror. Count the lead-hand knuckles and check the "V"s against the tab above. Golfers are astonishingly bad at feeling their own grip — the camera does not lie, and this two-minute check catches drift before it becomes a swing fault.</p>
+  </div>
+  <div class="drill-box">
+    <span class="dl">🎯 Drill 2 — Split-Grip Face Awareness</span>
+    <h4>Feel the Face Rotate</h4>
+    <p>Grip the club with your hands slightly apart (an inch of gap). Make slow half-swings and feel how the trail hand rotates the face open and closed through impact. This exaggerates the sensation of the hands controlling the face and teaches you what "square" feels like. Then rejoin the hands and keep the same feeling.</p>
+  </div>
+  <div class="drill-box">
+    <span class="dl">⛳ Drill 3 — The Putting Grip Ladder</span>
+    <h4>Prove Which Grip Wins for You</h4>
+    <p>On the practice green, hit ten putts from six feet with each grip you are considering (conventional, cross-hand, claw). Count makes. Repeat over three sessions. The grip with the highest total make-count is your grip — this replaces guesswork and pro-copying with your own evidence.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Reminder</span>
+    <h3>One Change at a Time</h3>
+    <p>Never alter grip strength, join, and putting grip in the same week — you will not know which change did what. Isolate one variable, test it over four rounds, keep it or bin it, then move to the next. Grip changes are the most powerful and the most patience-testing improvements in golf.</p>
+  </div>
+</div>
+
+</div>
+<div class="footer">STANDARD PLAYBOOK · GUIDE 70 v1.0 · GRIP FUNDAMENTALS · THE SCRATCH PROJECT · © 2026</div>
+<a href="index.html" class="home-btn">&#8962; Home</a>
+<script>function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});}</script>
+
+<!-- ONWARD NAV -->
+<div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
+  <button type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(160,200,80,0.35);background:#111e11;color:rgba(232,240,216,0.9);font-size:18px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8593;</button>
+  <a href="index.html" aria-label="All guides" style="width:44px;height:44px;border-radius:50%;border:1px solid #2d7a1c;background:#2d7a1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8962;</a>
+</div>
+<style>@media print{.onward-nav{display:none!important;}}</style>
+
+<!-- RELATED GUIDES PANEL -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
+  <p style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
+  <div style="display:flex;flex-wrap:wrap;gap:10px;">
+    <a href="62_grip_tension.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">✋</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Grip Pressure & Tension</span>
+    </a>
+    <a href="19_swing_mechanics.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">⚙️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Swing Mechanics</span>
+    </a>
+    <a href="01_putting_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🎯</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Putting Playbook</span>
+    </a>
+    <a href="11_shot_dispersion.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">📊</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Shot Dispersion Mapping</span>
+    </a>
+    <a href="03_longgame_pro.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
+      <span style="font-size:1.3rem;flex-shrink:0;">🏌️</span>
+      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Long Game Playbook</span>
+    </a>
+  </div>
+  <div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(160,200,80,0.15);text-align:center;">
+    <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+    <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+    <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+    <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+    <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+  </div>
+</div>
+</body></html>

@@ -8,17 +8,17 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Golf Playbooks">
 <title>Golf Playbooks — Find Your Biggest Scoring Leak</title>
-  <meta name="description" content="Stop guessing where you're losing shots. 47 expert playbooks using strokes gained analytics to identify your biggest scoring leaks and give you a prioritised practice plan. Works from 24 handicap down to scratch. WHS compatible worldwide.">
+  <meta name="description" content="Stop guessing where you're losing shots. 51 expert playbooks using strokes gained analytics to identify your biggest scoring leaks and give you a prioritised practice plan. Works from 24 handicap down to scratch. WHS compatible worldwide.">
   <meta name="keywords" content="golf improvement, strokes gained, handicap reduction, golf playbooks, golf practice plan, golf analytics, scratch golf">
   <meta name="author" content="The Scratch Project">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Golf Playbooks — Find Your Biggest Scoring Leak">
-  <meta property="og:description" content="47 expert playbooks. Strokes gained analytics. A prioritised plan to reach your handicap goal — at any level. Works with Arccos, Shot Scope, Garmin, or any tracking tool. WHS compatible worldwide.">
+  <meta property="og:description" content="51 expert playbooks. Strokes gained analytics. A prioritised plan to reach your handicap goal — at any level. Works with Arccos, Shot Scope, Garmin, or any tracking tool. WHS compatible worldwide.">
   <meta property="og:image" content="https://thescratchproject.co.uk/ogimage.png">
   <meta property="og:site_name" content="The Scratch Project — Golf Playbooks">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Golf Playbooks — Find Your Biggest Scoring Leak">
-  <meta name="twitter:description" content="47 expert playbooks. Strokes gained analytics. A prioritised plan to reach your handicap goal — at any level. Works with Arccos, Shot Scope, Garmin, or any tracking tool. WHS compatible worldwide.">
+  <meta name="twitter:description" content="51 expert playbooks. Strokes gained analytics. A prioritised plan to reach your handicap goal — at any level. Works with Arccos, Shot Scope, Garmin, or any tracking tool. WHS compatible worldwide.">
   <meta name="twitter:image" content="https://thescratchproject.co.uk/ogimage.png">
 <style>
 /* Self-hosted fonts — no external requests, GDPR compliant */
@@ -102,9 +102,52 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
 .hero-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,210,80,0.85);margin-bottom:14px;position:relative;}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2.2rem,8vw,3.4rem);font-weight:900;line-height:1.05;color:#ffffff;margin-bottom:10px;position:relative;}
 .hero h1 em{color:#f5d050;font-style:italic;}
-.hero-sub{font-size:13.5px;color:rgba(220,235,210,0.82);max-width:460px;margin:0 auto 22px;font-weight:300;line-height:1.7;position:relative;}
+.hero-sub{font-size:15px;color:rgba(224,238,214,0.88);max-width:460px;margin:0 auto 22px;font-weight:400;line-height:1.7;position:relative;}
 .hero-tags{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;position:relative;}
 .htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 11px;border-radius:4px;background:rgba(245,196,53,0.15);border:1px solid rgba(245,196,53,0.35);color:#f5d050;}
+
+/* ── Hero primary CTA (leak finder) ── */
+.hero-cta{display:inline-flex;align-items:center;gap:9px;margin:20px auto 2px;padding:14px 24px;border-radius:12px;background:linear-gradient(135deg,#f5c435,#e0a020);color:#1a2410;font-family:'Inter',sans-serif;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 4px 18px rgba(245,196,53,0.35);position:relative;transition:transform .14s,box-shadow .14s;}
+.hero-cta:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(245,196,53,0.45);}
+.hero-cta:active{transform:scale(0.98);}
+.hero-cta span{font-weight:600;font-size:13px;opacity:0.85;}
+
+/* ── Front-door router ── */
+.frontdoor{margin:22px 0 8px;}
+.fd-head{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;text-align:center;}
+.fd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.fd-card{display:flex;flex-direction:column;align-items:center;text-align:center;gap:7px;padding:16px 10px;border-radius:var(--r);background:var(--surface);border:1px solid var(--border);text-decoration:none;color:inherit;box-shadow:0 1px 4px rgba(0,0,0,0.06);transition:border-color .16s,box-shadow .16s,transform .12s;}
+.fd-card:hover{border-color:var(--border-hi);box-shadow:0 4px 14px rgba(0,0,0,0.1);transform:translateY(-1px);}
+.fd-card:active{transform:scale(0.98);}
+.fd-emoji{font-size:1.7rem;line-height:1;}
+.fd-title{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;line-height:1.15;}
+.fd-desc{font-size:11.5px;color:var(--text-muted);line-height:1.45;}
+.fd-card.fd-lead{border-color:var(--gold-border);background:var(--gold-bg);}
+@media(max-width:480px){.fd-grid{grid-template-columns:1fr;}.fd-card{flex-direction:row;text-align:left;gap:12px;}.fd-card .fd-emoji{font-size:1.5rem;}}
+
+/* ── Search ── */
+.search-wrap{margin:20px 0 6px;position:relative;}
+.search-box{width:100%;box-sizing:border-box;padding:13px 42px 13px 42px;border:1.5px solid var(--border);border-radius:12px;background:var(--surface);font-family:'Inter',sans-serif;font-size:15px;color:var(--text-primary);box-shadow:0 1px 4px rgba(0,0,0,0.06);}
+.search-box:focus{outline:none;border-color:var(--lime);box-shadow:0 0 0 3px rgba(94,203,62,0.15);}
+.search-ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);font-size:15px;opacity:.5;pointer-events:none;}
+.search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);border:none;background:var(--border);color:var(--text-muted);width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:14px;line-height:1;display:none;}
+.search-clear.on{display:block;}
+.search-count{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);margin:10px 2px 0;display:none;}
+body.searching .search-count{display:block;}
+.guide-card.search-hidden{display:none;}
+body.searching .pillar-sec{display:block;}
+body.searching .section-head,body.searching .start-label,body.searching .plan-label,body.searching .tracker-label,body.searching .hero-stats,body.searching .tip-bar,body.searching .frontdoor,body.searching .hero-cta-row,body.searching .pillar-header{display:none;}
+body.searching .start-here-wrap,body.searching .plan-block,body.searching .tracker-block{background:transparent;border:none;padding:0;}
+.hidden-wrap{display:none;}
+
+/* ── PWA install banner ── */
+.install-bar{display:none;align-items:center;gap:12px;background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:var(--r-sm);padding:13px 14px;margin-bottom:28px;}
+.install-bar.show{display:flex;}
+.install-bar .ib-txt{flex:1;font-size:13px;color:#6b4e08;line-height:1.5;}
+.install-bar .ib-txt strong{display:block;color:var(--gold);font-size:13.5px;margin-bottom:2px;}
+.install-bar button{flex-shrink:0;border:none;border-radius:8px;padding:9px 16px;font-family:'Inter',sans-serif;font-weight:700;font-size:13px;cursor:pointer;}
+.ib-install{background:var(--gold);color:#fff;}
+.ib-dismiss{background:transparent;color:var(--text-muted);padding:9px 8px;}
 
 .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:24px 0;}
 .stat-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px 12px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,0.06);}
@@ -112,7 +155,7 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
 .stat-lbl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);margin-top:5px;}
 
 .tip-bar{background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:var(--r-sm);padding:13px 16px;margin-bottom:28px;display:flex;gap:10px;align-items:flex-start;}
-.tip-bar p{font-size:12.5px;color:#6b4e08;line-height:1.65;}
+.tip-bar p{font-size:13.5px;color:#6b4e08;line-height:1.65;}
 .tip-bar strong{color:var(--gold);display:block;margin-bottom:2px;font-size:13px;}
 
 .index-wrap{max-width:720px;margin:0 auto;padding:0 16px 60px;}
@@ -135,7 +178,7 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
 .pillar-header{padding:24px 0 12px;display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--border);margin-bottom:6px;}
 .pillar-icon{font-size:1.7rem;line-height:1;}
 .pillar-name{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;line-height:1.1;}
-.pillar-tagline{font-size:13px;color:var(--text-muted);margin:10px 0 20px;line-height:1.7;font-weight:400;}
+.pillar-tagline{font-size:14px;color:var(--text-muted);margin:10px 0 20px;line-height:1.7;font-weight:400;}
 .ph-score   .pillar-name{color:var(--gold);}
 .ph-strike  .pillar-name{color:var(--lime);}
 .ph-measure .pillar-name{color:var(--teal);}
@@ -163,7 +206,7 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
 .p-prepare .card-number{color:var(--rust);}
 .p-compete .card-number{color:var(--violet);}
 .card-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--text-primary);line-height:1.22;margin-bottom:5px;}
-.card-desc{font-size:12.5px;color:var(--text-body);line-height:1.6;font-weight:400;}
+.card-desc{font-size:13.5px;color:var(--text-body);line-height:1.62;font-weight:400;}
 .card-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
 .card-tag{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:3px;background:#eef0ec;border:1px solid var(--border);color:var(--text-muted);font-weight:500;}
 .ct-gold  {background:var(--gold-tag-bg);  border-color:var(--gold-border);  color:var(--gold-tag-tx);}
@@ -181,14 +224,14 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
 .p-compete .guide-card:hover .card-arrow{color:var(--violet);}
 
 .start-here-wrap{background:var(--rust-bg);border:1.5px solid var(--rust-border);border-radius:var(--r);padding:4px;margin-bottom:10px;}
-.start-label{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);padding:10px 14px 4px;font-weight:500;}
+.start-label{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);padding:10px 14px 4px;font-weight:500;}
 .start-here-wrap .guide-card{margin-bottom:0;background:transparent;border:none;box-shadow:none;}
 .start-here-wrap .guide-card:hover{background:rgba(184,72,32,0.05);box-shadow:none;}
 .start-here-wrap .card-number{color:var(--rust);}
 .start-here-wrap .guide-card:hover .card-arrow{color:var(--rust);}
 
 .plan-block{background:var(--gold-bg);border:1.5px solid var(--gold-border);border-radius:var(--r);padding:4px;margin-bottom:10px;}
-.plan-label{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);padding:10px 14px 4px;font-weight:500;}
+.plan-label{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding:10px 14px 4px;font-weight:500;}
 .plan-block .guide-card{margin-bottom:0;background:transparent;border:none;border-top:1px solid var(--gold-border);box-shadow:none;}
 .plan-block .guide-card:first-of-type{border-top:none;}
 .plan-block .guide-card:hover{background:rgba(196,154,8,0.05);box-shadow:none;}
@@ -196,7 +239,7 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
 .plan-block .guide-card:hover .card-arrow{color:var(--gold);}
 
 .tracker-block{background:var(--lime-bg);border:1.5px solid var(--lime-border);border-radius:var(--r);padding:4px;margin-bottom:10px;}
-.tracker-label{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);padding:10px 14px 4px;font-weight:500;}
+.tracker-label{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);padding:10px 14px 4px;font-weight:500;}
 .tracker-block .guide-card{margin-bottom:0;background:transparent;border:none;box-shadow:none;}
 .tracker-block .guide-card:hover{background:rgba(45,122,28,0.05);box-shadow:none;}
 .tracker-block .card-number{color:var(--lime);}
@@ -218,7 +261,7 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
   .card-icon{width:44px;height:44px;font-size:1.2rem;}
   .card-title{font-size:.97rem;}
   .ptab{font-size:8.5px;padding:13px 10px;}
-  .card-desc{font-size:12px;}
+  .card-desc{font-size:13px;}
 }
 
 /* ── Five Pillars Logo (tsp) ── */
@@ -268,6 +311,9 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
     <span class="htag">🧠 Compete</span>
     <span class="htag">📱 Mobile Optimised</span>
   </div>
+  <div class="hero-cta-row" style="position:relative;">
+    <a class="hero-cta" href="sg_diagnostic.html">🔍 Find your biggest scoring leak <span>2-min diagnostic →</span></a>
+  </div>
 </div>
 
 <nav class="pillar-nav">
@@ -281,15 +327,45 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
 
 <div class="index-wrap">
 
+  <div class="search-wrap">
+    <span class="search-ico">🔍</span>
+    <input type="search" id="guideSearch" class="search-box" placeholder="Search all guides — e.g. bunker, yips, putting, wind…" autocomplete="off" aria-label="Search guides">
+    <button class="search-clear" id="searchClear" aria-label="Clear search">✕</button>
+    <div class="search-count" id="searchCount"></div>
+  </div>
+
+  <div class="frontdoor" id="frontdoor">
+    <div class="fd-head">New here? Pick your starting point</div>
+    <div class="fd-grid">
+      <a class="fd-card" href="quick_start.html">
+        <span class="fd-emoji">🚀</span>
+        <span class="fd-title">I'm new here</span>
+        <span class="fd-desc">5-minute orientation — what to read first and how to set up.</span>
+      </a>
+      <a class="fd-card fd-lead" href="sg_diagnostic.html">
+        <span class="fd-emoji">🔍</span>
+        <span class="fd-title">Find my weak area</span>
+        <span class="fd-desc">2-minute diagnostic pinpoints where you're losing the most shots.</span>
+      </a>
+      <a class="fd-card" href="10_scratch_plan.html">
+        <span class="fd-emoji">🏆</span>
+        <span class="fd-title">I'm chasing scratch</span>
+        <span class="fd-desc">The full 24-month master plan with SG targets at every milestone.</span>
+      </a>
+    </div>
+  </div>
+
   <div class="hero-stats">
-    <div class="stat-box"><div class="stat-num">47</div><div class="stat-lbl">Playbooks</div></div>
+    <div class="stat-box"><div class="stat-num">51</div><div class="stat-lbl">Playbooks</div></div>
     <div class="stat-box"><div class="stat-num">200+</div><div class="stat-lbl">Topics</div></div>
     <div class="stat-box"><div class="stat-num">Any</div><div class="stat-lbl">Handicap Level</div></div>
   </div>
 
-  <div class="tip-bar">
-    <span style="font-size:1.05rem;flex-shrink:0">💡</span>
-    <p><strong>Add to Home Screen</strong>Open in Safari → tap Share → "Add to Home Screen". Do the same for this page and the Performance Tracker to keep everything one tap away.</p>
+  <div class="install-bar" id="installBar">
+    <span style="font-size:1.35rem;flex-shrink:0">📲</span>
+    <div class="ib-txt" id="ibTxt"><strong>Install the app</strong>Add The Scratch Project to your home screen for one-tap access, offline.</div>
+    <button class="ib-install" id="ibInstall">Install</button>
+    <button class="ib-dismiss" id="ibDismiss" aria-label="Dismiss">✕</button>
   </div>
 
   <!-- ════════ THE PLAN ════════ -->
@@ -301,7 +377,7 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
       <div class="card-body">
         <div class="card-number">New Here?</div>
         <div class="card-title">Quick Start Guide</div>
-        <div class="card-desc">First time with The Scratch Project? Start here. A 5-minute orientation covering which guides to read first, how to set up your tracking tool, and how to build your first week of practice — before diving into the full 47-guide library.</div>
+        <div class="card-desc">First time with The Scratch Project? Start here. A 5-minute orientation covering which guides to read first, how to set up your tracking tool, and how to build your first week of practice — before diving into the full 51-guide library.</div>
         <div class="card-tags"><span class="card-tag ct-gold">Read First</span><span class="card-tag">5 Min Setup</span><span class="card-tag">Onboarding</span></div>
       </div>
       <div class="card-arrow">›</div>
@@ -545,6 +621,17 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
     </a>
   </div><!-- /sec-score -->
 
+    <a class="guide-card" href="73_course_architecture.html">
+      <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🏗️</div>
+      <div class="card-body">
+        <div class="card-number">Guide 73 · Course Design</div>
+        <div class="card-title">Reading the Architect's Mind</div>
+        <div class="card-desc">How course architects use design and optical illusion to manipulate your decisions — the three schools of design, the tricks that make you under-club and aim at trouble, and a method for reading a hole’s true intent and beating the trap.</div>
+        <div class="card-tags"><span class="card-tag ct-gold">New</span><span class="card-tag">Design Intent</span><span class="card-tag">Optical Deception</span><span class="card-tag">6 tabs</span></div>
+      </div>
+      <div class="card-arrow">&#8250;</div>
+    </a>
+
   <!-- ════════ STRIKE ════════ -->
     <a class="guide-card" href="50_links_golf_strategy.html">
       <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">🌬️</div>
@@ -652,6 +739,17 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
     </a>
   </div><!-- /sec-strike -->
 
+    <a class="guide-card" href="70_grip_fundamentals.html">
+      <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">🤝</div>
+      <div class="card-body">
+        <div class="card-number">Guide 70 · Grip</div>
+        <div class="card-title">Grip Fundamentals</div>
+        <div class="card-desc">The full-swing grip (strong, neutral, weak), overlap vs interlock vs ten-finger, and the putting grips that fix pulls, pushes and the yips — with a framework for matching your grip to your miss.</div>
+        <div class="card-tags"><span class="card-tag ct-lime">New</span><span class="card-tag">Face Control</span><span class="card-tag">Putting Grips</span><span class="card-tag">6 tabs</span></div>
+      </div>
+      <div class="card-arrow">&#8250;</div>
+    </a>
+
   <!-- ════════ MEASURE ════════ -->
     <a class="guide-card" href="59_practice_green_protocol.html">
       <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">⛳</div>
@@ -706,6 +804,17 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
     </a>
 
   </div><!-- /sec-measure -->
+
+    <a class="guide-card" href="72_equipment_decode.html">
+      <div class="card-icon" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">🏷️</div>
+      <div class="card-body">
+        <div class="card-number">Guide 72 · Equipment</div>
+        <div class="card-title">Decoding the Marketing</div>
+        <div class="card-desc">What MOI, CG, forgiveness and compression marketing actually mean for your game — plus a tiered, current UK buying guide to launch monitors and rangefinders worth your money.</div>
+        <div class="card-tags"><span class="card-tag ct-teal">New</span><span class="card-tag">Buying Guide</span><span class="card-tag">Jargon Decoded</span><span class="card-tag">6 tabs</span></div>
+      </div>
+      <div class="card-arrow">&#8250;</div>
+    </a>
 
   <!-- ════════ PREPARE ════════ -->
   <div class="pillar-sec p-prepare" id="sec-prepare">
@@ -898,11 +1007,22 @@ body{background:var(--bg);color:var(--text-primary);font-family:'Inter',sans-ser
       </div>
       <div class="card-arrow">›</div>
     </a>
+    <a class="guide-card" href="71_money_games.html">
+      <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">💰</div>
+      <div class="card-body">
+        <div class="card-number">Guide 71 · Games</div>
+        <div class="card-title">Friendly Games & Money Matches</div>
+        <div class="card-desc">Nassau, skins, wolf, bingo-bango-bongo and the rest — how the popular friendly games work, how to handicap them fairly across abilities, and how to agree and settle a bet without any awkwardness.</div>
+        <div class="card-tags"><span class="card-tag ct-gold">New</span><span class="card-tag">Nassau & Skins</span><span class="card-tag">Fair Strokes</span><span class="card-tag">6 tabs</span></div>
+      </div>
+      <div class="card-arrow">&#8250;</div>
+    </a>
+
   </div><!-- /sec-compete -->
 
 </div><!-- /index-wrap -->
 
-<div class="footer">GOLF PLAYBOOKS · 5 PILLARS · 47 GUIDES · 6 TOOLS · ANY HANDICAP → YOUR GOAL · STROKES GAINED · WHS COMPATIBLE</div>
+<div class="footer">GOLF PLAYBOOKS · 5 PILLARS · 51 GUIDES · 6 TOOLS · ANY HANDICAP → YOUR GOAL · STROKES GAINED · WHS COMPATIBLE</div>
 <div style="text-align:center;padding:0 16px 24px;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.18em;">
   <a href="privacy.html" style="color:var(--text-faint);text-decoration:none;">PRIVACY</a>
   <span style="color:var(--border);margin:0 8px;">·</span>
@@ -918,6 +1038,85 @@ function showPillar(id, btn) {
   btn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
   window.scrollTo({top:document.querySelector('.pillar-nav').offsetTop - 1,behavior:'smooth'});
 }
+
+/* ── Search filter across all pillars ── */
+(function(){
+  var input = document.getElementById('guideSearch');
+  var clear = document.getElementById('searchClear');
+  var count = document.getElementById('searchCount');
+  if(!input) return;
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.guide-card'));
+  var wraps = Array.prototype.slice.call(document.querySelectorAll('.start-here-wrap,.plan-block,.tracker-block'));
+
+  function run(){
+    var q = input.value.trim().toLowerCase();
+    clear.classList.toggle('on', q.length > 0);
+    if(!q){
+      document.body.classList.remove('searching');
+      cards.forEach(function(c){ c.classList.remove('search-hidden'); });
+      wraps.forEach(function(w){ w.classList.remove('hidden-wrap'); });
+      return;
+    }
+    document.body.classList.add('searching');
+    var hits = 0;
+    cards.forEach(function(c){
+      var match = c.textContent.toLowerCase().indexOf(q) !== -1;
+      c.classList.toggle('search-hidden', !match);
+      if(match) hits++;
+    });
+    // hide grouped wrappers that have no visible cards
+    wraps.forEach(function(w){
+      var any = w.querySelector('.guide-card:not(.search-hidden)');
+      w.classList.toggle('hidden-wrap', !any);
+    });
+    count.textContent = hits + (hits === 1 ? ' guide' : ' guides') + ' match “' + input.value.trim() + '”';
+  }
+  input.addEventListener('input', run);
+  clear.addEventListener('click', function(){ input.value=''; run(); input.focus(); });
+})();
+
+/* ── PWA install banner ── */
+(function(){
+  var bar = document.getElementById('installBar');
+  var btn = document.getElementById('ibInstall');
+  var dismiss = document.getElementById('ibDismiss');
+  var txt = document.getElementById('ibTxt');
+  if(!bar) return;
+  var KEY = 'tsp_install_dismissed';
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  var dismissed = false;
+  try { dismissed = localStorage.getItem(KEY) === '1'; } catch(e){}
+  if(standalone || dismissed) return;
+
+  var deferred = null;
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    deferred = e;
+    bar.classList.add('show');
+  });
+
+  if(isIOS){
+    // iOS Safari never fires beforeinstallprompt — show manual guidance instead
+    txt.innerHTML = '<strong>Add to your home screen</strong>Tap the Share icon, then “Add to Home Screen” for one-tap, offline access.';
+    btn.style.display = 'none';
+    bar.classList.add('show');
+  }
+
+  btn.addEventListener('click', async function(){
+    if(!deferred) return;
+    deferred.prompt();
+    try { await deferred.userChoice; } catch(e){}
+    deferred = null;
+    bar.classList.remove('show');
+  });
+  dismiss.addEventListener('click', function(){
+    bar.classList.remove('show');
+    try { localStorage.setItem(KEY, '1'); } catch(e){}
+  });
+  window.addEventListener('appinstalled', function(){ bar.classList.remove('show'); });
+})();
 </script>
 </body>
 </html>

@@ -261,6 +261,14 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <div class="sec active" id="overview">
   <h2 class="sec-title">The Stats Framework</h2>
   <p class="sec-desc">On-course stat tracking converts subjective "I think I need to work on X" into objective "the data shows I lose 1.2 strokes per round on approaches from 150–175 yards." The difference between those two statements is the difference between purposeful practice and comfortable practice.</p>
+  <span class="badge badge-gold">♀ Female Benchmark · Sourced</span>
+  <div class="card card-gold">
+    <span class="card-tag">Compare Against A Female Field, Not The Male Default</span>
+    <h3>Female Benchmark — By Handicap</h3>
+    <p style="font-size:12.5px;color:rgba(232,240,216,0.62);line-height:1.7;margin-bottom:12px;">The strokes-gained method on this page is identical for everyone — but the benchmark you compare against should match your game. These are female-amateur reference numbers by handicap (Shot Scope, women-specific); use them, not the male/PGA figures, to read where you actually stand. Note women hit more fairways than men at every level. Physiology and training in Guide 69.</p>
+    <div data-scratch-benchmark="female-amateur"></div>
+  </div>
+
   <span class="badge badge-gold">📊 Data-Driven Improvement</span>
   <div class="card card-gold">
     <span class="card-tag">Why Traditional Stats Miss the Point</span>
@@ -603,6 +611,13 @@ function show(id,btn){
 
 
 
+<script src="scratch_profile.js"></script>
+<!-- ONWARD NAV -->
+<div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
+  <button type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(160,200,80,0.35);background:#111e11;color:rgba(232,240,216,0.9);font-size:18px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8593;</button>
+  <a href="index.html" aria-label="All guides" style="width:44px;height:44px;border-radius:50%;border:1px solid #2d7a1c;background:#2d7a1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8962;</a>
+</div>
+<style>@media print{.onward-nav{display:none!important;}}</style>
 
 <!-- RELATED GUIDES PANEL -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">

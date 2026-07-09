@@ -257,6 +257,11 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 
 <!-- PRIORITY ORDER -->
 <div class="sec" id="priority">
+  <div style="background:rgba(224,184,64,0.08);border:1px solid rgba(224,184,64,0.28);border-left:3px solid #e0b840;border-radius:8px;padding:13px 15px;margin:16px 0;">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:#e0b840;margin-bottom:6px;">♀ For Female Golfers</div>
+    <p style="font-size:12.5px;color:#e8f0d8;line-height:1.7;margin:0;">Fitting for a lower swing speed is different fitting, not worse fitting. The priority order below (putter first, then driver, wedges, irons) is identical for everyone — but the target numbers (ball speed, spin, carry) and the right shaft flex and weight should be read against female norms, not the male-default figures. A ball that is over-spun at 80 mph, or a shaft that is too stiff, quietly costs distance. Bring your real launch-monitor numbers and fit to them. See Guide 69.</p>
+  </div>
+
   <h2 class="sec-title">The Fitting Priority Order</h2>
   <p class="sec-desc">Not all fittings are equal in strokes gained return. Budget, time, and energy should be allocated in this sequence — especially early in your journey.</p>
 
@@ -723,6 +728,12 @@ function show(id,btn){
 </script>
 
 
+<!-- ONWARD NAV -->
+<div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
+  <button type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(160,200,80,0.35);background:#111e11;color:rgba(232,240,216,0.9);font-size:18px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8593;</button>
+  <a href="index.html" aria-label="All guides" style="width:44px;height:44px;border-radius:50%;border:1px solid #2d7a1c;background:#2d7a1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8962;</a>
+</div>
+<style>@media print{.onward-nav{display:none!important;}}</style>
 
 <!-- RELATED GUIDES PANEL -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">

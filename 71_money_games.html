@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-07-09 · 71_money_games.html -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Friendly Games &amp; Money Matches — The Scratch Project</title>
+<meta name="description" content="Nassau, skins, wolf, bingo-bango-bongo and the rest — how the popular friendly golf games work, how to handicap them fairly across abilities, and how to agree and settle a bet without any awkwardness.">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#162416;
+  --border:rgba(160,200,80,.14);--border-hi:rgba(160,200,80,.32);
+  --lime:#a0c850;--lime-dim:rgba(160,200,80,.08);
+  --gold:#e0b840;--gold-dim:rgba(224,184,64,.08);--gold-border:rgba(224,184,64,.22);
+  --teal:#48b0a8;--teal-dim:rgba(72,176,168,.08);--teal-border:rgba(72,176,168,.22);
+  --rust:#d86030;--rust-dim:rgba(216,96,48,.08);--rust-border:rgba(216,96,48,.22);
+  --white:#e8f0d8;--muted:rgba(232,240,216,.6);--faint:rgba(232,240,216,.08);
+  --r:10px;--r-sm:6px;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.topbar a:hover{color:var(--lime);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+.hero{background:linear-gradient(160deg,#0f2010 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.6rem);font-weight:700;line-height:1.05;margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--teal);}
+.hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:500px;margin-bottom:14px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:4px 10px;border-radius:20px;}
+.nav{display:flex;gap:0;overflow-x:auto;background:var(--surface);border-bottom:1px solid var(--border);-webkit-overflow-scrolling:touch;position:sticky;top:0;z-index:100;}
+.nav::-webkit-scrollbar{display:none;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:12px 14px;cursor:pointer;white-space:nowrap;transition:all .15s;margin-bottom:-1px;-webkit-tap-highlight-color:transparent;}
+.tab.active{color:var(--teal);border-bottom-color:var(--teal);}
+.page{max-width:680px;margin:0 auto;padding:20px 16px 80px;}
+.sec{display:none;}.sec.active{display:block;}
+.sec-title{font-family:'Playfair Display',serif;font-size:1.35rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.sec-desc{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:18px;padding-left:10px;border-left:2px solid var(--teal);}
+.badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:10px;}
+.badge-gold{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);}
+.badge-rust{background:var(--rust-dim);border-color:var(--rust-border);color:var(--rust);}
+.badge-lime{background:var(--lime-dim);border-color:var(--border-hi);color:var(--lime);}
+.card{background:linear-gradient(145deg,var(--surface2),var(--surface));border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(72,176,168,.3),transparent);}
+.card-gold{border-color:var(--gold-border);}.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.3),transparent);}
+.card-rust{border-color:var(--rust-border);}.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.3),transparent);}
+.card-lime{border-color:var(--border-hi);}.card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-teal{border-color:var(--teal-border);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;display:block;}
+.card-gold .card-tag{color:var(--gold);}
+.card-rust .card-tag{color:var(--rust);}
+.card-lime .card-tag{color:var(--lime);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:10px;}
+.card p{font-size:13px;color:var(--muted);line-height:1.75;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;overflow-x:auto;display:block;}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl td{padding:6px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
+.tbl tr:last-child td{border-bottom:none;}
+.tbl td:first-child{color:var(--white);}
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-n.gd{color:var(--gold);background:var(--gold-dim);border-color:var(--gold-border);}
+.step-n.rs{color:var(--rust);background:var(--rust-dim);border-color:var(--rust-border);}
+.step-n.lm{color:var(--lime);background:var(--lime-dim);border-color:var(--border-hi);}
+/* Grip scale */
+.grip-scale{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:12px 0;}
+.grip-cell{border-radius:6px;padding:10px 6px;text-align:center;}
+.grip-cell .gn{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;}
+.grip-cell .gl{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.3;}
+.g1{background:rgba(72,176,168,.15);border:1px solid rgba(72,176,168,.3);}
+.g2{background:rgba(94,203,62,.15);border:1px solid rgba(94,203,62,.3);}
+.g3{background:rgba(160,200,80,.15);border:1px solid rgba(160,200,80,.3);}
+.g4{background:rgba(224,184,64,.15);border:1px solid rgba(224,184,64,.3);}
+.g5{background:rgba(216,96,48,.15);border:1px solid rgba(216,96,48,.3);}
+.pull-quote{border-left:3px solid var(--teal);padding:12px 16px;margin:16px 0;background:var(--teal-dim);border-radius:0 var(--r-sm) var(--r-sm) 0;}
+.pull-quote p{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;color:var(--white);line-height:1.6;}
+.pull-quote cite{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-top:8px;}
+.drill-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;margin:12px 0;}
+.drill-box .dl{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.drill-box h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.drill-box p{font-size:12px;color:var(--muted);line-height:1.7;}
+.footer{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);text-align:center;padding:24px 20px;border-top:1px solid var(--border);margin-top:40px;}
+a.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--lime);color:var(--bg);font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+
+/* ── Five Pillars Logo (tsp) ── */
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;position:relative;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+<body>
+<div class="topbar"><a href="index.html">&#8962; All Playbooks</a><span class="tsp-mini" aria-hidden="true"><span class="tsp-mini-bar" style="width:4px;height:9px;background:#e0a830;"></span><span class="tsp-mini-bar" style="width:4px;height:13px;background:#a0c850;"></span><span class="tsp-mini-bar" style="width:4px;height:16px;background:#4cb8c4;"></span><span class="tsp-mini-bar" style="width:4px;height:7px;background:#c8d8e8;"></span><span class="tsp-mini-bar" style="width:4px;height:11px;background:#c87830;"></span></span><span class="topbar-brand">The Scratch Project</span></div>
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <p class="hero-label">Compete Pillar · Guide 71</p>
+  <h1>Friendly Games &amp;<br><em>Money Matches</em></h1>
+  <p class="hero-sub">Match play, medal and Stableford have their own guides — this one is about the games you actually play on a Saturday morning fourball: Nassau, skins, wolf, bingo-bango-bongo and the rest. How each works, how to handicap them so they are fair across abilities, and how to agree and settle a bet without any awkwardness.</p>
+  <div class="hero-tags"><span class="htag">💰 Nassau &amp; Skins</span><span class="htag">🐺 Wolf</span><span class="htag">⚖️ Fair Strokes</span><span class="htag">🤝 Settling Up</span></div>
+</div>
+<div class="nav">
+  <button class="tab active" onclick="show('why',this)">The Point of a Bet</button>
+  <button class="tab" onclick="show('classics',this)">The Classics</button>
+  <button class="tab" onclick="show('team',this)">Team &amp; Group Games</button>
+  <button class="tab" onclick="show('strokes',this)">Handicapping the Bet</button>
+  <button class="tab" onclick="show('etiquette',this)">Etiquette &amp; Settling</button>
+  <button class="tab" onclick="show('start',this)">Get Started</button>
+</div>
+<div class="page">
+
+<div class="sec active" id="why">
+  <h2 class="sec-title">Why a Small Bet Improves Your Golf</h2>
+  <p class="sec-desc">A modest wager is not really about the money. It is about creating consequences — a mild, friendly pressure that makes every shot matter and turns a casual round into useful practice for competition.</p>
+  <div class="pull-quote"><p>"A game is much more fun — and much better practice — when there is a little something riding on it. You learn how you behave when a shot counts."</p><cite>Common wisdom of the weekend fourball</cite></div>
+  <div class="badge">The Real Value</div>
+  <div class="card card-teal">
+    <span class="card-tag">Pressure Rehearsal</span>
+    <h3>A Bet Is the Cheapest Pressure Training There Is</h3>
+    <p>The four-foot putt to win a hole for £2 rehearses exactly the nervous system you must control in a club medal or county qualifier. Players who habitually play for a little something arrive at genuine competition already used to a shot mattering. It is the same reason the pressure-round guides exist — a friendly game builds the same skill, for free, every week.</p>
+  </div>
+  <div class="badge badge-gold">The One Rule That Matters</div>
+  <div class="card card-gold">
+    <span class="card-tag">Agree Everything on the First Tee</span>
+    <h3>Settle the Format, Stakes and Strokes Before You Play</h3>
+    <p>Every dispute in a money game comes from something that was not agreed before the round. Before the first tee shot, agree three things out loud: the game, the stake, and how handicap strokes are applied. Then there is nothing to argue about at the 18th. If anyone is unsure or uncomfortable with the stake, lower it — the point is enjoyment, never anyone's wallet.</p>
+  </div>
+</div>
+
+<div class="sec" id="classics">
+  <h2 class="sec-title">The Classics — Nassau, Skins &amp; Match Bets</h2>
+  <p class="sec-desc">These three cover the vast majority of friendly golf. Learn them and you can join almost any game.</p>
+  <div class="card">
+    <span class="card-tag">The Nassau</span>
+    <h3>Three Bets in One Round</h3>
+    <p style="margin-bottom:10px;">The most popular wager in golf. A Nassau is really three separate matches for equal stakes: the front nine, the back nine, and the full eighteen. A "£2 Nassau" means £2 for each — a maximum of £6 changes hands. Because the back nine and the overall are still alive after a poor front nine, no one is ever out of it.</p>
+    <ul class="steps">
+      <li><span class="step-n">→</span><div><strong>The press.</strong> When a player or side falls two down in any of the three matches, they may "press" — starting a brand-new side bet for the same stake over the remaining holes. Presses can be optional or automatic; agree which on the first tee. They keep a runaway match interesting but can multiply the stakes, so know what you are agreeing to.</div></li>
+    </ul>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Skins</span>
+    <h3>Every Hole Has a Prize</h3>
+    <p style="margin-bottom:10px;">Each hole is worth one "skin." To win the skin you must have the outright best score on that hole — if two or more players tie, no one wins it. Tied skins usually <strong style="color:var(--white);">carry over</strong> to the next hole, so a hard-fought hole late in the round can be worth several skins at once. Skins works brilliantly for three or four players of any mix of abilities.</p>
+    <ul class="steps">
+      <li><span class="step-n">→</span><div><strong>Validation option:</strong> some groups require a "validation" — win a skin and you must at least tie the next hole to bank it. Optional, adds spice, agree beforehand.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Straight Match &amp; Medal Bets</span>
+    <h3>The Simplest Wagers</h3>
+    <p>A <strong style="color:var(--white);">match-play bet</strong> is simply a stake on the result of a hole-by-hole match — win, lose or halve, settled on the last hole played. A <strong style="color:var(--white);">medal (stroke-play) bet</strong> settles on total strokes, best used when everyone wants a single, simple wager on the round. Both are ideal for two players; the Nassau is the three-in-one upgrade of the match bet.</p>
+  </div>
+</div>
+
+<div class="sec" id="team">
+  <h2 class="sec-title">Team &amp; Group Games</h2>
+  <p class="sec-desc">These shine in a fourball, and several are deliberately designed so a higher-handicapper can win points, keeping mixed-ability groups genuinely competitive.</p>
+  <div class="card card-rust">
+    <span class="card-tag">Wolf</span>
+    <h3>The Rotating Captain</h3>
+    <p style="margin-bottom:10px;">A four-player game. On each tee, one player is the "Wolf," in a fixed rotation. The Wolf tees off last. As each of the other three players drives, the Wolf must decide straight away — before the next player hits — whether to take that player as a partner for the hole (two-versus-two). Pass on all three and the Wolf is committed to going it alone. If the Wolf fancies the odds, they can declare <strong style="color:var(--white);">"Lone Wolf"</strong> before anyone tees off and play one-against-three for double or triple points. High risk, high reward, and endlessly entertaining.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">Bingo-Bango-Bongo</span>
+    <h3>Three Points a Hole — Rewards Every Ability</h3>
+    <p style="margin-bottom:10px;">Three points are available on every hole, and crucially they reward order of play, not just the best golfer:</p>
+    <table class="tbl">
+      <tr><th>Point</th><th>Awarded to</th></tr>
+      <tr><td>Bingo</td><td>First ball on the green</td></tr>
+      <tr><td>Bango</td><td>Closest to the pin once all balls are on the green</td></tr>
+      <tr><td>Bongo</td><td>First ball into the hole</td></tr>
+    </table>
+    <p style="margin-top:10px;">Because points depend on order (furthest from the hole always plays first), a shorter or higher-handicap player can win Bingo by being first on, or Bongo by holing first. It is the fairest game for a mixed group and needs no handicap adjustment at all.</p>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Vegas</span>
+    <h3>Pairs, Scores Combined Into a Number</h3>
+    <p>Two-versus-two. Each pair combines their scores on a hole into a two-digit number, lowest first — a 4 and a 5 become 45, not 9. The difference between the two teams' numbers is the points won. Birdies can "flip" the opponents' number (a 6 and 4 becoming 64 instead of 46), so the swings get large. A lively game for confident groups — keep the per-point stake tiny.</p>
+  </div>
+  <div class="card">
+    <span class="card-tag">Quick-Fire Add-Ons</span>
+    <h3>Side Games Layered on Top</h3>
+    <ul class="steps">
+      <li><span class="step-n">→</span><div><strong>Snake:</strong> whoever three-putts holds the "snake" and owes the pot — until someone else three-putts and takes it. The player holding it at the 18th pays out. Cruel and very effective at sharpening lag putting.</div></li>
+      <li><span class="step-n">→</span><div><strong>Sixes (Round Robin):</strong> in a fourball, partners rotate every six holes so everyone partners everyone else across the round. Fair and sociable.</div></li>
+      <li><span class="step-n">→</span><div><strong>Aces &amp; Eights / greenies &amp; sandies:</strong> small bonus points for a hole-in-one attempt closest ("greenie" on par 3s), or getting up-and-down from a bunker ("sandie"). Layer sparingly.</div></li>
+    </ul>
+  </div>
+</div>
+
+<div class="sec" id="strokes">
+  <h2 class="sec-title">Handicapping the Bet — Making It Fair</h2>
+  <p class="sec-desc">A game between players of different abilities is only fun if the strokes are fair. This is the part most casual groups get wrong. Here is how to do it properly.</p>
+  <div class="card card-teal">
+    <span class="card-tag">The Core Method</span>
+    <h3>Play Off the Lowest Handicapper</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Find the lowest handicap in the group and set them to zero.</strong> Everyone else receives the difference between their course handicap and the lowest player's. A 20 playing a 6 receives 14 strokes; the 6 receives none.</div></li>
+      <li><span class="step-n gd">2</span><div><strong>Allocate those strokes by the card's stroke index.</strong> The 14-shot player gets a stroke on the 14 hardest holes (stroke index 1 through 14). On stroke-index-1 holes they may get one; if anyone is owed more than 18, they get a second stroke starting again at index 1.</div></li>
+      <li><span class="step-n rs">3</span><div><strong>A net birdie beats a gross par.</strong> On a hole where the higher-handicapper receives a stroke, their net score is what counts for the bet. This is what lets a 20-handicapper genuinely compete with — and beat — a 6 in a fair match.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Allowances for Format</span>
+    <h3>Full, Three-Quarter, or Difference Strokes</h3>
+    <p style="margin-bottom:10px;">Governing-body allowances exist so no format gives too big an edge:</p>
+    <table class="tbl">
+      <tr><th>Format</th><th>Common allowance</th></tr>
+      <tr><td>Singles match play</td><td>Full difference between the two handicaps</td></tr>
+      <tr><td>Fourball better-ball</td><td>85% of course handicap (the standard WHS four-ball better-ball allowance), strokes off the lowest player</td></tr>
+      <tr><td>Individual Stableford / medal bet</td><td>Full or 95% course handicap</td></tr>
+    </table>
+    <p style="margin-top:10px;">For a purely friendly game you can keep it simple with full difference strokes — but if the group is competitive, using the proper allowances (and the club's own handicap software or the England Golf / WHS app) removes any sense of unfairness.</p>
+  </div>
+  <div class="drill-box">
+    <span class="dl">💡 Practical Tip</span>
+    <h4>Mark the Stroke Holes on the Card</h4>
+    <p>Before you start, everyone circles the holes where they receive a stroke on their scorecard. It takes two minutes on the first tee and prevents every "wait, do I get a shot here?" conversation for the rest of the round.</p>
+  </div>
+</div>
+
+<div class="sec" id="etiquette">
+  <h2 class="sec-title">Etiquette &amp; Settling Up</h2>
+  <p class="sec-desc">A money game only stays friendly if everyone follows a few unwritten courtesies. None of them are about golf technique — all of them are about keeping the group happy.</p>
+  <ul class="steps">
+    <li><span class="step-n">1</span><div><strong>Set a stake everyone is comfortable losing.</strong> The right stake is one that focuses the mind but that nobody would mind handing over. If a new or junior player joins, quietly drop the stakes. Never let a bet make anyone anxious about money.</div></li>
+    <li><span class="step-n gd">2</span><div><strong>Agree presses and carry-overs in advance.</strong> Automatic presses and skin carry-overs can multiply a £2 game into something much bigger. Decide the ceiling before you start.</div></li>
+    <li><span class="step-n rs">3</span><div><strong>Keep an honest running count.</strong> Nominate one player, or use a notes app, to track the match, skins or points hole by hole. Reconstructing it on the 18th green is where disputes are born.</div></li>
+    <li><span class="step-n lm">4</span><div><strong>Settle promptly and gracefully.</strong> Pay what you owe at the end of the round without fuss, and collect your winnings the same way. "I'll get you next time" is fine among regulars but should never be assumed.</div></li>
+    <li><span class="step-n">5</span><div><strong>Know your club's and the law's limits.</strong> Keep stakes modest and social. Many clubs have norms (or rules) about betting on the premises, and amateur-status rules limit what a competitive amateur may win — see our Amateur Status Rules guide (Elite tier) if you play in ranked events. When in doubt, keep it to pocket change and pride.</div></li>
+  </ul>
+  <div class="card card-teal">
+    <span class="card-tag">The Spirit of It</span>
+    <h3>Pride Is the Real Currency</h3>
+    <p>The best weekend games are played for stakes small enough that the money is a token and the bragging rights are the real prize. Keep it light, keep it fair, pay up with a smile — and the game will still be running in twenty years.</p>
+  </div>
+</div>
+
+<div class="sec" id="start">
+  <h2 class="sec-title">Get Started This Weekend</h2>
+  <p class="sec-desc">Two ready-made games to bring to your next round — one for a pair, one for a fourball.</p>
+  <div class="card card-gold">
+    <span class="card-tag">For Two Players</span>
+    <h3>The £2 Nassau</h3>
+    <p>Agree £2 for the front nine, £2 for the back, £2 for the eighteen. Apply full difference strokes off the lower handicap, circle the stroke holes on the card, and allow one optional press per nine when someone goes two down. Maximum sensible exposure without presses: £6. Simple, classic, and it keeps every hole meaningful.</p>
+  </div>
+  <div class="card card-teal">
+    <span class="card-tag">For a Fourball of Mixed Abilities</span>
+    <h3>Bingo-Bango-Bongo at 10p a Point</h3>
+    <p>No handicap maths required, and it rewards the whole group rather than just the best ball-striker. Three points per hole, 54 points in play across the round, 10p a point. Track it in a phone note. The higher-handicappers stay genuinely competitive because being first on the green and first in the hole matters as much as raw distance.</p>
+  </div>
+  <div class="card card-lime">
+    <span class="card-tag">Related Playbooks</span>
+    <h3>Where to Go Next</h3>
+    <p>For the formal versions of matchplay and their strategy, see Guide 52 (Matchplay Formats). To rehearse pressure deliberately, see Guide 16 (Solo Pressure Round). For how competitive winnings interact with amateur status, see the Amateur Status Rules guide (Elite tier).</p>
+  </div>
+</div>
+
+</div>
+<div class="footer">STANDARD PLAYBOOK · GUIDE 71 v1.0 · FRIENDLY GAMES &amp; MONEY MATCHES · THE SCRATCH PROJECT · © 2026</div>
+<a href="index.html" class="home-btn">&#8962; Home</a>
+<script>function show(id,btn){document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));document.getElementById(id).classList.add('active');btn.classList.add('active');window.scrollTo({top:document.querySelector('.nav').offsetTop,behavior:'smooth'});}</script>
+
+<!-- ONWARD NAV -->
+<div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
+  <button type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(160,200,80,0.35);background:#111e11;color:rgba(232,240,216,0.9);font-size:18px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8593;</button>
+  <a href="index.html" aria-label="All guides" style="width:44px;height:44px;border-radius:50%;border:1px solid #2d7a1c;background:#2d7a1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8962;</a>
+</div>
+<style>@media print{.onward-nav{display:none!important;}}</style>
+</body></html>

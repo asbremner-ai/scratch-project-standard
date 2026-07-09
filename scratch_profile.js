@@ -109,6 +109,33 @@
 
   // ── Core API ─────────────────────────────────────────────────────────────────
 
+  // ── Distance reference (shared by every benchmark-table guide) ───────────────
+  // Driver swing-speed anchors (mph) and the human/skill label for each band.
+  const SPEED_ANCHORS = [70, 80, 90, 100, 110];
+  const SPEED_BAND_LABEL = {
+    70:  'Rec. women · senior men',
+    80:  'Mid-hcp women · higher-hcp men',
+    90:  'Low-hcp women · avg club men',
+    100: 'Elite-am women / LPGA · low-hcp men',
+    110: 'Long hitters · scratch/tour men'
+  };
+  const GENDER_DEFAULT_SPEED = { f: 80, m: 93 };
+  // Typical carry (yds) per club at each SPEED_ANCHORS point — illustrative reference,
+  // overwritten by the player's own launch-monitor numbers where available.
+  const CARRY_REF = {
+    'Driver (total)': [150, 175, 210, 245, 280],
+    '3-wood':         [130, 150, 180, 210, 240],
+    'Hybrid / 5-wood':[115, 135, 160, 185, 210],
+    '5-iron':         [100, 120, 145, 165, 185],
+    '6-iron':         [ 92, 110, 135, 152, 172],
+    '7-iron':         [ 85, 100, 125, 140, 160],
+    '8-iron':         [ 75,  90, 115, 130, 148],
+    '9-iron':         [ 67,  80, 103, 117, 135],
+    'PW':             [ 58,  70,  92, 105, 122],
+    'GW':             [ 50,  60,  78,  90, 105],
+    'SW':             [ 42,  50,  66,  78,  92]
+  };
+
   const Profile = {
 
     /** Read profile from localStorage. Returns null if not set. */
@@ -336,10 +363,236 @@
       });
     },
 
+    // ── Distance-profile helpers (gender + driver speed) ─────────────────────────
+    /** Effective driver speed: explicit profile value, else gender default, else 80. */
+    driverSpeed(profile) {
+      if (profile && typeof profile.driverSpeed === 'number') return profile.driverSpeed;
+      if (profile && profile.gender && GENDER_DEFAULT_SPEED[profile.gender] !== undefined)
+        return GENDER_DEFAULT_SPEED[profile.gender];
+      return 80;
+    },
+
+    /** Index of the nearest speed band for a driver speed. */
+    speedBandIndex(speed) {
+      let best = 0, bd = Infinity;
+      for (let i = 0; i < SPEED_ANCHORS.length; i++) {
+        const d = Math.abs(SPEED_ANCHORS[i] - speed);
+        if (d < bd) { bd = d; best = i; }
+      }
+      return best;
+    },
+
+    /** Nearest-band human label for a driver speed. */
+    speedBandLabel(speed) {
+      return SPEED_BAND_LABEL[SPEED_ANCHORS[this.speedBandIndex(speed)]];
+    },
+
+    /** Interpolate one club's carry (its CARRY_REF row) at an exact speed. */
+    carryFor(vals, speed) {
+      if (speed <= SPEED_ANCHORS[0]) return vals[0];
+      if (speed >= SPEED_ANCHORS[SPEED_ANCHORS.length - 1]) return vals[vals.length - 1];
+      for (let i = 0; i < SPEED_ANCHORS.length - 1; i++) {
+        if (speed >= SPEED_ANCHORS[i] && speed <= SPEED_ANCHORS[i + 1]) {
+          const t = (speed - SPEED_ANCHORS[i]) / (SPEED_ANCHORS[i + 1] - SPEED_ANCHORS[i]);
+          return Math.round(vals[i] + t * (vals[i + 1] - vals[i]));
+        }
+      }
+      return vals[vals.length - 1];
+    },
+
+    /** Estimated carry for every club at an exact speed -> { club: yds }. */
+    estimatedCarries(speed) {
+      const out = {};
+      for (const k in CARRY_REF) out[k] = this.carryFor(CARRY_REF[k], speed);
+      return out;
+    },
+
+    /** Merge gender / driverSpeed into the stored profile (creates one if none). */
+    setDistanceProfile(gender, driverSpeed) {
+      const p = this.get() || {};
+      if (gender) p.gender = gender;
+      if (typeof driverSpeed === 'number') p.driverSpeed = driverSpeed;
+      this.save(p);
+      return p;
+    },
+
   };
 
   // Expose globally
   global.ScratchProfile = Profile;
   global.SCRATCH_COUNTRY_CONFIG = COUNTRY_CONFIG;
+  global.SCRATCH_SPEED_ANCHORS = SPEED_ANCHORS;
+  global.SCRATCH_SPEED_BAND_LABEL = SPEED_BAND_LABEL;
+  global.SCRATCH_CARRY_REF = CARRY_REF;
 
+  // ── Reusable carry-table widget ──────────────────────────────────────────────
+  // Auto-mounts into every <div data-scratch-carry data-clubs="A,B,C" data-zone="X">.
+  // Guides only supply the placeholder + a wrapping card; all CSS/JS lives here.
+  function scInjectCSS(){
+    if (typeof document === 'undefined' || document.getElementById('sc-carry-css')) return;
+    var st = document.createElement('style'); st.id = 'sc-carry-css';
+    st.textContent = `
+    .sc-carry .sc-panel{display:flex;flex-wrap:wrap;gap:18px;align-items:center;background:#182818;border:1px solid rgba(160,200,80,.16);border-radius:8px;padding:12px 14px;margin-bottom:12px;}
+    .sc-carry .sc-lab{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:#e0b840;margin-bottom:6px;display:block;}
+    .sc-carry .sc-seg{display:inline-flex;border:1px solid rgba(160,200,80,.36);border-radius:20px;overflow:hidden;}
+    .sc-carry .sc-seg button{background:none;border:none;color:rgba(232,240,216,.55);font-family:'JetBrains Mono',monospace;font-size:12px;padding:7px 16px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+    .sc-carry .sc-seg button.on{background:rgba(224,184,64,.12);color:#e0b840;font-weight:700;}
+    .sc-carry .sc-spd{flex:1;min-width:200px;}
+    .sc-carry .sc-spdval{font-family:'JetBrains Mono',monospace;font-size:1.3rem;font-weight:700;color:#e0b840;}
+    .sc-carry .sc-spdval small{font-size:.75rem;color:rgba(232,240,216,.55);font-weight:400;}
+    .sc-carry input[type=range]{width:100%;accent-color:#e0b840;height:4px;margin-top:6px;}
+    .sc-carry .sc-you{font-size:12.5px;color:#e8f0d8;line-height:1.7;margin-bottom:12px;padding:10px 12px;background:rgba(224,184,64,.1);border-radius:6px;border:1px solid rgba(160,200,80,.16);}
+    .sc-carry .sc-you strong{color:#e0b840;}
+    .sc-carry table.sc-tbl td.hl,.sc-carry table.sc-tbl th.hl{background:rgba(224,184,64,.16);color:#e8f0d8;}
+    .sc-carry table.sc-tbl th.hl{color:#e0b840;}
+    .sc-carry table.sc-tbl td.yc,.sc-carry table.sc-tbl th.yc{color:#a0c850;font-weight:700;border-left:2px solid rgba(160,200,80,.36);}
+    .sc-carry .sc-sub{display:block;font-size:8px;color:rgba(232,240,216,.5);font-weight:400;margin-top:2px;line-height:1.3;text-transform:none;letter-spacing:0;}
+    .sc-carry .sc-note{font-size:11px;color:rgba(232,240,216,.5);margin-top:8px;line-height:1.6;}
+    .sc-carry .sc-note b{color:#a0c850;font-weight:700;}`;
+    document.head.appendChild(st);
+  }
+  function scMountOne(el){
+    var clubsAttr = el.getAttribute('data-clubs');
+    var clubs = (clubsAttr ? clubsAttr.split(',').map(function(x){return x.trim();}) : Object.keys(CARRY_REF))
+                .filter(function(c){return CARRY_REF[c];});
+    if(!clubs.length) return;
+    var zone = el.getAttribute('data-zone') || '';
+    el.innerHTML = '<div class="sc-carry">'
+      + '<div class="sc-panel"><div><span class="sc-lab">Gender</span>'
+      + '<div class="sc-seg sc-gen"><button type="button" data-g="f">♀ Female</button><button type="button" data-g="m">♂ Male</button></div></div>'
+      + '<div class="sc-spd"><span class="sc-lab">Driver Swing Speed</span>'
+      + '<div class="sc-spdval"><span class="sc-out">80</span> <small>mph</small></div>'
+      + '<input type="range" class="sc-range" min="60" max="115" step="1" value="80"></div></div>'
+      + '<div class="sc-you"></div>'
+      + '<div style="overflow-x:auto;"><table class="tbl sc-tbl"></table></div>'
+      + '<p class="sc-note">Carry in yards, illustrative reference — replace <b>Your carry</b> with your own launch-monitor numbers. Tour-level strike adds distance beyond speed alone.</p>'
+      + '</div>';
+    var prof = Profile.get() || {};
+    var gender = prof.gender || 'f';
+    var speed = Profile.driverSpeed(prof);
+    var touched = (typeof prof.driverSpeed === 'number');
+    var tbl = el.querySelector('.sc-tbl'), you = el.querySelector('.sc-you');
+    var out = el.querySelector('.sc-out'), range = el.querySelector('.sc-range');
+    var gbtns = el.querySelectorAll('.sc-gen button');
+    range.value = speed; out.textContent = speed;
+    function markG(){ for(var i=0;i<gbtns.length;i++){ gbtns[i].classList.toggle('on', gbtns[i].getAttribute('data-g')===gender); } }
+    function render(){
+      var hi = Profile.speedBandIndex(speed), h = '<tr><th>Club</th>', i;
+      for(i=0;i<SPEED_ANCHORS.length;i++){ h += '<th class="'+(i===hi?'hl':'')+'">'+SPEED_ANCHORS[i]+' mph<span class="sc-sub">'+SPEED_BAND_LABEL[SPEED_ANCHORS[i]]+'</span></th>'; }
+      h += '<th class="yc">Your carry</th></tr>';
+      var lo = Infinity, hg = -Infinity;
+      clubs.forEach(function(c){
+        h += '<tr><td>'+c+'</td>';
+        for(i=0;i<SPEED_ANCHORS.length;i++){ h += '<td class="'+(i===hi?'hl':'')+'">'+CARRY_REF[c][i]+'</td>'; }
+        var yc = Profile.carryFor(CARRY_REF[c], speed);
+        if(yc<lo)lo=yc; if(yc>hg)hg=yc;
+        h += '<td class="yc">'+yc+'</td></tr>';
+      });
+      tbl.innerHTML = h;
+      var msg = 'Your profile: <strong>'+(gender==='f'?'♀ Female':'♂ Male')+' · '+speed+' mph</strong> ('+Profile.speedBandLabel(speed)+').';
+      if(zone){ msg += ' At your speed, this guide’s '+zone+' zone is really your <strong>'+lo+'–'+hg+' yard</strong> range — same clubs, same method, only the numbers move.'; }
+      you.innerHTML = msg;
+    }
+    range.addEventListener('input', function(e){ speed=+e.target.value; touched=true; out.textContent=speed; Profile.setDistanceProfile(null, speed); render(); });
+    for(var j=0;j<gbtns.length;j++){ gbtns[j].addEventListener('click', function(e){
+      gender = e.currentTarget.getAttribute('data-g'); markG(); Profile.setDistanceProfile(gender, undefined);
+      if(!touched){ speed = Profile.driverSpeed({gender:gender}); range.value=speed; out.textContent=speed; }
+      render();
+    }); }
+    markG(); render();
+  }
+  Profile.mountCarryWidgets = function(){
+    if (typeof document === 'undefined') return;
+    var els = document.querySelectorAll('[data-scratch-carry]');
+    if(!els.length) return;
+    scInjectCSS();
+    for(var i=0;i<els.length;i++){ scMountOne(els[i]); }
+  };
+
+  // ── Female performance baselines (sourced — see female_sg_baselines.md) ───────
+  const LPGA_TIER = {
+    caption: 'LPGA Tour 2024 by ranking tier (LPGA.com via Shot Scope). “Scratch am.” = mixed amateur reference. Highlighted column ≈ female-scratch benchmark.',
+    cols: ['Metric','LPGA #1','#10','#50','#100','Scratch am.'],
+    highlightCol: 4,
+    rows: [
+      ['Scoring average','69.0','70.2','71.3','72.4','71.4'],
+      ['Driving distance (yds)','291','274','261','254','260'],
+      ['Driving accuracy %','85.9','79.9','74.3','68.9','49.9'],
+      ['Greens in regulation %','78','75','71','68','62'],
+      ['Putts per GIR','1.71','1.76','1.81','1.84','1.82'],
+      ['Sand save %','63','57','47','40','44'],
+      ['Birdies per round','4.1','3.8','3.7','3.1','2.7'],
+      ['% rounds under par','80','65','50','37','27']
+    ]
+  };
+  const FEMALE_AMATEUR = {
+    caption: 'Female amateurs by handicap — Shot Scope women-specific data, 2025 (outliers removed). Fairway % exceeds the male equivalent at every level.',
+    cols: ['Handicap','Driver (yds)','3-wood (yds)','Fairways %'],
+    rows: [
+      ['Scratch+','252','232','60'],
+      ['1–5','235','224','54'],
+      ['6–10','226','212','55'],
+      ['11–15','199','183','56'],
+      ['16–20','188','173','58'],
+      ['21–25','178','166','59'],
+      ['26+','166','155','56']
+    ]
+  };
+  const LPGA_VS_AVG = {
+    caption: 'Shot Scope 2024. “Avg male” = 15 hcp, “avg female” = 25 hcp. † derived from stated multiples (approximate).',
+    cols: ['Metric','LPGA','Avg male (15)','Avg female (25)'],
+    rows: [
+      ['Driving distance (yds)','~290','202','141'],
+      ['GIR per round','~14','~4 †','~2 †'],
+      ['Up-and-down %','~67','~33 †','~24 †'],
+      ['Three-putt (holes per 3-putt)','~53','~10','~7']
+    ]
+  };
+  const LPGA_SG = {
+    caption: 'LPGA Tour 2025 strokes gained per round vs the LPGA field (field average = 0), by category. Source: LPGA.com / KPMG Performance Insights, retrieved 2026-07-08. Top-10 / Top-25 are tier averages of that year\'s field.',
+    cols: ['SG Category','LPGA #1','Top-10 avg','Top-25 avg'],
+    highlightCol: 2,
+    rows: [
+      ['SG: Total','+3.04','+1.96','+1.57'],
+      ['SG: Off-the-Tee','+0.56','+0.48','+0.34'],
+      ['SG: Approach','+0.91','+0.53','+0.54'],
+      ['SG: Around-the-Green','+0.26','+0.13','+0.14'],
+      ['SG: Putting','+1.09','+0.66','+0.40']
+    ]
+  };
+  const BENCHMARK_SETS = { 'lpga-tier': LPGA_TIER, 'female-amateur': FEMALE_AMATEUR, 'lpga-vs-avg': LPGA_VS_AVG, 'lpga-sg': LPGA_SG };
+
+  function scInjectBenchCSS(){
+    if (typeof document === 'undefined' || document.getElementById('sc-bench-css')) return;
+    var st = document.createElement('style'); st.id = 'sc-bench-css';
+    st.textContent = `
+    .sc-bench table.sc-btbl td.hlc,.sc-bench table.sc-btbl th.hlc{background:rgba(224,168,64,.14);color:#e8f0d8;}
+    .sc-bench table.sc-btbl th.hlc{color:#e0b840;}
+    .sc-bench .sc-bcap{font-size:10.5px;color:rgba(232,240,216,.5);line-height:1.55;margin-top:8px;font-style:italic;}`;
+    document.head.appendChild(st);
+  }
+  function scMountBench(el){
+    var d = BENCHMARK_SETS[el.getAttribute('data-scratch-benchmark')];
+    if(!d) return;
+    var hc = (typeof d.highlightCol === 'number') ? d.highlightCol : -1;
+    var h = '<div class="sc-bench"><div style="overflow-x:auto;"><table class="tbl sc-btbl"><tr>';
+    d.cols.forEach(function(c,i){ h += '<th class="'+(i===hc?'hlc':'')+'">'+c+'</th>'; });
+    h += '</tr>';
+    d.rows.forEach(function(r){ h += '<tr>'; r.forEach(function(v,i){ h += '<td class="'+(i===hc?'hlc':'')+'">'+v+'</td>'; }); h += '</tr>'; });
+    h += '</table></div><p class="sc-bcap">'+d.caption+'</p></div>';
+    el.innerHTML = h;
+  }
+  Profile.mountBenchmarkTables = function(){
+    if (typeof document === 'undefined') return;
+    var els = document.querySelectorAll('[data-scratch-benchmark]');
+    if(!els.length) return;
+    scInjectBenchCSS();
+    for(var i=0;i<els.length;i++){ scMountBench(els[i]); }
+  };
+
+  function scMountAll(){ Profile.mountCarryWidgets(); Profile.mountBenchmarkTables(); }
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', scMountAll);
+    else scMountAll();
+  }
 })(window);

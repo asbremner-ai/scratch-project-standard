@@ -694,6 +694,19 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       </select>
     </div>
     <div class="sp-field">
+      <label class="sp-label">Distance &amp; speed <span style="opacity:.55;font-weight:400;">(optional)</span></label>
+      <p class="sp-hint">Personalises the distance and swing-speed tables across the guides so the reference numbers match your game. Leave as “prefer not to say” / blank to keep the standard reference — you can also set this inside any distance guide.</p>
+      <select id="sp-gender" class="sp-input sp-full sp-select">
+        <option value="">— Prefer not to say —</option>
+        <option value="f">♀ Female</option>
+        <option value="m">♂ Male</option>
+      </select>
+      <div class="sp-row" style="margin-top:8px;">
+        <input type="number" id="sp-speed" class="sp-input" min="50" max="130" step="1" placeholder="e.g. 85" inputmode="numeric">
+        <span class="sp-unit">driver mph</span>
+      </div>
+    </div>
+    <div class="sp-field">
       <label class="sp-label">Your weekly schedule</label>
       <p class="sp-hint">Tap each day to assign it. Cycles: Rest → Practice → Round → Strength. Aim for 2 rounds and 2 practice sessions minimum. This personalises the weekly plan in Guide 10.</p>
       <div class="sched-picker" id="sched-picker"></div>
@@ -1294,7 +1307,17 @@ function spSave() {
   if (!date)    { alert('Please choose a start date'); return; }
   if (!country) { alert('Please select your country'); return; }
   if (!_spSV()) { alert('Please set at least 1 round day and 1 practice day.'); return; }
-  const profile = { startHcp:hcp, goalHcp:goal, startDate:date, country:country, schedule:Object.assign({},_spS) };
+  // Merge onto any existing profile so fields set elsewhere (e.g. gender/speed
+  // chosen inside a distance guide) are preserved, not overwritten.
+  const prev = JSON.parse(localStorage.getItem('scratch_profile') || '{}');
+  const profile = Object.assign({}, prev, { startHcp:hcp, goalHcp:goal, startDate:date, country:country, schedule:Object.assign({},_spS) });
+  // Optional distance fields — the form is prefilled from the stored profile, so
+  // it is authoritative on submit: a chosen value sets it, blank clears it.
+  const g = document.getElementById('sp-gender').value;
+  if (g) { profile.gender = g; } else { delete profile.gender; }
+  const svRaw = document.getElementById('sp-speed').value;
+  const spd = parseFloat(svRaw);
+  if (svRaw !== '' && !isNaN(spd)) { profile.driverSpeed = Math.max(50, Math.min(130, spd)); } else { delete profile.driverSpeed; }
   localStorage.setItem('scratch_profile', JSON.stringify(profile));
   spRenderSummary(profile);
 }
@@ -1387,6 +1410,8 @@ function spEdit() {
   if (p.goalHcp !== undefined) document.getElementById('sp-goal').value    = p.goalHcp;
   if (p.startDate)             document.getElementById('sp-date').value    = p.startDate;
   if (p.country)               document.getElementById('sp-country').value = p.country;
+  if (p.gender)                document.getElementById('sp-gender').value  = p.gender;
+  if (typeof p.driverSpeed === 'number') document.getElementById('sp-speed').value = p.driverSpeed;
   if (p.schedule) _spInitPicker(p.schedule);
   document.getElementById('sp-form').style.display    = 'block';
   document.getElementById('sp-summary').style.display = 'none';
@@ -1404,10 +1429,20 @@ document.addEventListener('DOMContentLoaded', function() {
   if (di && !di.value) di.value = new Date().toISOString().split('T')[0];
   const saved = localStorage.getItem('scratch_profile');
   const sp = saved ? JSON.parse(saved) : null;
+  if (sp) {
+    if (sp.gender) { const _g = document.getElementById('sp-gender'); if (_g) _g.value = sp.gender; }
+    if (typeof sp.driverSpeed === 'number') { const _s = document.getElementById('sp-speed'); if (_s) _s.value = sp.driverSpeed; }
+  }
   _spInitPicker(sp ? sp.schedule : null);
   if (sp) { try { spRenderSummary(sp); } catch(e) {} }
 });
 </script>
 
+<!-- ONWARD NAV -->
+<div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
+  <button type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(160,200,80,0.35);background:#111e11;color:rgba(232,240,216,0.9);font-size:18px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8593;</button>
+  <a href="index.html" aria-label="All guides" style="width:44px;height:44px;border-radius:50%;border:1px solid #2d7a1c;background:#2d7a1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8962;</a>
+</div>
+<style>@media print{.onward-nav{display:none!important;}}</style>
 </body>
 </html>
