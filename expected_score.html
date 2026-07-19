@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-07-13 · expected_score.html — Standard (free) tool, Score pillar: handicap + course rating/slope → hole-by-hole expected scores, round distribution, and expectation management. Course-handicap formula matches playing_hcp_calculator.html verbatim: round(HI×slope/113 + (CR−par)). K (expected average = par + course handicap + K) = +3: the repo lacks a direct average-vs-handicap figure (26_stats_interpretation / female_sg_baselines cover GIR/driving, not scoring gap), so K is the well-documented WHS/USGA/Shot Scope figure — WHS handicap = best 8 of 20, so the average round runs ~2–4 over course handicap; +3 gives a ~18–22% beat-handicap rate (≈1 in 5), matching the published figure. σ ≈ 2.7–4.2 rising with handicap (Shot Scope/WHS differential spread). Blow-up counts by band copied from rounds_tracker.html BENCH (double-bogey-or-worse). K and σ are FLAGGED for review in the Method tab. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Expected Score Simulator — The Scratch Project</title>
+<meta name="description" content="Free tool: your handicap and the course rating/slope → what you should actually expect to shoot today, hole by hole, with the good-day / typical / rough-day range. Expectation management, made interactive.">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/inter-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2')}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a160a;--surface:#111e11;--surface2:#162416;
+  --border:rgba(160,200,80,.14);--border-hi:rgba(160,200,80,.32);
+  --lime:#a0c850;--lime-dim:rgba(160,200,80,.08);
+  --gold:#e0b840;--gold-dim:rgba(224,184,64,.08);--gold-border:rgba(224,184,64,.22);
+  --teal:#48b0a8;--teal-dim:rgba(72,176,168,.08);--teal-border:rgba(72,176,168,.22);
+  --rust:#d86030;--rust-dim:rgba(216,96,48,.08);--rust-border:rgba(216,96,48,.22);
+  --white:#e8f0d8;--muted:rgba(232,240,216,.6);--faint:rgba(232,240,216,.08);
+  --r:10px;--r-sm:6px;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
+
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.topbar a:hover{color:var(--lime);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+
+.hero{background:linear-gradient(160deg,#0f2010 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:10px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.8rem);font-weight:700;line-height:1.1;margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--lime);}
+.hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:520px;margin-bottom:16px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--lime-dim);border:1px solid var(--border-hi);color:var(--lime);padding:4px 10px;border-radius:20px;}
+
+.page{max-width:600px;margin:0 auto;padding:20px 16px 80px;}
+
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
+.card-teal{border-color:var(--teal-border);}
+.card-gold{border-color:var(--gold-border);}
+.card-rust{border-color:var(--rust-border);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:7px;display:block;}
+.card-teal .card-tag{color:var(--teal);}
+.card-gold .card-tag{color:var(--gold);}
+.card-rust .card-tag{color:var(--rust);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2;}
+.card p{font-size:13px;color:var(--muted);line-height:1.75;}
+
+.sec-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.sec-desc{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:16px;padding-left:10px;border-left:2px solid var(--lime);}
+
+.field{margin-bottom:14px;}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:7px;}
+.field input[type=number]{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--white);font-family:'Inter',system-ui;font-size:16px;font-weight:600;padding:12px 14px;outline:none;-webkit-appearance:none;appearance:none;}
+.field input[type=number]:focus{border-color:var(--lime);box-shadow:0 0 0 2px rgba(160,200,80,.15);}
+.field input[type=number]::placeholder{color:rgba(232,240,216,.25);font-weight:400;}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.field-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+
+.chip-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-bottom:10px;display:block;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+.chip{background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:8px 13px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.chip.selected{background:var(--lime);border-color:var(--lime);color:#0a160a;font-weight:700;}
+
+.calc-btn{width:100%;background:var(--lime);color:#0a160a;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:none;border-radius:var(--r-sm);padding:16px;cursor:pointer;margin-top:4px;}
+.calc-btn:active{opacity:.85;}
+.ghost-btn{background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:11px 16px;cursor:pointer;width:100%;margin-top:10px;}
+.ghost-btn:hover{border-color:var(--border-hi);color:var(--white);}
+
+.result{display:none;margin-top:20px;}
+.result.visible{display:block;}
+.hero-result{background:linear-gradient(135deg,rgba(160,200,80,.15),rgba(160,200,80,.04));border:1.5px solid var(--border-hi);border-radius:var(--r);padding:20px 18px;text-align:center;margin-bottom:14px;}
+.hr-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;}
+.hr-score{font-family:'Playfair Display',serif;font-size:3.2rem;font-weight:700;color:var(--white);line-height:1;}
+.hr-score span{font-size:1.1rem;color:var(--muted);}
+.hr-range{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);margin-top:8px;}
+.hr-odds{display:inline-block;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;padding:5px 13px;border-radius:20px;background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);}
+
+.bell-wrap{display:flex;justify-content:center;margin:6px 0 4px;}
+.bell-svg{width:100%;max-width:360px;height:auto;}
+
+.stat-tbl,.ref-tbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px;}
+.stat-tbl td{padding:7px 10px;border-bottom:1px solid var(--faint);color:var(--muted);}
+.stat-tbl td:first-child{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--white);}
+.stat-tbl td:last-child{text-align:right;font-weight:600;color:var(--white);}
+.stat-tbl tr:last-child td{border-bottom:none;}
+.ref-tbl th{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:7px 8px;text-align:left;border-bottom:1px solid var(--border);}
+.ref-tbl td{padding:6px 8px;color:var(--muted);border-bottom:1px solid var(--faint);}
+.ref-tbl td:first-child{color:var(--white);}
+.ref-tbl tr:last-child td{border-bottom:none;}
+.ref-tbl tr.hl td{background:rgba(160,200,80,.12);color:var(--white);font-weight:600;}
+
+.scard{width:100%;border-collapse:collapse;font-size:11px;margin-top:4px;}
+.scard th{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.06em;text-transform:uppercase;color:var(--lime);padding:5px 4px;text-align:center;border-bottom:1px solid var(--border);}
+.scard td{padding:5px 4px;text-align:center;color:var(--muted);border-bottom:1px solid var(--faint);}
+.scard td:first-child{color:var(--white);font-family:'JetBrains Mono',monospace;}
+.scard tr.gets td{color:var(--gold);}
+.scard tr.total td{border-top:1px solid var(--border);color:var(--white);font-weight:700;border-bottom:none;}
+
+.advice{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:10px;font-size:13px;color:var(--muted);line-height:1.75;}
+.advice strong{color:var(--white);display:block;margin-bottom:4px;font-size:12px;}
+.advice.tip-head::before{content:'💡 ';}
+.advice.warn-head::before{content:'⚠️ ';}
+.advice a{color:var(--lime);}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.7;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border-hi);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.flag-note{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:6px;padding:9px 11px;margin-top:10px;line-height:1.6;}
+
+.tab-bar{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;cursor:pointer;white-space:nowrap;margin-bottom:-1px;}
+.tab.active{color:var(--lime);border-bottom-color:var(--lime);}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+
+.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--lime);color:var(--bg);font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<script async src="https://plausible.io/js/pa-XSwCniFb76oIDC0vR-U0K.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html">&#8962; All Playbooks</a>
+  <span class="tsp-mini" aria-hidden="true"><span class="tsp-mini-bar" style="width:4px;height:9px;background:#e0a830;"></span><span class="tsp-mini-bar" style="width:4px;height:13px;background:#a0c850;"></span><span class="tsp-mini-bar" style="width:4px;height:16px;background:#4cb8c4;"></span><span class="tsp-mini-bar" style="width:4px;height:7px;background:#c8d8e8;"></span><span class="tsp-mini-bar" style="width:4px;height:11px;background:#c87830;"></span></span><span class="topbar-brand">The Scratch Project</span>
+</div>
+
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <p class="hero-label">Interactive Tool · Score Pillar</p>
+  <h1>Expected Score<br><em>Simulator</em></h1>
+  <p class="hero-sub">What should an 18-handicapper actually shoot? Your handicap and the course's rating and slope give a realistic expected score, the good-day / typical / rough-day range, and how often you'll genuinely beat your handicap — because the WHS number is your potential, not your average.</p>
+  <div class="hero-tags">
+    <span class="htag">🎲 Realistic Range</span>
+    <span class="htag">📋 Hole by Hole</span>
+    <span class="htag">🎯 Beat-Handicap Odds</span>
+    <span class="htag">Free</span>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('sim',this)">Simulator</button>
+    <button class="tab" onclick="switchTab('scorecard',this)">Scorecard</button>
+    <button class="tab" onclick="switchTab('method',this)">Method</button>
+    <button class="tab" onclick="switchTab('bench',this)">Benchmarks</button>
+  </div>
+
+  <!-- ══ SIMULATOR ══ -->
+  <div class="tab-pane active" id="tab-sim">
+    <div class="card">
+      <span class="card-tag">You</span>
+      <h3>Your Handicap Index</h3>
+      <div class="field">
+        <label for="hi">Handicap index (use + for plus handicaps, e.g. −2 = enter -2)</label>
+        <input type="number" id="hi" placeholder="18.0" step="0.1" min="-10" max="54" inputmode="decimal">
+      </div>
+    </div>
+
+    <div class="card card-teal">
+      <span class="card-tag">The Course</span>
+      <h3>Rating, Slope &amp; Par</h3>
+      <div class="field-row-3">
+        <div class="field"><label for="cr">Course rating</label><input type="number" id="cr" placeholder="71.0" step="0.1" min="55" max="80" inputmode="decimal"></div>
+        <div class="field"><label for="slope">Slope</label><input type="number" id="slope" placeholder="125" min="55" max="155" inputmode="numeric"></div>
+        <div class="field"><label for="par">Par</label><input type="number" id="par" placeholder="72" min="60" max="74" inputmode="numeric"></div>
+      </div>
+      <button class="ghost-btn" onclick="fillTypical()">↺ Use a typical UK parkland (CR 71.0 · slope 125 · par 72)</button>
+    </div>
+
+    <div class="card card-gold">
+      <span class="card-tag">Conditions</span>
+      <h3>Today's Weather</h3>
+      <div class="chips" id="condChips">
+        <div class="chip selected" data-cond="calm" onclick="selCond(this)">☀️ Calm</div>
+        <div class="chip" data-cond="breezy" onclick="selCond(this)">🌬️ Breezy</div>
+        <div class="chip" data-cond="winter" onclick="selCond(this)">❄️ Winter / wet</div>
+      </div>
+    </div>
+
+    <button class="calc-btn" onclick="simulate()">What Should I Expect to Shoot?</button>
+
+    <div class="result" id="result">
+      <div class="hero-result">
+        <div class="hr-label">Expected today</div>
+        <div class="hr-score" id="expScore">—</div>
+        <div class="hr-range" id="expRange"></div>
+        <div class="hr-odds" id="beatOdds"></div>
+      </div>
+      <div class="bell-wrap"><svg class="bell-svg" id="bell" viewBox="0 0 360 150" aria-label="score distribution"></svg></div>
+      <div class="card">
+        <span class="card-tag">The Numbers</span>
+        <h3>Where This Comes From</h3>
+        <table class="stat-tbl" id="statTbl"></table>
+      </div>
+      <div class="advice tip-head" id="whsAdvice"></div>
+      <div class="advice" id="moveAdvice"></div>
+    </div>
+  </div>
+
+  <!-- ══ SCORECARD ══ -->
+  <div class="tab-pane" id="tab-scorecard">
+    <h2 class="sec-title">Hole-by-Hole Expectation</h2>
+    <p class="sec-desc">Your course handicap spread across the card by stroke index. On the holes where you get a shot, <strong>net par is your par</strong> — a bogey there is a good hole, not a dropped shot.</p>
+    <div id="scorecardOut"><div class="advice">Run the Simulator first to build your card.</div></div>
+  </div>
+
+  <!-- ══ METHOD ══ -->
+  <div class="tab-pane" id="tab-method">
+    <h2 class="sec-title">How the Model Works</h2>
+    <p class="sec-desc">Every assumption stated openly — this tool's credibility is its honesty. It is a simple statistical model, not a swing analyser.</p>
+
+    <div class="card card-teal">
+      <span class="card-tag">Step 1 — Course Handicap</span>
+      <h3>The WHS Formula</h3>
+      <p>Course handicap = round( Index × Slope ÷ 113 + (Course Rating − Par) ). Identical to the <a href="playing_hcp_calculator.html">Playing Handicap Calculator</a> — the two never disagree.</p>
+    </div>
+
+    <div class="card card-gold">
+      <span class="card-tag">Step 2 — Expected Average (the K correction)</span>
+      <h3>Your Handicap Is Your Potential, Not Your Average</h3>
+      <p>Your WHS handicap is built from your <strong>best 8 of your last 20</strong> rounds — so your average round is not your handicap, it's several strokes worse. This tool uses <strong>expected average = par + course handicap + 3</strong>.</p>
+      <div class="flag-note">⚑ FLAGGED FOR REVIEW — the "+3" (K): the repo has no direct average-vs-handicap figure, so this uses the well-documented WHS/USGA/Shot Scope value. Because handicaps track the best 8 of 20, the average round runs ~2–4 strokes over course handicap; +3 produces a ~1-in-5 beat-handicap rate, which matches published data. Adjust here if a better in-repo source appears.</div>
+    </div>
+
+    <div class="card card-rust">
+      <span class="card-tag">Step 3 — The Distribution</span>
+      <h3>Good Day, Typical, Rough Day</h3>
+      <p>Round scores are modelled as a bell curve around the expected average, with a spread (σ) of about 2.7 strokes for low handicaps rising to ~4 for high — higher handicaps are more variable. A good day (best ~20%) is roughly the average minus 0.85σ; a rough day (worst ~20%) is the average plus 0.85σ.</p>
+      <div class="flag-note">⚑ σ is also a sourced estimate (Shot Scope / WHS score-differential spread), not a fitted per-player value. It's flagged like K above.</div>
+    </div>
+
+    <div class="card">
+      <span class="card-tag">Step 4 — Beat-Handicap Odds & Blow-Ups</span>
+      <h3>The Two Most Expectation-Correcting Numbers</h3>
+      <p>Beating your handicap happens roughly <strong>1 round in 4–5</strong> — that's the WHS system working exactly as designed, not you failing. And every handicap band has a typical number of double-bogey-or-worse holes per round (from the Rounds Tracker benchmarks): expecting zero is the fastest route to a ruined round. A score 7.0 strokes better than your handicap triggers an exceptional-score reduction — rare by design.</p>
+    </div>
+
+    <div class="card">
+      <span class="card-tag">Go Deeper</span>
+      <h3>The Playbooks Behind This Tool</h3>
+      <ul class="steps">
+        <li><span class="step-n">26</span><span><a href="26_stats_interpretation.html" style="color:var(--lime);">Stats Interpretation</a> — why fairways and GIR are the wrong metrics, and variance is normal.</span></li>
+        <li><span class="step-n">📈</span><span><a href="hcp_trajectory.html" style="color:var(--lime);">Handicap Trajectory Simulator</a> — this models one round; that models your handicap over months.</span></li>
+        <li><span class="step-n">🎯</span><span><a href="sg_diagnostic.html" style="color:var(--lime);">SG Diagnostic</a> — find which part of your game to move to lower this number.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ══ BENCHMARKS ══ -->
+  <div class="tab-pane" id="tab-bench">
+    <h2 class="sec-title">Blow-Up Holes by Handicap</h2>
+    <p class="sec-desc">Double-bogey-or-worse holes per round, by band (from the Rounds Tracker benchmarks). The 15–24 bracket especially: two or three of these a round is normal — plan for them, don't unravel.</p>
+    <div class="card card-rust">
+      <span class="card-tag">Double-Bogey-or-Worse per Round</span>
+      <h3>What's Normal</h3>
+      <table class="ref-tbl" id="blowTbl">
+        <tr><th>Handicap</th><th>Blow-ups / round</th><th>Putts / round</th></tr>
+        <tr data-lo="21" data-hi="99"><td>~24 HCP</td><td>6</td><td>38</td></tr>
+        <tr data-lo="15" data-hi="21"><td>~18 HCP</td><td>4</td><td>36</td></tr>
+        <tr data-lo="9" data-hi="15"><td>~12 HCP</td><td>2–3</td><td>34</td></tr>
+        <tr data-lo="3" data-hi="9"><td>~6 HCP</td><td>1–2</td><td>32</td></tr>
+        <tr data-lo="-10" data-hi="3"><td>Scratch</td><td>&lt;1</td><td>30</td></tr>
+      </table>
+      
+    </div>
+    <div class="advice tip-head"><strong>The mindset that saves rounds</strong>A double bogey is not a disaster for a mid-handicapper — it's a scheduled event. The players who shoot their expected score aren't the ones who avoid blow-ups; they're the ones who don't let one blow-up become three.</div>
+  </div>
+
+</div>
+
+<a href="index.html" class="home-btn">⌂ Home</a>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   EXPECTED SCORE SIMULATOR — core model (see version comment + Method tab)
+   ═══════════════════════════════════════════════════════════════ */
+const KEY = 'sp_expected';
+const K_AVG = 3;   // expected average = par + course handicap + K  (FLAGGED — see Method)
+
+// Course handicap — identical formula to playing_hcp_calculator.html
+function courseHandicap(hi, cr, slope, par){ return Math.round(hi*(slope/113) + (cr - par)); }
+// σ rises with handicap: ~2.7 at scratch → ~4.2 at 24+  (FLAGGED estimate)
+function sigmaFor(courseHcp){ return Math.min(4.2, Math.max(2.6, 2.7 + 0.045*Math.max(0,courseHcp))); }
+// Standard normal CDF (Abramowitz-Stegun 7.1.26 approximation)
+function normCdf(z){
+  const t = 1/(1+0.2316419*Math.abs(z));
+  const d = 0.3989423*Math.exp(-z*z/2);
+  let p = d*t*(0.3193815 + t*(-0.3565638 + t*(1.781478 + t*(-1.821256 + t*1.330274))));
+  return z > 0 ? 1-p : p;
+}
+// Allocate course-handicap strokes across 18 holes by stroke index (1..18)
+function allocateStrokes(courseHcp){
+  const ch = Math.max(0, courseHcp);
+  const base = Math.floor(ch/18), extra = ch - base*18;
+  const out = [];
+  for (let si=1; si<=18; si++) out.push(base + (si<=extra ? 1 : 0));
+  return out; // index 0 = SI 1
+}
+// Blow-up (double-or-worse per round) by band — from rounds_tracker.html BENCH
+function blowupsFor(courseHcp){
+  if (courseHcp>=21) return 6; if (courseHcp>=15) return 4; if (courseHcp>=9) return 2.5;
+  if (courseHcp>=3) return 1.5; return 0.7;
+}
+function computeModel(hi, cr, slope, par){
+  const ch = courseHandicap(hi, cr, slope, par);
+  const target = par + ch;               // "playing to your handicap"
+  const mean = target + K_AVG;            // expected average round
+  const sigma = sigmaFor(ch);
+  const good = Math.round(mean - 0.84*sigma);   // best ~20%
+  const rough = Math.round(mean + 0.84*sigma);  // worst ~20%
+  const typical = Math.round(mean);
+  const beatOdds = normCdf((target - mean)/sigma); // P(score <= target)
+  return { ch, target, mean, sigma, good, typical, rough, beatOdds, blowups: blowupsFor(ch) };
+}
+if (typeof window !== 'undefined') {
+  window.EXP = { courseHandicap, sigmaFor, allocateStrokes, blowupsFor, computeModel, normCdf, K_AVG };
+}
+
+/* ── UI ── */
+let selCondVal = 'calm';
+function selCond(chip){ document.querySelectorAll('#condChips .chip').forEach(c=>c.classList.remove('selected')); chip.classList.add('selected'); selCondVal = chip.dataset.cond; }
+function fillTypical(){ document.getElementById('cr').value='71.0'; document.getElementById('slope').value='125'; document.getElementById('par').value='72'; }
+const condAdj = { calm:0, breezy:2, winter:3 };
+let lastModel = null, lastPar = 72;
+
+function num(id){ const v=parseFloat(document.getElementById(id).value); return isNaN(v)?null:v; }
+
+function simulate(){
+  const hi = num('hi'); if (hi===null){ document.getElementById('hi').focus(); return; }
+  const cr = num('cr') ?? 71.0, slope = num('slope') ?? 125, par = Math.round(num('par') ?? 72);
+  const m = computeModel(hi, cr, slope, par);
+  // conditions add to the expectation (harder day → higher score)
+  const cAdd = condAdj[selCondVal];
+  const good=m.good+cAdd, typical=m.typical+cAdd, rough=m.rough+cAdd;
+  lastModel = m; lastPar = par;
+  try { localStorage.setItem(KEY, JSON.stringify({v:1, lastInputs:{hi,cr,slope,par,cond:selCondVal}})); } catch(e){}
+
+  document.getElementById('expScore').innerHTML = typical + ' <span>(' + (typical-par>=0?'+':'') + (typical-par) + ')</span>';
+  document.getElementById('expRange').textContent = 'Good day ' + good + ' · typical ' + typical + ' · rough day ' + rough;
+  const odds = Math.round(m.beatOdds*100);
+  const oneIn = m.beatOdds>0 ? Math.max(1, Math.round(1/m.beatOdds)) : 99;
+  document.getElementById('beatOdds').textContent = 'Beat your handicap: ~' + odds + '% (about 1 round in ' + oneIn + ')';
+
+  drawBell(good, typical, rough, par);
+
+  document.getElementById('statTbl').innerHTML = `
+    <tr><td>Course handicap</td><td>${m.ch}</td></tr>
+    <tr><td>Playing to handicap</td><td>${m.target} (${m.target-par>=0?'+':''}${m.target-par})</td></tr>
+    <tr><td>+ average gap (K)</td><td>+${K_AVG}</td></tr>
+    <tr><td>+ conditions (${selCondVal})</td><td>+${cAdd}</td></tr>
+    <tr><td>Expected average</td><td>${typical}</td></tr>
+    <tr><td>Round-to-round spread (σ)</td><td>±${m.sigma.toFixed(1)}</td></tr>
+    <tr><td>Typical blow-up holes</td><td>~${m.blowups} / round</td></tr>`;
+
+  document.getElementById('whsAdvice').innerHTML =
+    `<strong>Beating your handicap ~1 round in ${oneIn} is the system working, not you failing</strong>Your handicap is built from your best 8 of 20 rounds, so most rounds sit above it by design. A round of ${typical} for a ${m.ch} course handicap is a <em>par</em> performance for you — treat ${good} as the reward for a genuinely good day.`;
+  document.getElementById('moveAdvice').innerHTML =
+    `<strong>What would move this?</strong> Dropping the expected ${typical} by two shots means gaining ~2 strokes across your game — start with where you actually lose them via the <a href="sg_diagnostic.html">SG Diagnostic</a>, then work the leak it finds. (The Benchmarks tab shows the tracking tool that measures your real average over time.)`;
+
+  buildScorecard(m, par);
+  document.getElementById('result').classList.add('visible');
+  document.getElementById('result').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function drawBell(good, typical, rough, par){
+  const W=360,H=150, m=typical, sd=(rough-good)/(2*0.84)||3;
+  const x0=m-3.2*sd, x1=m+3.2*sd;
+  const sx = s => 20 + (s-x0)/(x1-x0)*(W-40);
+  const peakY=28, baseY=H-24;
+  let path='';
+  for (let s=x0; s<=x1; s+=0.5){
+    const y = baseY - Math.exp(-0.5*Math.pow((s-m)/sd,2))*(baseY-peakY);
+    path += (s===x0?'M':'L') + sx(s).toFixed(1) + ' ' + y.toFixed(1) + ' ';
+  }
+  // shaded zones
+  function zone(a,b,fill){
+    let p='M '+sx(a)+' '+baseY+' ';
+    for (let s=a; s<=b; s+=0.5){ const y=baseY-Math.exp(-0.5*Math.pow((s-m)/sd,2))*(baseY-peakY); p+='L '+sx(s).toFixed(1)+' '+y.toFixed(1)+' '; }
+    p+='L '+sx(b)+' '+baseY+' Z';
+    return `<path d="${p}" fill="${fill}"/>`;
+  }
+  let g = `<rect x="0" y="0" width="${W}" height="${H}" fill="#0d180d" rx="8"/>`;
+  g += zone(x0, good, 'rgba(160,200,80,.22)');
+  g += zone(good, rough, 'rgba(224,184,64,.14)');
+  g += zone(rough, x1, 'rgba(216,96,48,.18)');
+  g += `<path d="${path}" fill="none" stroke="var(--lime)" stroke-width="1.5"/>`;
+  // markers
+  [[good,'good','var(--lime)'],[typical,'typical','var(--gold)'],[rough,'rough','var(--rust)']].forEach(([s,lbl,col])=>{
+    g += `<line x1="${sx(s)}" y1="${peakY-4}" x2="${sx(s)}" y2="${baseY}" stroke="${col}" stroke-width="1" stroke-dasharray="3 2"/>`;
+    g += `<text x="${sx(s)}" y="${baseY+14}" fill="${col}" font-size="10" font-family="monospace" text-anchor="middle">${s}</text>`;
+    g += `<text x="${sx(s)}" y="${peakY-8}" fill="${col}" font-size="7" font-family="monospace" text-anchor="middle" letter-spacing="1">${lbl.toUpperCase()}</text>`;
+  });
+  document.getElementById('bell').innerHTML = g;
+}
+
+// generic par-72 layout (4 par-3s, 4 par-5s, 10 par-4s) with SI 1..18 assigned across
+const GEN_PARS = [4,4,3,5,4,4,3,5,4, 4,3,5,4,4,3,5,4,4]; // sums to 72
+function buildScorecard(m, par){
+  const strokes = allocateStrokes(m.ch);
+  // assign SI 1..18: hardest holes = longer pars typically; keep generic SI = hole order
+  let rows = '<tr><th>Hole</th><th>Par</th><th>SI</th><th>Shots</th><th>Net par</th></tr>';
+  let totPar=0, totShots=0;
+  for (let i=0;i<18;i++){
+    const hp = GEN_PARS[i]; const si=i+1; const sh=strokes[si-1];
+    totPar+=hp; totShots+=sh;
+    rows += `<tr class="${sh>0?'gets':''}"><td>${i+1}</td><td>${hp}</td><td>${si}</td><td>${sh>0?'+'+sh:'—'}</td><td>${hp+sh}</td></tr>`;
+  }
+  rows += `<tr class="total"><td>Total</td><td>${totPar}</td><td></td><td>+${totShots}</td><td>${totPar+totShots}</td></tr>`;
+  document.getElementById('scorecardOut').innerHTML =
+    `<div class="card"><span class="card-tag">Your Net-Par Card (generic par-72 layout)</span>
+       <h3>Where You Get Your ${m.ch} Shots</h3>
+       <table class="scard">${rows}</table>
+       <p style="font-size:11px;color:var(--muted);margin-top:10px;">On a highlighted hole, a bogey ties your net par — that's a solid hole, not a mistake. Your net-par total (${totPar+totShots}) is what "playing to your handicap" looks like; the Simulator adds the realistic average gap on top.</p>
+     </div>`;
+}
+
+function switchTab(id, btn){
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// prefill last inputs
+document.addEventListener('DOMContentLoaded', ()=>{
+  try {
+    const s = JSON.parse(localStorage.getItem(KEY));
+    if (s && s.lastInputs){
+      const L=s.lastInputs;
+      if (L.hi!=null) document.getElementById('hi').value=L.hi;
+      if (L.cr!=null) document.getElementById('cr').value=L.cr;
+      if (L.slope!=null) document.getElementById('slope').value=L.slope;
+      if (L.par!=null) document.getElementById('par').value=L.par;
+    }
+  } catch(e){}
+});
+</script>
+
+<!-- LEGAL FOOTER -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:18px 20px;text-align:center;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+  <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+</div>
+<!-- ONWARD NAV -->
+<div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
+  <button type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(160,200,80,0.35);background:#111e11;color:rgba(232,240,216,0.9);font-size:18px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8593;</button>
+  <a href="index.html" aria-label="All guides" style="width:44px;height:44px;border-radius:50%;border:1px solid #2d7a1c;background:#2d7a1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8962;</a>
+</div>
+<style>@media print{.onward-nav{display:none!important;}}</style>
+</body>
+</html>

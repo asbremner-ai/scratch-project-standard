@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- version:v1.0 · 2026-06-25 · playing_hcp_calculator.html -->
+<!-- version:v1.1 · 2026-07-13 · playing_hcp_calculator.html — performance-band tables (stroke play + Stableford) realigned with the Expected Score Simulator (expected_score.html): the average round runs ~3 over course handicap (WHS = best 8 of 20), so "playing to handicap" is the GOOD day (~1 in 5), not the typical round. Prevents the two Standard tools from shipping contradictory expectations. Course-handicap formula unchanged. -->
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -212,18 +212,23 @@ function calculate(){
   const scoreTable = document.getElementById('scoreTable');
   const stablePoints = fmt==='stableford';
   if(stablePoints){
+    // Bands aligned with the Expected Score Simulator: 36 pts = playing to handicap,
+    // which is your GOOD day (~1 round in 5), not your average. Typical ≈ 32.
     scoreTable.innerHTML = '<tr><th>Performance</th><th>Points Range</th><th>Equivalent</th></tr>'+
-      '<tr><td>Exceptional</td><td>40+</td><td>Handicap improvement likely</td></tr>'+
-      '<tr><td>Good</td><td>36–39</td><td>On-target for your handicap</td></tr>'+
-      '<tr><td>Average</td><td>30–35</td><td>Slightly below handicap</td></tr>'+
-      '<tr><td>Difficult day</td><td>< 30</td><td>Probably a tough conditions day</td></tr>';
+      '<tr><td>Beat your handicap</td><td>37+</td><td>~1 round in 5 — the WHS system working; cut likely</td></tr>'+
+      '<tr><td>A good day</td><td>34–36</td><td>Better than your typical round</td></tr>'+
+      '<tr><td>Your typical round</td><td>30–33</td><td>The average round runs ~3 over handicap — normal, not failure</td></tr>'+
+      '<tr><td>A tough day</td><td>&lt; 30</td><td>Expected a few times a season</td></tr>';
   } else {
     const t = targetScore;
+    // Bands aligned with the Expected Score Simulator (expected_score.html): the average
+    // round runs ~3 over course handicap (WHS = best 8 of 20), so "playing to handicap"
+    // (t) is your GOOD day, and your typical round is t+3. See that tool's Method tab.
     scoreTable.innerHTML = '<tr><th>Performance</th><th>Score Range</th><th>Meaning</th></tr>'+
-      '<tr><td>Exceptional</td><td>'+Math.max(par,t-6)+' – '+(t-3)+'</td><td>Playing well above handicap — CSS cuts likely</td></tr>'+
-      '<tr><td>Good</td><td>'+(t-2)+' – '+(t+1)+'</td><td>On-target for your current handicap</td></tr>'+
-      '<tr><td>Average</td><td>'+(t+2)+' – '+(t+6)+'</td><td>Just above target — no CSS impact</td></tr>'+
-      '<tr><td>Difficult day</td><td>'+(t+7)+'+</td><td>Handicap may buffer if CSS adjusted</td></tr>';
+      '<tr><td>Beat your handicap</td><td>'+Math.max(par,t-3)+' – '+t+'</td><td>~1 round in 5 — the WHS system working; CSS cuts likely</td></tr>'+
+      '<tr><td>A good day</td><td>'+(t+1)+' – '+(t+2)+'</td><td>Better than your typical round</td></tr>'+
+      '<tr><td>Your typical round</td><td>'+(t+3)+' – '+(t+5)+'</td><td>The average round runs ~3 over handicap — normal, not failure</td></tr>'+
+      '<tr><td>A tough day</td><td>'+(t+6)+'+</td><td>Expected a few times a season</td></tr>';
   }
 
   document.getElementById('explainTitle').textContent = 'WHS Calculation Breakdown';
