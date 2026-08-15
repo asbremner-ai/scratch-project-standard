@@ -42,12 +42,12 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* HERO */
 .hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
-.hero-overline{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;display:block;}
+.hero-overline{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;display:block;}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
 .hero h1 .ruled{display:block;font-family:'Inter',sans-serif;font-style:normal;font-weight:300;font-size:0.38em;color:rgba(232,240,216,0.5);letter-spacing:.01em;margin-top:8px;}
 .hero-deck{font-size:13.5px;color:rgba(232,240,216,0.65);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.7;}
 .hero-topics{display:flex;justify-content:center;flex-wrap:wrap;gap:6px;}
-.hero-topic{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.hero-topic{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
 
 /* LOGO */
 .tsp-logo{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:18px;}
@@ -55,7 +55,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tsp-bar{border-radius:2px 2px 0 0;}
 .tsp-wordmark{text-align:center;}
 .tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:.9rem;letter-spacing:.14em;text-transform:uppercase;color:var(--white);line-height:1;}
-.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.22em;text-transform:uppercase;color:rgba(224,184,64,0.55);margin-top:4px;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:rgba(224,184,64,0.55);margin-top:4px;}
 
 /* BANNERS */
 .no-profile-banner{background:rgba(224,184,64,0.1);border:1px solid rgba(224,184,64,0.35);border-radius:var(--r-sm);padding:14px 18px;margin:14px 0 0;font-size:12.5px;line-height:1.7;color:var(--white);text-align:left;}
@@ -77,7 +77,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* NAV — 7 tabs */
 .nav-tabs{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
 .nav-tabs::-webkit-scrollbar{display:none;}
-.tab-btn{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab-btn{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
 .tab-btn:hover{color:var(--lime-hi);}
 .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
 
@@ -85,7 +85,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .section{display:none;padding:36px 18px 60px;max-width:740px;margin:0 auto;position:relative;z-index:1;animation:appear .3s ease;}
 .section.active{display:block;}
 @keyframes appear{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-.section-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;opacity:.8;}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;opacity:.8;}
 .section-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:6px;line-height:1.1;}
 .section-desc{font-size:13px;color:var(--muted);margin-bottom:24px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
 
@@ -95,7 +95,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
 .card.teal-card::before{background:linear-gradient(90deg,transparent,rgba(72,176,168,.25),transparent);}
 .card.gold-card::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
-.card-kicker{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card-kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
 .card.teal-card .card-kicker{color:var(--teal);}
 .card.gold-card .card-kicker{color:var(--gold);}
 .card h3{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--white);margin-bottom:9px;line-height:1.25;}
@@ -116,7 +116,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .phase-block.phase-past{opacity:.6;}
 .phase-block.phase-past .phase-num{border-color:var(--border);color:var(--muted);}
 .phase-block.phase-future{opacity:.85;}
-.phase-here-badge{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;background:var(--lime-dim);border:1px solid var(--lime);color:var(--lime-hi);border-radius:3px;padding:3px 8px;margin-bottom:8px;}
+.phase-here-badge{display:inline-flex;align-items:center;gap:5px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;background:var(--lime-dim);border:1px solid var(--lime);color:var(--lime-hi);border-radius:3px;padding:3px 8px;margin-bottom:8px;}
 
 /* CHECKLISTS */
 .checklist{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:12px;}
@@ -138,7 +138,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 /* DATA TABLE */
 .dtable{width:100%;border-collapse:collapse;margin:12px 0;font-size:12.5px;}
-.dtable th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.dtable th{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
 .dtable td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
 .dtable tr:last-child td{border-bottom:none;}
 .dtable td:first-child{color:var(--white);font-family:'JetBrains Mono',monospace;font-size:.75rem;}
@@ -188,7 +188,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .tl-hcp{font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:700;text-align:right;}
 /* TODAY marker on trajectory */
 .tl-today{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--white);border-radius:1px;opacity:.7;}
-.tl-today::after{content:'▶';position:absolute;top:-8px;left:-4px;font-size:8px;color:var(--white);opacity:.9;}
+.tl-today::after{content:'▶';position:absolute;top:-8px;left:-4px;font-size:11px;color:var(--white);opacity:.9;}
 
 /* SG GAP BARS */
 .gap-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--faint);}
@@ -223,7 +223,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sn.gd{color:var(--gold-hi);background:var(--gold-dim);border-color:rgba(224,184,64,.2);}
 
 /* GUIDE LINK CHIPS */
-a.guide-link{display:inline-flex;align-items:center;gap:5px;background:var(--lime-dim);border:1px solid var(--border-hi);color:var(--lime-hi);border-radius:4px;padding:3px 10px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .15s;margin-left:4px;}
+a.guide-link{display:inline-flex;align-items:center;gap:5px;background:var(--lime-dim);border:1px solid var(--border-hi);color:var(--lime-hi);border-radius:4px;padding:3px 10px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .15s;margin-left:4px;}
 a.guide-link:hover{background:rgba(160,200,80,0.18);border-color:var(--lime);}
 
 /* PHASE FITNESS NOTE */
@@ -611,16 +611,35 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<!-- tsp:pwa -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a160a">
+<script>
+(function(){
+  if (!("serviceWorker" in navigator)) return;
+  // file:// has no service-worker support at all — Pro/Elite buyers open
+  // the zip locally, so bail out quietly rather than throwing on load.
+  if (location.protocol === "file:") return;
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(e){
+      console.warn("[TSP] service worker registration failed:", e);
+    });
+  });
+})();
+</script>
+<!-- /tsp:pwa -->
 </head>
 <body>
 
 <!-- HOME NAV -->
 <div style="background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:10px 18px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
-  <a href="index.html" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+  <a href="index.html" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
     <span style="font-size:13px;line-height:1;">&#8962;</span> All Playbooks
   </a>
-  <span style="font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);">The Scratch Project</span>
-  <button onclick="history.back()" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:0;">
+  <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);">The Scratch Project</span>
+  <button onclick="history.back()" style="font-family:'Courier New',monospace;font-size:12.5px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:0;">
     <span style="font-size:14px;line-height:1;">&#8592;</span> Back
   </button>
 </div>
@@ -1010,7 +1029,7 @@ function showTab(id, btn) {
 
 // ─── PLAN DATA + GOAL ASSESSMENT (preserved from v5.1) ────────────────────
 // ─── SG DATA + BAND HELPERS ───────────────────────────────────────────────────
-// SG deficits vs scratch by starting handicap (Broadie 2014 + Decade framework)
+// SG deficits vs scratch by starting handicap (Broadie 2014 + expected-value framework)
 const SG_BY_HCP = {
   20: {app:-2.8, ag:-3.4, putt:-2.8, ott:-1.4},
   18: {app:-2.5, ag:-3.1, putt:-2.6, ott:-1.2},
@@ -1393,9 +1412,9 @@ function buildPlan(hcp, startDate, goalHcp, country, goalOverridden, originalGoa
   if (startDate) {
     const cc = {uk:'England Golf',us:'USGA GHIN',ireland:'Golf Ireland',eu:'EGA',australia:'Golf Australia',nz:'NZ Golf',canada:'Golf Canada',other:'Your federation'};
     const goalStr = goalOverridden && originalGoal != null
-      ? goalLabel + ' <span style="opacity:.6;font-size:11px;">(adjusted from ' + originalLabel + ')</span>'
+      ? goalLabel + ' <span style="opacity:.6;font-size:13px;">(adjusted from ' + originalLabel + ')</span>'
       : goalLabel;
-    banner.innerHTML = '<strong>Your plan:</strong> HCP ' + hcp + ' → ' + goalStr + ' · Started ' + mDate(1) + ' · Now in <strong>Month ' + curMs + '</strong> (' + mDate(curMs) + ') · ' + (cc[country]||cc.other) + ' <a href="quick_start.html" style="color:var(--lime-hi);font-size:11px;margin-left:8px;">Edit →</a>';
+    banner.innerHTML = '<strong>Your plan:</strong> HCP ' + hcp + ' → ' + goalStr + ' · Started ' + mDate(1) + ' · Now in <strong>Month ' + curMs + '</strong> (' + mDate(curMs) + ') · ' + (cc[country]||cc.other) + ' <a href="quick_start.html" style="color:var(--lime-hi);font-size:13px;margin-left:8px;">Edit →</a>';
     banner.style.display = 'block';
   }
 
@@ -1624,7 +1643,7 @@ function assessGoal(startHcp, goalHcp) {
   }
 
   // Goal requires more improvement than is realistic in 24 months
-  const realistic = Math.max(0, startHcp - MAX_24M_IMPROVEMENT);
+  const realistic = Math.round(Math.max(0, startHcp - MAX_24M_IMPROVEMENT) * 10) / 10;
 
   if (goal <= 0) {
     // They wanted scratch — honest about the timeline
