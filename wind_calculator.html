@@ -43,18 +43,18 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 
 /* ── TOP NAV ── */
 .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
-.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
 .topbar a:hover{color:var(--lime);}
-.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
 
 /* ── HERO ── */
 .hero{background:linear-gradient(160deg,#0f2010 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
-.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.8rem);font-weight:700;line-height:1.1;margin-bottom:10px;}
 .hero h1 em{font-style:italic;color:var(--teal);}
 .hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:520px;margin-bottom:16px;}
 .hero-tags{display:flex;flex-wrap:wrap;gap:6px;}
-.htag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:4px 10px;border-radius:20px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:4px 10px;border-radius:20px;}
 
 /* ── MAIN LAYOUT ── */
 .page{max-width:600px;margin:0 auto;padding:20px 16px 80px;}
@@ -70,7 +70,7 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 .card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.3),transparent);}
 .card-lime{border-color:var(--border-hi);}
 .card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
-.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;display:block;}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;display:block;}
 .card-gold .card-tag{color:var(--gold);}
 .card-lime .card-tag{color:var(--lime);}
 .card-rust .card-tag{color:var(--rust);}
@@ -80,7 +80,7 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 /* ── SECTION HEADERS ── */
 .sec-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:6px;}
 .sec-desc{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:16px;padding-left:10px;border-left:2px solid var(--teal);}
-.badge{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:10px;}
+.badge{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;background:var(--teal-dim);border:1px solid var(--teal-border);color:var(--teal);padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:10px;}
 .badge-gold{background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);}
 .badge-lime{background:var(--lime-dim);border-color:var(--border-hi);color:var(--lime);}
 .badge-rust{background:var(--rust-dim);border-color:var(--rust-border);color:var(--rust);}
@@ -88,31 +88,31 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 /* ── FORM INPUTS ── */
 .form-section{margin-bottom:20px;}
 .field{margin-bottom:14px;}
-.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;}
 .field input[type=number]{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--white);font-family:'Inter',system-ui;font-size:16px;font-weight:600;padding:12px 14px;outline:none;-webkit-appearance:none;appearance:none;}
 .field input[type=number]:focus{border-color:var(--teal);box-shadow:0 0 0 2px rgba(72,176,168,.15);}
 .field input[type=number]::placeholder{color:rgba(232,240,216,.25);font-weight:400;}
 
 /* ── DIRECTION GRID ── */
-.dir-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;display:block;}
+.dir-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;display:block;}
 .dir-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:14px;}
 .dir-btn{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:10px 6px;text-align:center;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
 .dir-btn .emoji{font-size:18px;display:block;margin-bottom:3px;}
-.dir-btn .dir-name{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.dir-btn .dir-name{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
 .dir-btn:active{transform:scale(.97);}
 .dir-btn.selected{background:var(--teal);border-color:var(--teal);box-shadow:0 0 10px rgba(72,176,168,.3);}
 .dir-btn.selected .dir-name{color:#fff;}
 
 /* ── SPEED CHIPS ── */
-.speed-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;display:block;}
+.speed-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;display:block;}
 .speed-chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
-.speed-chip{background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
+.speed-chip{background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
 .speed-chip:active{transform:scale(.97);}
 .speed-chip.selected{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:700;box-shadow:0 0 8px rgba(72,176,168,.3);}
 
 /* ── FLIGHT TYPE ── */
 .flight-chips{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
-.flight-chip{background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);cursor:pointer;transition:all .15s;flex:1;text-align:center;min-width:80px;-webkit-tap-highlight-color:transparent;}
+.flight-chip{background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);cursor:pointer;transition:all .15s;flex:1;text-align:center;min-width:80px;-webkit-tap-highlight-color:transparent;}
 .flight-chip.selected{background:var(--gold);border-color:var(--gold);color:#0a160a;font-weight:700;}
 
 /* ── CALCULATE BUTTON ── */
@@ -124,7 +124,7 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 .result{display:none;margin-top:20px;}
 .result.visible{display:block;}
 .result-hero{background:linear-gradient(135deg,rgba(72,176,168,.15),rgba(72,176,168,.05));border:1.5px solid var(--teal-border);border-radius:var(--r);padding:20px 18px;text-align:center;margin-bottom:14px;}
-.result-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.result-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
 .result-yardage{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:4px;}
 .result-yardage span{font-size:1.2rem;color:var(--muted);font-weight:400;}
 .result-delta{font-family:'JetBrains Mono',monospace;font-size:12px;margin-bottom:12px;}
@@ -136,7 +136,7 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 /* ── BREAKDOWN TABLE ── */
 .breakdown{font-size:12px;width:100%;border-collapse:collapse;margin-top:4px;}
 .breakdown td{padding:7px 10px;border-bottom:1px solid var(--faint);color:var(--muted);line-height:1.5;vertical-align:top;}
-.breakdown td:first-child{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--white);width:55%;}
+.breakdown td:first-child{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.08em;color:var(--white);width:55%;}
 .breakdown tr:last-child td{border-bottom:none;}
 .breakdown .val{text-align:right;font-weight:600;}
 .val-add{color:var(--rust);}
@@ -151,25 +151,25 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 
 /* ── REFERENCE TABLE ── */
 .ref-tbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px;}
-.ref-tbl th{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.ref-tbl th{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
 .ref-tbl td{padding:6px 10px;color:var(--muted);border-bottom:1px solid var(--faint);vertical-align:top;}
 .ref-tbl td:first-child{color:var(--white);}
 .ref-tbl tr:last-child td{border-bottom:none;}
 
 .steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
 .steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
-.step-n{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--teal);background:var(--teal-dim);border:1px solid var(--teal-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
 
 .divider{height:1px;background:var(--border);margin:20px 0;}
 
 /* ── RESET BUTTON ── */
-.reset-btn{background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:10px 16px;cursor:pointer;width:100%;margin-top:10px;transition:border-color .15s;}
+.reset-btn{background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;padding:10px 16px;cursor:pointer;width:100%;margin-top:10px;transition:border-color .15s;}
 .reset-btn:hover{border-color:var(--border-hi);color:var(--white);}
 
 /* ── TABS ── */
 .tab-bar{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .tab-bar::-webkit-scrollbar{display:none;}
-.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;cursor:pointer;white-space:nowrap;transition:all .15s;margin-bottom:-1px;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;cursor:pointer;white-space:nowrap;transition:all .15s;margin-bottom:-1px;}
 .tab.active{color:var(--teal);border-bottom-color:var(--teal);}
 .tab-pane{display:none;}
 .tab-pane.active{display:block;}
@@ -183,8 +183,8 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 .tsp-bar{border-radius:3px 3px 0 0;display:block;}
 .tsp-wordmark{text-align:center;}
 .tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
-.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
-.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
 .tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
 .tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
 </style>
@@ -211,6 +211,25 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<!-- tsp:pwa -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a160a">
+<script>
+(function(){
+  if (!("serviceWorker" in navigator)) return;
+  // file:// has no service-worker support at all — Pro/Elite buyers open
+  // the zip locally, so bail out quietly rather than throwing on load.
+  if (location.protocol === "file:") return;
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(e){
+      console.warn("[TSP] service worker registration failed:", e);
+    });
+  });
+})();
+</script>
+<!-- /tsp:pwa -->
 </head>
 <body>
 
@@ -311,12 +330,12 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <h3>How Strong Is It?</h3>
       <span class="speed-label">Approximate wind speed (mph)</span>
       <div class="speed-chips">
-        <div class="speed-chip" data-mph="5" onclick="selectSpeed(this)">~5 mph<br><small style="font-size:9px;opacity:.7;">Slight</small></div>
-        <div class="speed-chip" data-mph="10" onclick="selectSpeed(this)">~10 mph<br><small style="font-size:9px;opacity:.7;">Light</small></div>
-        <div class="speed-chip" data-mph="15" onclick="selectSpeed(this)">~15 mph<br><small style="font-size:9px;opacity:.7;">Moderate</small></div>
-        <div class="speed-chip" data-mph="20" onclick="selectSpeed(this)">~20 mph<br><small style="font-size:9px;opacity:.7;">Fresh</small></div>
-        <div class="speed-chip" data-mph="25" onclick="selectSpeed(this)">~25 mph<br><small style="font-size:9px;opacity:.7;">Strong</small></div>
-        <div class="speed-chip" data-mph="30" onclick="selectSpeed(this)">30+ mph<br><small style="font-size:9px;opacity:.7;">Very Strong</small></div>
+        <div class="speed-chip" data-mph="5" onclick="selectSpeed(this)">~5 mph<br><small style="font-size:12px;opacity:.7;">Slight</small></div>
+        <div class="speed-chip" data-mph="10" onclick="selectSpeed(this)">~10 mph<br><small style="font-size:12px;opacity:.7;">Light</small></div>
+        <div class="speed-chip" data-mph="15" onclick="selectSpeed(this)">~15 mph<br><small style="font-size:12px;opacity:.7;">Moderate</small></div>
+        <div class="speed-chip" data-mph="20" onclick="selectSpeed(this)">~20 mph<br><small style="font-size:12px;opacity:.7;">Fresh</small></div>
+        <div class="speed-chip" data-mph="25" onclick="selectSpeed(this)">~25 mph<br><small style="font-size:12px;opacity:.7;">Strong</small></div>
+        <div class="speed-chip" data-mph="30" onclick="selectSpeed(this)">30+ mph<br><small style="font-size:12px;opacity:.7;">Very Strong</small></div>
       </div>
     </div>
 
@@ -446,7 +465,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
           <tr><td>LW / 58°</td><td>68</td><td><input type="number" class="custom-dist" data-club="LW" placeholder="—" style="background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);width:70px;padding:4px 6px;font-size:12px;text-align:center;"></td></tr>
         </tbody>
       </table>
-      <p style="font-size:11px;color:var(--muted);margin-top:10px;">Your custom values are used in calculations during this session. Cross-reference with Guide 22 — Wedge Distances for your precise yardages.</p>
+      <p style="font-size:13px;color:var(--muted);margin-top:10px;">Your custom values are used in calculations during this session. Cross-reference with Guide 22 — Wedge Distances for your precise yardages.</p>
     </div>
 
     <span class="badge badge-gold">Wind Speed Estimation</span>
@@ -714,12 +733,48 @@ function switchTab(id, btn) {
 
 <!-- LEGAL FOOTER -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:18px 20px;text-align:center;">
-  <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
-  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
   <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
-  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
 </div>
+
+<!-- tsp:persist — these tools stored nothing, so every on-course use meant
+     retyping every field. Values are restored on load and saved on change. -->
+<script>
+(function(){
+  var KEY = 'tsp_wind_v1';
+  function fields(){ return [].slice.call(document.querySelectorAll('input,select')); }
+  function id(el, i){ return el.id || el.name || ('idx' + i); }
+  function save(){
+    try {
+      var o = {};
+      fields().forEach(function(el, i){
+        if (el.type === 'button' || el.type === 'submit' || el.type === 'file') return;
+        o[id(el, i)] = (el.type === 'checkbox' || el.type === 'radio') ? el.checked : el.value;
+      });
+      localStorage.setItem(KEY, JSON.stringify(o));
+    } catch(e){}
+  }
+  function restore(){
+    try {
+      var o = JSON.parse(localStorage.getItem(KEY) || '{}');
+      fields().forEach(function(el, i){
+        var k = id(el, i);
+        if (!(k in o)) return;
+        if (el.type === 'checkbox' || el.type === 'radio') el.checked = !!o[k];
+        else el.value = o[k];
+      });
+    } catch(e){}
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    restore();
+    document.addEventListener('input',  save, true);
+    document.addEventListener('change', save, true);
+  });
+})();
+</script>
 <!-- ONWARD NAV -->
 <div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
   <button type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(160,200,80,0.35);background:#111e11;color:rgba(232,240,216,0.9);font-size:18px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8593;</button>

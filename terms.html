@@ -35,11 +35,11 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-size:15px;line-height:1.8;padding-bottom:60px;}
 .topnav{background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
-.topnav a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);text-decoration:none;}
+.topnav a{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--lime);text-decoration:none;}
 .hero{background:linear-gradient(160deg,#040a04 0%,var(--surface) 100%);padding:52px 24px 40px;border-bottom:1px solid var(--border);}
-.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);opacity:.75;margin-bottom:12px;}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);opacity:.75;margin-bottom:12px;}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:900;color:var(--white);margin-bottom:8px;}
-.hero-date{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.1em;}
+.hero-date{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted);letter-spacing:.1em;}
 .content{max-width:720px;margin:0 auto;padding:48px 24px;}
 h2{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin:36px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
 h2:first-child{margin-top:0;}
@@ -59,8 +59,8 @@ a:hover{text-decoration:underline;}
 .tsp-bar{border-radius:3px 3px 0 0;display:block;}
 .tsp-wordmark{text-align:center;}
 .tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
-.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
-.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
 .tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
 .tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
 </style>
@@ -87,14 +87,33 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<!-- tsp:pwa -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a160a">
+<script>
+(function(){
+  if (!("serviceWorker" in navigator)) return;
+  // file:// has no service-worker support at all — Pro/Elite buyers open
+  // the zip locally, so bail out quietly rather than throwing on load.
+  if (location.protocol === "file:") return;
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(e){
+      console.warn("[TSP] service worker registration failed:", e);
+    });
+  });
+})();
+</script>
+<!-- /tsp:pwa -->
 </head>
 <body>
 <!-- HOME NAV -->
 <div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
-  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:12.5px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
     <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
   </a>
-  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+  <span style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
 </div>
 <nav class="topnav">
   <a href="index.html">⌂ The Scratch Project</a>
@@ -160,6 +179,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <h2>4. Intellectual Property</h2>
 <p>All content in The Scratch Project — including text, data, methodology, guide structure, design, and code — is the intellectual property of the operator. All rights are reserved.</p>
 <p>Third-party data sources referenced in the content (strokes gained research, R&A studies, etc.) remain the property of their respective owners and are used under fair use principles for educational commentary.</p>
+<p><strong>Trademarks and non-affiliation.</strong> All product, company, brand, and system names referred to in this content — including but not limited to Arccos, FlightScope Mevo, HackMotion, TrackMan, Sportsbox AI, Golfmetrics, Shot Scope, AimPoint, and DECADE — are the trademarks or registered trademarks of their respective owners. They are referred to for identification and educational purposes only. The Scratch Project is independent and is not affiliated with, endorsed by, sponsored by, or connected to any of these companies. Any methods, models, and reference tables presented here (including our feel-based green-reading break model and our expected-value course-strategy engine) are The Scratch Project's own work, independently derived from publicly available strokes-gained research and putting/ball-flight physics, and are not reproductions of any third party's proprietary system or materials.</p>
 
 <h2>5. No Guarantee of Results</h2>
 <p>Golf improvement depends on many factors including individual skill, time invested, coaching, physical attributes, and course conditions. While our content is based on established strokes gained methodology and sports science research, <strong>we make no guarantee of specific handicap improvement, scoring outcomes, or performance results</strong> from using our products.</p>
@@ -202,11 +222,11 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 
 <!-- LEGAL FOOTER -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:18px 20px;text-align:center;">
-  <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
-  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
   <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
-  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
 </div>
 <!-- ONWARD NAV -->
 <div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">

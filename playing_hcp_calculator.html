@@ -14,11 +14,11 @@
 :root{--bg:#0a160a;--surface:#111e11;--surface2:#162416;--border:rgba(160,200,80,.14);--border-hi:rgba(160,200,80,.32);--lime:#a0c850;--lime-dim:rgba(160,200,80,.08);--gold:#e0b840;--gold-dim:rgba(224,184,64,.08);--gold-border:rgba(224,184,64,.22);--teal:#48b0a8;--teal-dim:rgba(72,176,168,.08);--teal-border:rgba(72,176,168,.22);--white:#e8f0d8;--muted:rgba(232,240,216,.6);--faint:rgba(232,240,216,.08);--r:10px;--r-sm:6px;}
 html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
 .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
-.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
 .topbar a:hover{color:var(--lime);}
-.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
 .hero{background:linear-gradient(160deg,#0d1e10 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
-.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--teal);margin-bottom:10px;}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.6rem);font-weight:700;line-height:1.05;margin-bottom:10px;}
 .hero h1 em{font-style:italic;color:var(--teal);}
 .hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:500px;}
@@ -28,13 +28,13 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 .card-gold{border-color:var(--gold-border);}.card-gold::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.3),transparent);}
 .card-teal{border-color:var(--teal-border);}
 .card-lime{border-color:var(--border-hi);}.card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
-.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;display:block;}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;display:block;}
 .card-gold .card-tag{color:var(--gold);}
 .card-lime .card-tag{color:var(--lime);}
 .card h3{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:10px;}
 .card p{font-size:13px;color:var(--muted);line-height:1.75;}
 .field{margin-bottom:14px;}
-.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:7px;}
 .field input[type=number],.field select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--white);font-family:'Inter',system-ui;font-size:16px;padding:11px 13px;outline:none;-webkit-appearance:none;}
 .field input:focus,.field select:focus{border-color:var(--teal);}
 .field select option{background:#111e11;}
@@ -42,24 +42,24 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 .calc-btn{width:100%;background:var(--teal);color:#0a160a;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:none;border-radius:var(--r-sm);padding:15px;cursor:pointer;margin-top:4px;}
 .calc-btn:active{opacity:.85;}
 .result-big{background:linear-gradient(135deg,var(--teal-dim),rgba(72,176,168,.03));border:1.5px solid var(--teal-border);border-radius:var(--r);padding:22px 18px;text-align:center;margin:16px 0;}
-.rb-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.rb-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
 .rb-value{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--white);line-height:1;}
 .rb-sub{font-size:12px;color:var(--muted);margin-top:6px;}
 .info-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:12px 0;}
 .info-cell{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px;text-align:center;}
 .ic-val{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--gold);}
-.ic-label{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:3px;}
+.ic-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:3px;}
 .result-section{display:none;}
 .result-section.visible{display:block;}
-.reset-btn{background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px;width:100%;margin-top:8px;cursor:pointer;}
+.reset-btn{background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;padding:10px;width:100%;margin-top:8px;cursor:pointer;}
 .tbl{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0;}
-.tbl th{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.tbl th{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
 .tbl td{padding:7px 10px;color:var(--muted);border-bottom:1px solid var(--faint);}
 .tbl tr:last-child td{border-bottom:none;}
 .tbl td:first-child{color:var(--white);}
 .explain-box{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;margin:12px 0;font-size:12px;color:var(--muted);line-height:1.7;}
 .explain-box strong{color:var(--white);}
-.footer{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);text-align:center;padding:24px 20px;border-top:1px solid var(--border);margin-top:40px;}
+.footer{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);text-align:center;padding:24px 20px;border-top:1px solid var(--border);margin-top:40px;}
 a.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--lime);color:var(--bg);font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);}
 
 /* ── Five Pillars Logo (tsp) ── */
@@ -68,8 +68,8 @@ a.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--l
 .tsp-bar{border-radius:3px 3px 0 0;display:block;}
 .tsp-wordmark{text-align:center;}
 .tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
-.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
-.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
 .tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
 .tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
 </style>
@@ -96,6 +96,25 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<!-- tsp:pwa -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a160a">
+<script>
+(function(){
+  if (!("serviceWorker" in navigator)) return;
+  // file:// has no service-worker support at all — Pro/Elite buyers open
+  // the zip locally, so bail out quietly rather than throwing on load.
+  if (location.protocol === "file:") return;
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(e){
+      console.warn("[TSP] service worker registration failed:", e);
+    });
+  });
+})();
+</script>
+<!-- /tsp:pwa -->
 </head>
 <body>
 <div class="topbar"><a href="index.html">&#8962; All Playbooks</a><span class="tsp-mini" aria-hidden="true"><span class="tsp-mini-bar" style="width:4px;height:9px;background:#e0a830;"></span><span class="tsp-mini-bar" style="width:4px;height:13px;background:#a0c850;"></span><span class="tsp-mini-bar" style="width:4px;height:16px;background:#4cb8c4;"></span><span class="tsp-mini-bar" style="width:4px;height:7px;background:#c8d8e8;"></span><span class="tsp-mini-bar" style="width:4px;height:11px;background:#c87830;"></span></span><span class="topbar-brand">The Scratch Project</span></div>
@@ -245,11 +264,11 @@ function reset(){document.getElementById('hcpIdx').value='';document.getElementB
 
 <!-- LEGAL FOOTER -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:18px 20px;text-align:center;">
-  <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
-  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
   <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
-  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
 </div>
 <!-- ONWARD NAV -->
 <div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">

@@ -52,18 +52,18 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 .hero{position:relative;z-index:2;background:linear-gradient(170deg,#040a04 0%,var(--surface) 100%);padding:52px 20px 40px;text-align:center;border-bottom:1px solid var(--border);}
 .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--lime),var(--gold),var(--lime),transparent);}
 .hero-lines{display:none;}
-.hero-overline{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;display:block;}
+.hero-overline{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:14px;opacity:.8;display:block;}
 .hero-overline::before,.hero-overline::after{display:none;}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,8vw,3.2rem);font-weight:900;line-height:1.05;color:var(--white);margin-bottom:10px;}
 .hero h1 .ruled{display:block;font-family:'Inter',sans-serif;font-style:normal;font-weight:300;font-size:0.42em;color:var(--muted);letter-spacing:0.05em;margin-top:8px;}
 .hero-deck{font-size:13px;color:var(--muted);max-width:480px;margin:0 auto 20px;font-weight:300;line-height:1.65;}
 .hero-topics{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
-.hero-topic{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
+.hero-topic{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:4px;background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);}
 
 /* NAV */
 .nav-tabs{display:flex;overflow-x:auto;background:rgba(4,10,4,.97);border-bottom:1px solid var(--border);padding:0 12px;scrollbar-width:none;position:sticky;top:0;z-index:100;-webkit-overflow-scrolling:touch;}
 .nav-tabs::-webkit-scrollbar{display:none;}
-.tab-btn{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
+.tab-btn{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);background:none;border:none;border-bottom:2px solid transparent;padding:13px 12px;cursor:pointer;white-space:nowrap;transition:all .2s;-webkit-appearance:none;}
 .tab-btn:hover{color:var(--lime-hi);}
 .tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);}
 
@@ -72,7 +72,7 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 .section.active{height:auto;overflow:visible;padding:28px 16px 60px;animation:appear .3s ease;}
 @keyframes appear{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
 
-.section-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
 .section-title{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;color:var(--white);margin-bottom:4px;line-height:1.1;}
 .section-desc{font-size:13px;color:var(--muted);margin-bottom:22px;line-height:1.75;padding-left:12px;border-left:2px solid var(--lime);font-weight:300;}
 
@@ -85,7 +85,7 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 .card.gold-card{border-color:rgba(224,184,64,.2);}
 .card.gold-card::before{background:linear-gradient(90deg,transparent,rgba(224,184,64,.25),transparent);}
 .card.lime-card{border-color:rgba(160,200,80,.2);}
-.card-kicker{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
+.card-kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:6px;display:block;}
 .card.teal-card .card-kicker{color:var(--teal-hi);}
 .card.gold-card .card-kicker{color:var(--gold-hi);}
 .card.lime-card .card-kicker{color:var(--lime-hi);}
@@ -95,7 +95,7 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 /* STEPS */
 .steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:12px;}
 .steps li{display:flex;gap:14px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
-.sn{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;font-weight:700;}
+.sn{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--lime);background:var(--lime-dim);border:1px solid var(--border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;font-weight:700;}
 .sn.tl{color:var(--teal-hi);background:var(--teal-dim);}
 .sn.gd{color:var(--gold-hi);background:var(--gold-dim);}
 .sn.lm{color:var(--lime-hi);background:var(--lime-dim);}
@@ -116,7 +116,7 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 
 /* DATA TABLE */
 .dtable{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0;overflow-x:auto;display:block;}
-.dtable th{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.dtable th{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);}
 .dtable td{padding:8px 10px;color:var(--muted);border-bottom:1px solid var(--faint);line-height:1.5;vertical-align:top;}
 .dtable tr:last-child td{border-bottom:none;}
 .dtable td:first-child{color:var(--white);font-weight:600;}
@@ -127,9 +127,9 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 /* WEEK GRID */
 .week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin:14px 0;}
 .day-cell{border-radius:var(--r-sm);padding:10px 4px;text-align:center;}
-.day-cell .day-name{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;display:block;}
+.day-cell .day-name{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;display:block;}
 .day-cell .day-icon{font-size:1.1rem;display:block;margin-bottom:4px;}
-.day-cell .day-label{font-family:'JetBrains Mono',monospace;font-size:7px;letter-spacing:.08em;text-transform:uppercase;display:block;line-height:1.3;}
+.day-cell .day-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;display:block;line-height:1.3;}
 .day-cell.play{background:var(--rust-dim);border:1px solid rgba(216,96,48,.3);}
 .day-cell.play .day-name{color:var(--rust-hi);}
 .day-cell.play .day-label{color:var(--rust-hi);}
@@ -150,15 +150,15 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 .month-block{position:relative;padding-left:52px;margin-bottom:32px;}
 .month-block::before{content:'';position:absolute;left:18px;top:38px;bottom:-20px;width:2px;background:var(--border);}
 .month-block:last-child::before{display:none;}
-.month-num{position:absolute;left:0;top:0;width:38px;height:38px;background:var(--surface2);color:var(--gold-hi);font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;letter-spacing:.05em;border-radius:var(--r-sm);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1.1;}
-.month-num .ph-label{font-size:7px;color:var(--lime);letter-spacing:.2em;text-transform:uppercase;}
+.month-num{position:absolute;left:0;top:0;width:38px;height:38px;background:var(--surface2);color:var(--gold-hi);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.05em;border-radius:var(--r-sm);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-direction:column;line-height:1.1;}
+.month-num .ph-label{font-size:11px;color:var(--lime);letter-spacing:.2em;text-transform:uppercase;}
 .month-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:2px;}
-.month-sub{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;display:block;}
+.month-sub{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;display:block;}
 
 /* CHECKLIST */
 .checklist{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:14px;}
 .checklist li{display:flex;gap:12px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.7;}
-.check{font-family:'JetBrains Mono',monospace;font-size:9px;min-width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;font-weight:700;}
+.check{font-family:'JetBrains Mono',monospace;font-size:12px;min-width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:3px;font-weight:700;}
 .check.rust{color:var(--rust-hi);background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);}
 .check.teal{color:var(--teal-hi);background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);}
 .check.gold{color:var(--gold-hi);background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);}
@@ -166,12 +166,12 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 
 /* SESSION TEMPLATE */
 .session-block{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin:12px 0;}
-.session-title{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.session-title{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
 .session-title::after{content:'';flex:1;height:1px;background:var(--border);}
 .session-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--faint);}
 .session-row:last-child{border-bottom:none;}
-.s-time{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);min-width:36px;}
-.s-pct{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;min-width:36px;}
+.s-time{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);min-width:36px;}
+.s-pct{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;min-width:36px;}
 .s-pct.rs{color:var(--rust-hi);}
 .s-pct.tl{color:var(--teal-hi);}
 .s-pct.gd{color:var(--gold-hi);}
@@ -183,7 +183,7 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 /* COMPETITION TABLE */
 .comp-row{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid var(--faint);}
 .comp-row:last-child{border-bottom:none;}
-.comp-month{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;min-width:76px;color:var(--rust-hi);text-transform:uppercase;letter-spacing:.1em;padding-top:2px;}
+.comp-month{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;min-width:76px;color:var(--rust-hi);text-transform:uppercase;letter-spacing:.1em;padding-top:2px;}
 .comp-detail{flex:1;}
 .comp-detail strong{font-family:'Playfair Display',serif;font-size:1rem;color:var(--white);display:block;margin-bottom:2px;}
 .comp-detail span{font-size:13px;color:var(--muted);}
@@ -193,7 +193,7 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 .mini-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;}
 .mini-card.teal{border-color:rgba(72,176,168,.2);background:var(--teal-dim);}
 .mini-card.gold{border-color:rgba(224,184,64,.2);background:var(--gold-dim);}
-.mini-kicker{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);display:block;margin-bottom:6px;}
+.mini-kicker{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);display:block;margin-bottom:6px;}
 .mini-card.teal .mini-kicker{color:var(--teal-hi);}
 .mini-card.gold .mini-kicker{color:var(--gold-hi);}
 .mini-card h4{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:var(--white);margin-bottom:6px;}
@@ -201,10 +201,10 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 
 /* PULL QUOTE */
 .pull-quote{font-size:1rem;font-style:italic;color:var(--muted);line-height:1.8;padding:18px 22px;border-left:3px solid var(--gold);margin:20px 0;background:var(--surface2);border-radius:0 var(--r-sm) var(--r-sm) 0;}
-.pull-quote span{display:block;font-style:normal;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:10px;opacity:.7;}
+.pull-quote span{display:block;font-style:normal;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:10px;opacity:.7;}
 
 /* BADGE */
-.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
+.badge{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px;border-radius:4px;margin-bottom:16px;}
 .b-rust{background:var(--rust-dim);border:1px solid rgba(216,96,48,.25);color:var(--rust-hi);}
 .b-teal{background:var(--teal-dim);border:1px solid rgba(72,176,168,.25);color:var(--teal-hi);}
 .b-gold{background:var(--gold-dim);border:1px solid rgba(224,184,64,.25);color:var(--gold-hi);}
@@ -212,12 +212,12 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 /* MILESTONE ROW */
 .milestone-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--faint);}
 .milestone-row:last-child{border-bottom:none;}
-.ms-date{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;min-width:80px;color:var(--lime);}
+.ms-date{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;min-width:80px;color:var(--lime);}
 .ms-label{flex:1;font-size:13px;color:var(--muted);}
-.ms-target{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;min-width:60px;text-align:right;}
+.ms-target{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;min-width:60px;text-align:right;}
 
 /* FOOTER */
-.footer{text-align:center;padding:28px 20px;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:.18em;border-top:1px solid var(--border);position:relative;z-index:1;background:var(--surface);}
+.footer{text-align:center;padding:28px 20px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);letter-spacing:.18em;border-top:1px solid var(--border);position:relative;z-index:1;background:var(--surface);}
 
 @media(max-width:480px){
   .two-col{grid-template-columns:1fr;}
@@ -231,8 +231,8 @@ body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;min-
 .tsp-bar{border-radius:3px 3px 0 0;display:block;}
 .tsp-wordmark{text-align:center;}
 .tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
-.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
-.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
 .tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
 .tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
 
@@ -261,15 +261,34 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<!-- tsp:pwa -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a160a">
+<script>
+(function(){
+  if (!("serviceWorker" in navigator)) return;
+  // file:// has no service-worker support at all — Pro/Elite buyers open
+  // the zip locally, so bail out quietly rather than throwing on load.
+  if (location.protocol === "file:") return;
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(e){
+      console.warn("[TSP] service worker registration failed:", e);
+    });
+  });
+})();
+</script>
+<!-- /tsp:pwa -->
 </head>
 <body>
 <!-- HOME NAV -->
 <div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
-  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:12.5px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
     <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
   </a>
-  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
-  <button onclick="history.back()" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:0;">
+  <span style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+  <button onclick="history.back()" style="font-family:'Courier New',monospace;font-size:12.5px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:0;">
     <span style="font-size:14px;line-height:1;">&#8592;</span> Back
   </button>
 </div>
@@ -309,49 +328,49 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <div id="baseline-section" style="background:var(--surface);border-bottom:2px solid rgba(72,176,168,0.3);padding:20px 16px 24px;position:relative;z-index:20;isolation:isolate;">
   <div style="max-width:720px;margin:0 auto;">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:8px;">
-      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-hi);">📐 Day One Baselines — Enter Once · Saved to This Device</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--teal-hi);">📐 Day One Baselines — Enter Once · Saved to This Device</span>
       <div style="display:flex;gap:8px;align-items:center;">
-        <button type="button" id="bl-toggle" onclick="toggleBaseline()" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--teal-dim);border:1px solid rgba(72,176,168,.3);color:var(--teal-hi);padding:6px 12px;border-radius:var(--r-sm);cursor:pointer;-webkit-appearance:none;touch-action:manipulation;">▼ Show</button>
-        <button type="button" onclick="saveBaseline()" style="font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--lime);color:#0a160a;border:none;padding:6px 12px;border-radius:var(--r-sm);cursor:pointer;font-weight:700;-webkit-appearance:none;touch-action:manipulation;">💾 Save</button>
-        <span id="bl-status-27" style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--lime);opacity:0;transition:opacity 0.4s;"></span>
+        <button type="button" id="bl-toggle" onclick="toggleBaseline()" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:var(--teal-dim);border:1px solid rgba(72,176,168,.3);color:var(--teal-hi);padding:6px 12px;border-radius:var(--r-sm);cursor:pointer;-webkit-appearance:none;touch-action:manipulation;">▼ Show</button>
+        <button type="button" onclick="saveBaseline()" style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:var(--lime);color:#0a160a;border:none;padding:6px 12px;border-radius:var(--r-sm);cursor:pointer;font-weight:700;-webkit-appearance:none;touch-action:manipulation;">💾 Save</button>
+        <span id="bl-status-27" style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--lime);opacity:0;transition:opacity 0.4s;"></span>
       </div>
     </div>
     <div id="bl-grid" style="display:none;margin-top:14px;">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 16px;">
         <div>
-          <label for="bl-hcp" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">Handicap Index</label>
+          <label for="bl-hcp" style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">Handicap Index</label>
           <input id="bl-hcp" type="number" inputmode="decimal" step="0.1" min="0" max="54" placeholder="e.g. 14.2" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
         </div>
         <div>
-          <label for="bl-driver" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">Driver Speed (mph)</label>
+          <label for="bl-driver" style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">Driver Speed (mph)</label>
           <input id="bl-driver" type="number" inputmode="numeric" step="1" min="60" max="140" placeholder="e.g. 98" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
         </div>
         <div>
-          <label for="bl-7iron" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">7-Iron Carry (yds)</label>
+          <label for="bl-7iron" style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">7-Iron Carry (yds)</label>
           <input id="bl-7iron" type="number" inputmode="numeric" step="1" min="80" max="220" placeholder="e.g. 155" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
         </div>
         <div>
-          <label for="bl-6ft" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">6ft Make % (out of 20 putts)</label>
+          <label for="bl-6ft" style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">6ft Make % (out of 20 putts)</label>
           <input id="bl-6ft" type="number" inputmode="numeric" step="1" min="0" max="100" placeholder="e.g. 65" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
         </div>
         <div>
-          <label for="bl-chip" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">Chip inside 6ft / 20 balls</label>
+          <label for="bl-chip" style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">Chip inside 6ft / 20 balls</label>
           <input id="bl-chip" type="number" inputmode="numeric" step="1" min="0" max="20" placeholder="e.g. 8" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
         </div>
         <div>
-          <label for="bl-sg-app" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">SG: Approach (10-round avg)</label>
+          <label for="bl-sg-app" style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">SG: Approach (10-round avg)</label>
           <input id="bl-sg-app" type="number" inputmode="decimal" step="0.1" min="-15" max="5" placeholder="e.g. -4.2" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
         </div>
         <div>
-          <label for="bl-sg-putt" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">SG: Putting (10-round avg)</label>
+          <label for="bl-sg-putt" style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">SG: Putting (10-round avg)</label>
           <input id="bl-sg-putt" type="number" inputmode="decimal" step="0.1" min="-5" max="3" placeholder="e.g. -1.1" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
         </div>
         <div>
-          <label for="bl-gir" style="display:block;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">GIR % (recent rounds avg)</label>
+          <label for="bl-gir" style="display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--teal-hi);margin-bottom:5px;">GIR % (recent rounds avg)</label>
           <input id="bl-gir" type="number" inputmode="numeric" step="1" min="0" max="100" placeholder="e.g. 28" style="width:100%;background:var(--surface3);border:1px solid rgba(72,176,168,.4);border-radius:var(--r-sm);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;padding:10px 12px;outline:none;-webkit-appearance:none;touch-action:manipulation;-webkit-user-select:text;user-select:text;box-sizing:border-box;">
         </div>
       </div>
-      <button type="button" onclick="clearBaseline()" style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:none;border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:var(--r-sm);cursor:pointer;-webkit-appearance:none;touch-action:manipulation;">Clear All Baselines</button>
+      <button type="button" onclick="clearBaseline()" style="margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:none;border:1px solid var(--border);color:var(--muted);padding:8px 14px;border-radius:var(--r-sm);cursor:pointer;-webkit-appearance:none;touch-action:manipulation;">Clear All Baselines</button>
     </div>
   </div>
 </div>
@@ -565,13 +584,13 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     <p class="month-title">Putting Precision</p>
     <span class="month-sub">Weeks 9–13 · Month 3 · HCP Target: ~7</span>
     <ul class="checklist">
-      <li><span class="check teal">□</span><strong>AimPoint Express:</strong> Learn and apply the technique from Guide 01. Use on every putt in rounds from Week 9 onwards. Allocate 20 min per Tuesday session to green reading.</li>
+      <li><span class="check teal">□</span><strong>Feel-based reading:</strong> Learn and apply the technique from Guide 01. Use on every putt in rounds from Week 9 onwards. Allocate 20 min per Tuesday session to green reading.</li>
       <li><span class="check teal">□</span><strong>Lag putting:</strong> 30% of every putting block on lag putts 25 ft+. Pass/fail: inside 3-ft radius. Track 3-putt rate in every round — target below 10% by end of Month 3.</li>
       <li><span class="check teal">□</span><strong>Speed gates drill:</strong> Two tees 4 inches apart at 6 ft, putt through the gate. 50 putts per session, minimum 42/50 to pass. Record daily.</li>
       <li><span class="check teal">□</span><strong>Rypstick speed training:</strong> Begin Month 3 (Guide 25 protocol). 3× per week, 10 minutes. Integrate with gym days — speed before strength, never after.</li>
     </ul>
     <div class="insight"><span class="cicon">🏋️</span><p><strong>Fitness phase shift:</strong> Month 3 moves to Guide 06 Phase 2 — add rotational cable work and medicine ball throws. Strength is the base; power development begins now.</p></div>
-    <div class="callout" style="background:rgba(26,74,26,0.06);border-left-color:var(--teal);"><span class="cicon">📚</span><p><strong>Key guides for Month 3:</strong> <strong>Guide 01</strong> (Putting — AimPoint Express and lag drills) · <strong>Guide 25</strong> (Speed Training — Rypstick protocol begins this month) · <strong>Guide 06</strong> (Fitness Phase 2) · <strong>Guide 32</strong> (Green Reading)</p></div>
+    <div class="callout" style="background:rgba(26,74,26,0.06);border-left-color:var(--teal);"><span class="cicon">📚</span><p><strong>Key guides for Month 3:</strong> <strong>Guide 01</strong> (Putting — feel-based reading and lag drills) · <strong>Guide 25</strong> (Speed Training — Rypstick protocol begins this month) · <strong>Guide 06</strong> (Fitness Phase 2) · <strong>Guide 32</strong> (Green Reading)</p></div>
   </div>
 
   <!-- SEPTEMBER -->
@@ -665,7 +684,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <div class="session-row">
         <span class="s-pct tl">30%</span>
         <div class="s-bar"><div class="s-bar-fill" style="width:30%;background:linear-gradient(90deg,var(--teal),var(--teal-light));"></div></div>
-        <span class="s-label">Putting — Speed gates · AimPoint application · Lag from 30–40 ft</span>
+        <span class="s-label">Putting — Speed gates · Feel-read application · Lag from 30–40 ft</span>
       </div>
       <div class="session-row">
         <span class="s-pct rs">25%</span>
@@ -684,7 +703,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       </div>
     </div>
     <ul class="steps" style="margin-top:14px;">
-      <li><span class="sn tl">1</span><strong>Putting (24 min):</strong> 10 min speed gates at 6 ft (pass = 42/50). 8 min AimPoint green reading — read, putt, record accuracy. 6 min lag from 35 ft (pass = all inside 3 ft).</li>
+      <li><span class="sn tl">1</span><strong>Putting (24 min):</strong> 10 min speed gates at 6 ft (pass = 42/50). 8 min feel-based green reading — read, putt, record accuracy. 6 min lag from 35 ft (pass = all inside 3 ft).</li>
       <li><span class="sn tl">2</span><strong>Short game (20 min):</strong> 10 chips — all proximity tracked. Record average distance from hole. 10 min bunker — 10 exits, track how many stop within 10 ft of the flag.</li>
       <li><span class="sn tl">3</span><strong>Iron play (28 min):</strong> 10 balls 7-iron on LM or measured range — record carry and offline distance. Low Point Drill × 15. Apply wind adjustment to 5 simulated approach scenarios — choose club, write it down.</li>
       <li><span class="sn tl">4</span><strong>Pressure finish (8 min):</strong> 18-hole putting simulation — 18 putts, one from each distance (3–30 ft in steps), score yourself against par.</li>
@@ -887,8 +906,8 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     </table>
     </div>
     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-      <button type="button" onclick="addRoundRow()" style="background:var(--teal-dim);border:1px solid rgba(72,176,168,.3);color:var(--teal-hi);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:9px 14px;border-radius:var(--r-sm);cursor:pointer;-webkit-appearance:none;">+ Add Round</button>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);padding:8px 0;">Tap any field to edit · Saves automatically</span>
+      <button type="button" onclick="addRoundRow()" style="background:var(--teal-dim);border:1px solid rgba(72,176,168,.3);color:var(--teal-hi);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;padding:9px 14px;border-radius:var(--r-sm);cursor:pointer;-webkit-appearance:none;">+ Add Round</button>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);padding:8px 0;">Tap any field to edit · Saves automatically</span>
     </div>
   </div>
 
@@ -901,8 +920,8 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     </table>
     </div>
     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-      <button type="button" onclick="addPracticeRow()" style="background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.15em;text-transform:uppercase;padding:9px 14px;border-radius:var(--r-sm);cursor:pointer;-webkit-appearance:none;">+ Add Session</button>
-      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);padding:8px 0;">Tap any field to edit · Saves automatically</span>
+      <button type="button" onclick="addPracticeRow()" style="background:var(--lime-dim);border:1px solid var(--border);color:var(--lime-hi);font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:0.15em;text-transform:uppercase;padding:9px 14px;border-radius:var(--r-sm);cursor:pointer;-webkit-appearance:none;">+ Add Session</button>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);padding:8px 0;">Tap any field to edit · Saves automatically</span>
     </div>
   </div>
 
@@ -913,7 +932,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     <table class="dtable">
       <tr><th>Month</th><th>OTT</th><th>APP</th><th>ARG</th><th>PUTT</th><th>HCP End</th></tr>
       <tr>
-        <td style="color:var(--muted);font-size:11px;">Month 1</td>
+        <td style="color:var(--muted);font-size:13px;">Month 1</td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m1-ott"></td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m1-app"></td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m1-arg"></td>
@@ -921,7 +940,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m1-hcp"></td>
       </tr>
       <tr>
-        <td style="color:var(--muted);font-size:11px;">Month 2</td>
+        <td style="color:var(--muted);font-size:13px;">Month 2</td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m2-ott"></td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m2-app"></td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m2-arg"></td>
@@ -929,7 +948,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m2-hcp"></td>
       </tr>
       <tr>
-        <td style="color:var(--muted);font-size:11px;">Month 3</td>
+        <td style="color:var(--muted);font-size:13px;">Month 3</td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m3-ott"></td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m3-app"></td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m3-arg"></td>
@@ -937,7 +956,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m3-hcp"></td>
       </tr>
       <tr>
-        <td style="color:var(--muted);font-size:11px;">Month 4</td>
+        <td style="color:var(--muted);font-size:13px;">Month 4</td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m4-ott"></td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m4-app"></td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m4-arg"></td>
@@ -945,7 +964,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m4-hcp"></td>
       </tr>
       <tr>
-        <td style="color:var(--muted);font-size:11px;">Month 5</td>
+        <td style="color:var(--muted);font-size:13px;">Month 5</td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m5-ott"></td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m5-app"></td>
         <td class="t-td-27"><input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="—" class="t-sg-inp-27" data-key="sg-m5-arg"></td>
@@ -962,7 +981,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       </tr>
     </table>
     </div>
-    <p style="font-size:11px;color:var(--muted);margin-top:10px;">Target at Month 6: HCP ~5 · SG: APP improving toward −3.0 · All categories trending less negative month-on-month.</p>
+    <p style="font-size:13px;color:var(--muted);margin-top:10px;">Target at Month 6: HCP ~5 · SG: APP improving toward −3.0 · All categories trending less negative month-on-month.</p>
   </div>
 
   <div class="pull-quote">

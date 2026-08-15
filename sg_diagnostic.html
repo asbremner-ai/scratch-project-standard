@@ -26,11 +26,11 @@
 }
 html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
 .topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
-.topbar a{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;}
 .topbar a:hover{color:var(--lime);}
-.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
 .hero{background:linear-gradient(160deg,#0f2010 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
-.hero-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:10px;}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--lime);margin-bottom:10px;}
 .hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.6rem);font-weight:700;line-height:1.05;margin-bottom:10px;}
 .hero h1 em{font-style:italic;color:var(--lime);}
 .hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:520px;}
@@ -42,7 +42,7 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 .card-rust{border-color:var(--rust-border);}.card-rust::before{background:linear-gradient(90deg,transparent,rgba(216,96,48,.3),transparent);}
 .card-violet{border-color:var(--violet-border);}.card-violet::before{background:linear-gradient(90deg,transparent,rgba(155,114,245,.3),transparent);}
 .card-lime{border-color:var(--border-hi);}.card-lime::before{background:linear-gradient(90deg,transparent,rgba(160,200,80,.3),transparent);}
-.card-tag{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:7px;display:block;}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--lime);margin-bottom:7px;display:block;}
 .card-gold .card-tag{color:var(--gold);}
 .card-teal .card-tag{color:var(--teal);}
 .card-rust .card-tag{color:var(--rust);}
@@ -52,13 +52,13 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 
 /* Round entry table */
 .round-table{width:100%;border-collapse:collapse;margin:10px 0;}
-.round-table th{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:6px 8px;text-align:left;border-bottom:1px solid var(--border);}
+.round-table th{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:6px 8px;text-align:left;border-bottom:1px solid var(--border);}
 .round-table td{padding:5px 6px;border-bottom:1px solid var(--faint);}
-.round-table td:first-child{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);width:60px;}
+.round-table td:first-child{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted);width:60px;}
 .round-table input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);font-family:'Inter',system-ui;font-size:14px;padding:6px 8px;outline:none;-webkit-appearance:none;text-align:center;}
 .round-table input:focus{border-color:var(--teal);}
 .field{margin-bottom:12px;}
-.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
 .field select{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--white);font-family:'Inter',system-ui;font-size:16px;padding:11px 13px;outline:none;-webkit-appearance:none;}
 .field select option{background:#111e11;}
 .calc-btn{width:100%;background:var(--lime);color:#0a160a;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:none;border-radius:var(--r-sm);padding:15px;cursor:pointer;margin-top:4px;}
@@ -71,15 +71,15 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 /* SG bar chart */
 .sg-bars{display:flex;flex-direction:column;gap:10px;margin:14px 0;}
 .sg-bar-row{display:flex;align-items:center;gap:10px;}
-.sg-bar-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;width:60px;flex-shrink:0;color:var(--muted);}
+.sg-bar-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;width:60px;flex-shrink:0;color:var(--muted);}
 .sg-bar-track{flex:1;background:var(--surface2);border-radius:4px;height:22px;position:relative;overflow:hidden;}
 .sg-bar-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 8px;transition:width .6s cubic-bezier(.4,0,.2,1);}
-.sg-bar-val{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:#0a160a;white-space:nowrap;}
+.sg-bar-val{font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;color:#0a160a;white-space:nowrap;}
 .sg-bar-val.outside{position:absolute;right:-50px;color:var(--muted);}
 
 /* Leak indicator */
 .leak-hero{background:linear-gradient(135deg,var(--rust-dim),rgba(216,96,48,.03));border:2px solid var(--rust-border);border-radius:var(--r);padding:20px 16px;text-align:center;margin:16px 0;}
-.lh-label{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:8px;}
+.lh-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);margin-bottom:8px;}
 .lh-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:700;color:var(--white);margin-bottom:6px;}
 .lh-sub{font-size:12px;color:var(--muted);line-height:1.65;}
 
@@ -89,19 +89,19 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 .guide-link:hover{border-color:var(--lime);}
 .gl-icon{font-size:1.3rem;flex-shrink:0;}
 .gl-body{flex:1;}
-.gl-num{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:2px;}
+.gl-num{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--lime);margin-bottom:2px;}
 .gl-name{font-size:13px;font-weight:600;color:var(--white);}
-.gl-why{font-size:11px;color:var(--muted);margin-top:2px;line-height:1.5;}
+.gl-why{font-size:13px;color:var(--muted);margin-top:2px;line-height:1.5;}
 .gl-arrow{font-size:16px;color:var(--lime);flex-shrink:0;}
 
 /* Profile chips */
 .profile-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
-.pchip{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:20px;}
+.pchip{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:20px;}
 .pchip.good{background:rgba(94,203,62,.12);border:1px solid rgba(94,203,62,.3);color:#5ecb3e;}
 .pchip.warn{background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);}
 .pchip.bad{background:var(--rust-dim);border:1px solid var(--rust-border);color:var(--rust);}
 
-.reset-btn{background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:10px;width:100%;margin-top:8px;cursor:pointer;}
+.reset-btn{background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;padding:10px;width:100%;margin-top:8px;cursor:pointer;}
 .info-box{background:var(--surface2);border:1px solid var(--teal-border);border-radius:var(--r-sm);padding:12px 13px;margin:12px 0;display:flex;gap:10px;}
 .info-box .ico{font-size:15px;flex-shrink:0;margin-top:1px;}
 .info-box p{font-size:12px;color:var(--muted);line-height:1.65;}
@@ -114,8 +114,8 @@ a.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--l
 .tsp-bar{border-radius:3px 3px 0 0;display:block;}
 .tsp-wordmark{text-align:center;}
 .tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
-.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
-.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:7.5px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
 .tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
 .tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
 </style>
@@ -142,6 +142,25 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<!-- tsp:pwa -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a160a">
+<script>
+(function(){
+  if (!("serviceWorker" in navigator)) return;
+  // file:// has no service-worker support at all — Pro/Elite buyers open
+  // the zip locally, so bail out quietly rather than throwing on load.
+  if (location.protocol === "file:") return;
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(e){
+      console.warn("[TSP] service worker registration failed:", e);
+    });
+  });
+})();
+</script>
+<!-- /tsp:pwa -->
 </head>
 <body>
 <div class="topbar"><a href="index.html">&#8962; All Playbooks</a><span class="tsp-mini" aria-hidden="true"><span class="tsp-mini-bar" style="width:4px;height:9px;background:#e0a830;"></span><span class="tsp-mini-bar" style="width:4px;height:13px;background:#a0c850;"></span><span class="tsp-mini-bar" style="width:4px;height:16px;background:#4cb8c4;"></span><span class="tsp-mini-bar" style="width:4px;height:7px;background:#c8d8e8;"></span><span class="tsp-mini-bar" style="width:4px;height:11px;background:#c87830;"></span></span><span class="topbar-brand">The Scratch Project</span></div>
@@ -225,7 +244,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     <span class="card-tag">Your SG Estimates by Category</span>
     <h3>Strokes Gained vs Scratch</h3>
     <div class="sg-bars" id="sgBars"></div>
-    <p style="font-size:11px;color:var(--muted);margin-top:8px;">Estimates derived from your basic stats using published SG conversion models (Broadie, 2014). Accuracy improves with full SG tracking — see Guide 63 for tool recommendations.</p>
+    <p style="font-size:13px;color:var(--muted);margin-top:8px;">Estimates derived from your basic stats using published SG conversion models (Broadie, 2014). Accuracy improves with full SG tracking — see Guide 63 for tool recommendations.</p>
   </div>
 
   <div class="card card-lime" id="profileCard">
@@ -254,7 +273,31 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     <p id="nextAction"></p>
   </div>
 
-  <button class="reset-btn" onclick="reset()">↺ Re-run with Updated Stats</button>
+  <!-- tsp:history — previous runs, so "re-run after 8 rounds" is actionable -->
+  <div class="card" id="historyCard" style="display:none;">
+    <span class="card-tag">Your Progress</span>
+    <h3>Compared With Your Last Diagnostic</h3>
+    <p id="historyText"></p>
+    <div id="historyRows" style="margin-top:10px;"></div>
+  </div>
+
+  <!-- tsp:upsell — highest-intent moment in the free product -->
+  <div class="card" id="upsellCard" style="border-color:var(--pro-border,rgba(200,146,42,0.35));background:var(--pro-dim,rgba(200,146,42,0.08));">
+    <span class="card-tag" style="color:#c8922a;">Go Deeper</span>
+    <h3 id="upsellTitle">Fix This Leak Faster</h3>
+    <p id="upsellText"></p>
+    <a href="https://thescratchproject.gumroad.com/l/scratch-pro" id="upsellLink"
+       style="display:inline-block;margin-top:10px;padding:11px 18px;border-radius:8px;
+              background:#c8922a;color:#0a160a;font-weight:700;text-decoration:none;
+              font-size:13px;letter-spacing:0.02em;">
+      See what Pro adds &rarr;
+    </a>
+    <p style="font-size:13px;opacity:0.62;margin-top:9px;">
+      One-time &pound;47. 84 guides, 27 of them Pro-only. No subscription.
+    </p>
+  </div>
+
+  <button class="reset-btn" onclick="reset()">&#8634; Re-run with Updated Stats</button>
 </div>
 </div>
 <a href="index.html" class="home-btn">&#8962; Home</a>
@@ -504,9 +547,87 @@ function diagnose(){
   document.getElementById('nextAction').textContent =
     `For the next 30 days: open ${pd.links[0].name} today and run the diagnostic sequence in Tab 1. Track the relevant metric (${leak1.key==='ott'?'fairways hit':''}${leak1.key==='app'?'GIR% and proximity':''}${leak1.key==='arg'?'up-and-down %':''}${leak1.key==='putt'?'make% from 6 feet':''}) in Guide 17 (Progress Journal) after every round. Re-run this diagnostic after 8 rounds to measure whether the number has moved.`;
 
+  // ── tsp: persist this run ───────────────────────────────────────────────
+  // Until 2026-08-15 this tool stored nothing at all: 30 numbers in, an
+  // excellent read-out, and everything gone on refresh. Its own closing advice
+  // ("re-run after 8 rounds and see if the number has moved") was impossible to
+  // follow because no baseline was kept.
+  try {
+    saveRun({
+      date: new Date().toISOString().slice(0,10),
+      sg: {ott:+sgOTT.toFixed(2), app:+sgAPP.toFixed(2),
+           arg:+sgARG.toFixed(2), putt:+sgPUTT.toFixed(2)},
+      leak: leak1.key,
+      rounds: rounds.length
+    });
+    renderHistory();
+    writeLeakToProfile(leak1.key);
+    tuneUpsell(leak1.key);
+  } catch (e) { console.warn('[TSP] could not save diagnostic run:', e); }
+
   document.getElementById('results').classList.add('visible');
   document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
 }
+
+// ── tsp: diagnostic history ───────────────────────────────────────────────
+const TSP_DIAG_KEY = 'tsp_diagnostic_runs';
+const SG_LABEL = {ott:'Off the tee', app:'Approach', arg:'Around green', putt:'Putting'};
+
+function loadRuns(){
+  try { return JSON.parse(localStorage.getItem(TSP_DIAG_KEY) || '[]'); }
+  catch(e){ return []; }
+}
+function saveRun(run){
+  const all = loadRuns();
+  all.push(run);
+  localStorage.setItem(TSP_DIAG_KEY, JSON.stringify(all.slice(-24)));
+}
+function renderHistory(){
+  const all = loadRuns();
+  const card = document.getElementById('historyCard');
+  if (!card || all.length < 2) { if (card) card.style.display='none'; return; }
+  const now = all[all.length-1], prev = all[all.length-2];
+  const rows = ['ott','app','arg','putt'].map(k => {
+    const d = now.sg[k] - prev.sg[k];
+    const better = d > 0.05, worse = d < -0.05;
+    const col = better ? 'var(--good,#5fc8a0)' : worse ? 'var(--bad,#e05030)' : 'var(--muted,#8a9a7a)';
+    const arrow = better ? '\u25b2' : worse ? '\u25bc' : '\u2013';
+    return `<div style="display:flex;justify-content:space-between;padding:5px 0;
+              border-bottom:1px solid var(--faint,rgba(232,240,216,0.12));font-size:13px;">
+              <span>${SG_LABEL[k]}</span>
+              <span style="font-family:monospace;">${prev.sg[k].toFixed(2)} &rarr; ${now.sg[k].toFixed(2)}
+              <span style="color:${col};margin-left:7px;">${arrow} ${Math.abs(d).toFixed(2)}</span></span>
+            </div>`;
+  }).join('');
+  document.getElementById('historyRows').innerHTML = rows;
+  document.getElementById('historyText').textContent =
+    `You last ran this on ${prev.date}. This is run ${all.length}. Positive movement means strokes gained back.`;
+  card.style.display = '';
+}
+function writeLeakToProfile(leak){
+  // Let the rest of the system know what this reader's weakness is.
+  try {
+    const raw = localStorage.getItem('scratch_profile');
+    const p = raw ? JSON.parse(raw) : {};
+    p.primaryLeak = leak;
+    p.leakUpdated = new Date().toISOString().slice(0,10);
+    localStorage.setItem('scratch_profile', JSON.stringify(p));
+  } catch(e) { /* profile not set up yet — harmless */ }
+}
+function tuneUpsell(leak){
+  const COPY = {
+    ott:  ['Ground Reaction Force and Dispersion Cone', 'Guide 39 breaks down where clubhead speed actually comes from, and the Dispersion Cone Visualiser turns your miss pattern into an aim point.'],
+    app:  ['The 125\u2013175 Yard Deep-Dive', 'Guide 48p sets proximity targets by distance band and Guide 40 turns them into shot-by-shot expected-value decisions \u2014 the zone that separates a 10 from scratch.'],
+    arg:  ['Short Game by Lie Type', 'Pro adds the full lie-by-lie short game system plus the Practice Session Planner, which reads your logged rounds and builds the session for you.'],
+    putt: ['Putting Metrics Deep-Dive', 'Guide 49p splits SG: Putting by distance bracket so you can tell a pace problem from a read problem \u2014 they need opposite practice.']
+  };
+  const c = COPY[leak]; if (!c) return;
+  const t = document.getElementById('upsellTitle');
+  const x = document.getElementById('upsellText');
+  if (t) t.textContent = c[0];
+  if (x) x.textContent = c[1];
+}
+document.addEventListener('DOMContentLoaded', renderHistory);
 
 function reset(){
   for(let i=1;i<=5;i++){
@@ -522,11 +643,11 @@ function reset(){
 
 <!-- LEGAL FOOTER -->
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:18px 20px;text-align:center;">
-  <a href="index.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
   <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
-  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
   <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
-  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
 </div>
 <!-- ONWARD NAV -->
 <div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
