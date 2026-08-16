@@ -52,10 +52,18 @@ html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,
 
 /* Round entry table */
 .round-table{width:100%;border-collapse:collapse;margin:10px 0;}
+    .round-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:10px -4px;padding:0 4px;}
+    .round-scroll .round-table{min-width:430px;}
+    .round-table td{padding:4px 3px;}
+    .round-table th{padding:6px 3px;font-size:11px;}
 .round-table th{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);padding:6px 8px;text-align:left;border-bottom:1px solid var(--border);}
 .round-table td{padding:5px 6px;border-bottom:1px solid var(--faint);}
 .round-table td:first-child{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--muted);width:60px;}
-.round-table input{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:4px;color:var(--white);font-family:'Inter',system-ui;font-size:14px;padding:6px 8px;outline:none;-webkit-appearance:none;text-align:center;}
+/* tsp:tap — this is the one screen where a reader must key 30 numbers on a
+   phone, and the cells were 29x31px. Apple asks for 44x44, Android 48dp.
+   The table now scrolls horizontally so columns can be finger-sized rather
+   than squeezed into 390px. */
+    .round-table input{width:100%;min-width:52px;min-height:44px;box-sizing:border-box;background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--white);font-family:'Inter',system-ui;font-size:16px;padding:8px 8px;outline:none;-webkit-appearance:none;appearance:none;text-align:center;}
 .round-table input:focus{border-color:var(--teal);}
 .field{margin-bottom:12px;}
 .field label{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:6px;}
@@ -212,7 +220,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <span class="card-tag">Step 2 — Last 5 Rounds</span>
   <h3>Enter Your Stats Per Round</h3>
   <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Use your scorecards or GPS app history. Leave a round blank if you don't have it — minimum 3 rounds needed. Par for most courses is 72.</p>
-  <table class="round-table">
+  <div class="round-scroll"><table class="round-table">
     <thead>
       <tr>
         <th>Round</th>
@@ -225,7 +233,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       </tr>
     </thead>
     <tbody id="roundRows"></tbody>
-  </table>
+  </table></div>
   <div class="info-box" style="margin-top:10px;">
     <span class="ico">💡</span>
     <p><strong>FH%</strong> = % fairways hit. <strong>GIR</strong> = greens in regulation (0–18). <strong>Putts</strong> = total putts per round. <strong>U&D%</strong> = % of missed greens you got up-and-down (scrambling rate). If you don't track U&D, leave it blank.</p>

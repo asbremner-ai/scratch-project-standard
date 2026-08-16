@@ -418,8 +418,377 @@
 
   };
 
+  // ═══════════════════════════════════════════════════════════════════════════
+  // ScratchBag — the one shared club/carry namespace ('scratch_bag')
+  // ═══════════════════════════════════════════════════════════════════════════
+  // Before this existed, the same carry numbers were typed into three stores
+  // that never spoke: tsp_wedge_matrix_v1 (wedge_matrix.html),
+  // scratch_caddie_distances (caddie_card.html) and sp_bag
+  // (dispersion_visualiser.html) — plus private copies inside
+  // wind_calculator.html and plays_like_calculator.html.
+  //
+  // Shape:
+  //   scratch_bag = {
+  //     v: 1,
+  //     clubs:  [ {club:'7i', carry:158, total:166}, ... ],   // ordered = bag order
+  //     wedges: { pw:{full:132, three_quarter:118, half:96, quarter:80,
+  //                   loft:46, bounce:10}, gw:{...}, sw:{...}, lw:{...} },
+  //     updated: '2026-08-15'
+  //   }
+  //
+  // Two deliberate deviations from the shape sketched in NEXT_SESSION_BRIEF.md,
+  // both to keep exactly ONE home per number (the whole point of this work):
+  //   * a wedge's FULL carry lives only in wedges[id].full, never also in
+  //     clubs[].carry. A wedge may still appear in clubs[] (bag membership and
+  //     order) with carry:null. Bag.carries() merges the two on read, so callers
+  //     see one flat {id: yards} map and never need to know the difference.
+  //   * driverCarry is a derived accessor (Bag.driverCarry()), not a stored
+  //     field — it is just clubs[] entry 'dr'. Storing it twice inside the
+  //     namespace built to stop duplication would repeat the original mistake.
+  //
+  // MIGRATION: legacy keys are folded in on first read and a
+  // 'scratch_bag_migrated_v1' flag is set. Nothing is deleted — the legacy keys
+  // stay both readable AND written by their own tools for one release, so
+  // anyone mid-season on-course keeps their numbers either way.
+
+  const BAG_KEY  = 'scratch_bag';
+  const BAG_FLAG = 'scratch_bag_migrated_v1';
+
+  // Canonical club ids. MUST stay in sync with MASTER_CLUBS in
+  // dispersion_visualiser.html (same ids, same labels, same order).
+  const BAG_CLUB_DEFS = [
+    {id:'dr', label:'Driver',      grp:'Woods'},
+    {id:'3w', label:'3-wood',      grp:'Woods'},
+    {id:'5w', label:'5-wood',      grp:'Woods'},
+    {id:'7w', label:'7-wood',      grp:'Woods'},
+    {id:'2h', label:'2-hybrid',    grp:'Hybrids'},
+    {id:'3h', label:'3-hybrid',    grp:'Hybrids'},
+    {id:'4h', label:'4-hybrid',    grp:'Hybrids'},
+    {id:'5h', label:'5-hybrid',    grp:'Hybrids'},
+    {id:'hy', label:'Hybrid',      grp:'Hybrids'},
+    {id:'2i', label:'2-iron',      grp:'Irons'},
+    {id:'3i', label:'3-iron',      grp:'Irons'},
+    {id:'4i', label:'4-iron',      grp:'Irons'},
+    {id:'5i', label:'5-iron',      grp:'Irons'},
+    {id:'6i', label:'6-iron',      grp:'Irons'},
+    {id:'7i', label:'7-iron',      grp:'Irons'},
+    {id:'8i', label:'8-iron',      grp:'Irons'},
+    {id:'9i', label:'9-iron',      grp:'Irons'},
+    {id:'pw', label:'PW',          grp:'Wedges'},
+    {id:'gw', label:'GW / 50°',    grp:'Wedges'},
+    {id:'sw', label:'SW / 54–56°', grp:'Wedges'},
+    {id:'lw', label:'LW / 58–60°', grp:'Wedges'}
+  ];
+  const BAG_ORDER   = BAG_CLUB_DEFS.map(c => c.id);
+  const BAG_BY_ID   = {}; BAG_CLUB_DEFS.forEach(c => BAG_BY_ID[c.id] = c);
+  const WEDGE_IDS   = ['pw','gw','sw','lw'];
+  const SWING_KEYS  = ['full','three_quarter','half','quarter'];
+
+  // Legacy stores folded in by migrate().
+  const L_CADDIE = 'scratch_caddie_distances';   // caddie_card.html
+  const L_WEDGE  = 'tsp_wedge_matrix_v1';        // wedge_matrix.html
+  const L_SPBAG  = 'sp_bag';                     // dispersion_visualiser.html
+  const L_CUSTOM = 'sp_bag_custom';              // dispersion custom club labels
+
+  const CADDIE_CLUB_MAP = {
+    driver:'dr', fw3:'3w', fw5:'5w', fw7:'7w',
+    iron4:'4i', iron5:'5i', iron6:'6i', iron7:'7i', iron8:'8i', iron9:'9i'
+  };
+  const CADDIE_SWING_MAP = { full:'full', '3q':'three_quarter', half:'half', qtr:'quarter' };
+
+  function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
+  function lsSet(k, v){ try { localStorage.setItem(k, v); return true; } catch(e){ return false; } }
+  function lsJson(k){ try { const r = lsGet(k); return r ? JSON.parse(r) : null; } catch(e){ return null; } }
+  function today(){ return new Date().toISOString().slice(0,10); }
+
+  /** Coerce to a plausible carry in yards, else null. Rejects '', 0, NaN, junk. */
+  function yards(v){
+    if (v === null || v === undefined || v === '') return null;
+    const n = typeof v === 'number' ? v : parseFloat(String(v).replace(/[^0-9.\-]/g,''));
+    if (!isFinite(n) || n <= 0 || n > 400) return null;
+    return Math.round(n);
+  }
+
+  /** Map a free-text wedge (name + loft) onto a canonical wedge id, else null. */
+  function wedgeIdFor(name, loft){
+    const l = yards(loft);
+    if (l !== null && l >= 40 && l <= 70) {
+      if (l < 48) return 'pw';
+      if (l <= 52) return 'gw';
+      if (l <= 57) return 'sw';
+      return 'lw';
+    }
+    const n = String(name || '').trim().toLowerCase();
+    if (/^p/.test(n)) return 'pw';
+    if (/^[ga]/.test(n)) return 'gw';
+    if (/^s/.test(n)) return 'sw';
+    if (/^l/.test(n)) return 'lw';
+    return null;
+  }
+
+  function emptyBag(){ return { v:1, clubs:[], wedges:{}, updated:null }; }
+
+  /** Master order first, unknown/custom ids appended in their existing order. */
+  function orderIds(ids){
+    const known = BAG_ORDER.filter(id => ids.indexOf(id) !== -1);
+    const rest  = ids.filter(id => !BAG_BY_ID[id]);
+    return known.concat(rest);
+  }
+
+  const Bag = {
+
+    CLUBS: BAG_CLUB_DEFS,
+    WEDGE_IDS: WEDGE_IDS,
+    SWING_KEYS: SWING_KEYS,
+
+    /** Human label for any club id, including dispersion's custom 'c_*' ids. */
+    label(id){
+      if (BAG_BY_ID[id]) return BAG_BY_ID[id].label;
+      const custom = lsJson(L_CUSTOM) || {};
+      return custom[id] || id;
+    },
+
+    /** The bag, migrating legacy stores on first read. Never returns null. */
+    get(){
+      this.migrate();
+      const b = lsJson(BAG_KEY);
+      if (!b || typeof b !== 'object') return emptyBag();
+      if (!Array.isArray(b.clubs)) b.clubs = [];
+      if (!b.wedges || typeof b.wedges !== 'object') b.wedges = {};
+      b.v = 1;
+      return b;
+    },
+
+    save(b){
+      if (!b || typeof b !== 'object') return false;
+      b.v = 1;
+      b.updated = today();
+      return lsSet(BAG_KEY, JSON.stringify(b));
+    },
+
+    /** True when nothing has been entered anywhere yet. */
+    isEmpty(){
+      const b = this.get();
+      const anyCarry  = b.clubs.some(c => yards(c.carry) !== null);
+      const anyWedge  = Object.keys(b.wedges).some(id =>
+        SWING_KEYS.some(s => yards(b.wedges[id][s]) !== null));
+      return !anyCarry && !anyWedge;
+    },
+
+    /** Ordered club ids in the bag. */
+    clubList(){
+      return this.get().clubs.map(c => c.club);
+    },
+
+    /**
+     * Replace the bag's club membership/order. Carry values for clubs that
+     * survive are preserved; new clubs arrive with carry null. Clubs dropped
+     * here lose their clubs[] entry (the user removed them) but any wedge
+     * numbers stay in wedges{} — removing a club from the bag must never be
+     * a silent way to delete a season of wedge yardages.
+     */
+    setClubList(ids){
+      if (!Array.isArray(ids)) return false;
+      const b = this.get();
+      const byId = {}; b.clubs.forEach(c => byId[c.club] = c);
+      b.clubs = orderIds(ids.slice()).map(id => byId[id] || { club:id, carry:null, total:null });
+      return this.save(b);
+    },
+
+    /** Full-swing carry for one club id (wedges fall back to wedges[id].full). */
+    carryOf(id){
+      const b = this.get();
+      const entry = b.clubs.filter(c => c.club === id)[0];
+      const direct = entry ? yards(entry.carry) : null;
+      if (direct !== null) return direct;
+      if (b.wedges[id]) return yards(b.wedges[id].full);
+      return null;
+    },
+
+    /** Flat {clubId: carryYards} across clubs[] and wedge fulls. */
+    carries(){
+      const b = this.get(), out = {};
+      b.clubs.forEach(c => { const y = yards(c.carry); if (y !== null) out[c.club] = y; });
+      Object.keys(b.wedges).forEach(id => {
+        const y = yards(b.wedges[id].full);
+        if (y !== null && out[id] === undefined) out[id] = y;
+      });
+      return out;
+    },
+
+    /**
+     * Set a club's full-swing carry. Wedge ids route to wedges[id].full so the
+     * number keeps exactly one home. Passing a blank value clears an existing
+     * number but does NOT create a new entry: pages like caddie_card.html push
+     * every field they own on save, most of them empty, and a blank box is not
+     * a statement that the club is in the bag. Membership must only ever come
+     * from a real number or an explicit bag edit — dispersion_visualiser.html
+     * consumes this list as the player's actual bag.
+     */
+    setCarry(id, carry, total){
+      if (!id) return false;
+      const y = yards(carry), t = total === undefined ? undefined : yards(total);
+      const b = this.get();
+      const isWedge = WEDGE_IDS.indexOf(id) !== -1;
+      let entry = b.clubs.filter(c => c.club === id)[0];
+      const known = !!entry || (isWedge && !!b.wedges[id]);
+      if (!known && y === null && (t === undefined || t === null)) return true;  // blank + unknown: no-op
+
+      if (isWedge) {
+        if (!b.wedges[id]) b.wedges[id] = {};
+        b.wedges[id].full = y;
+      }
+      if (!entry) {
+        entry = { club:id, carry:null, total:null };
+        b.clubs.push(entry);
+        b.clubs = orderIds(b.clubs.map(c => c.club)).map(cid =>
+          b.clubs.filter(c => c.club === cid)[0]);
+      }
+      if (!isWedge) entry.carry = y;
+      if (t !== undefined) entry.total = t;
+      return this.save(b);
+    },
+
+    /** Driver carry — derived, not stored separately. */
+    driverCarry(){ return this.carryOf('dr'); },
+
+    /** All wedge records, with full/three_quarter/half/quarter normalised. */
+    wedges(){
+      const b = this.get(), out = {};
+      Object.keys(b.wedges).forEach(id => {
+        const src = b.wedges[id] || {}, rec = {};
+        SWING_KEYS.forEach(s => rec[s] = yards(src[s]));
+        if (src.loft   !== undefined) rec.loft   = src.loft;
+        if (src.bounce !== undefined) rec.bounce = src.bounce;
+        rec.label = this.label(id);
+        out[id] = rec;
+      });
+      return out;
+    },
+
+    /**
+     * Set one swing distance for one wedge. swing ∈ SWING_KEYS.
+     * As with setCarry, a blank value against a wedge nothing is known about is
+     * a no-op rather than a reason to create an empty record.
+     */
+    setWedge(id, swing, dist){
+      if (!id || SWING_KEYS.indexOf(swing) === -1) return false;
+      const y = yards(dist);
+      const b = this.get();
+      if (!b.wedges[id]) {
+        if (y === null) return true;
+        b.wedges[id] = {};
+      }
+      b.wedges[id][swing] = y;
+      return this.save(b);
+    },
+
+    /** Attach loft/bounce metadata to a wedge without touching its distances. */
+    setWedgeMeta(id, meta){
+      if (!id || !meta) return false;
+      const b = this.get();
+      if (!b.wedges[id]) b.wedges[id] = {};
+      if (meta.loft   !== undefined) b.wedges[id].loft   = meta.loft;
+      if (meta.bounce !== undefined) b.wedges[id].bounce = meta.bounce;
+      return this.save(b);
+    },
+
+    /** Nearest club to a target yardage, or null when the bag is empty. */
+    clubFor(target){
+      const t = yards(target);
+      if (t === null) return null;
+      const c = this.carries(), ids = Object.keys(c);
+      if (!ids.length) return null;
+      let best = ids[0], bd = Math.abs(c[ids[0]] - t);
+      ids.forEach(id => { const d = Math.abs(c[id] - t); if (d < bd) { bd = d; best = id; } });
+      return best;
+    },
+
+    /**
+     * Fold the three legacy stores into scratch_bag exactly once.
+     * Precedence is fixed and first-writer-wins: caddie card (most complete,
+     * carries its own saved date) → wedge matrix → sp_bag. A later source
+     * never overwrites a value an earlier one already supplied; it only fills
+     * blanks. Legacy keys are left in place, and their own tools keep writing
+     * them for this release, so a rollback loses nothing.
+     */
+    migrate(){
+      if (lsGet(BAG_FLAG) === '1') return false;
+      lsSet(BAG_FLAG, '1');            // set first: a throw mid-migration must not loop
+
+      const b = lsJson(BAG_KEY) || emptyBag();
+      if (!Array.isArray(b.clubs)) b.clubs = [];
+      if (!b.wedges || typeof b.wedges !== 'object') b.wedges = {};
+
+      const carryById = {}, totalById = {};
+      b.clubs.forEach(c => {
+        if (yards(c.carry) !== null) carryById[c.club] = yards(c.carry);
+        if (yards(c.total) !== null) totalById[c.club] = yards(c.total);
+      });
+      const ids = b.clubs.map(c => c.club);
+      const addId = id => { if (ids.indexOf(id) === -1) ids.push(id); };
+      const fillWedge = (id, swing, val) => {
+        const y = yards(val);
+        if (y === null) return;
+        if (!b.wedges[id]) b.wedges[id] = {};
+        if (yards(b.wedges[id][swing]) === null) b.wedges[id][swing] = y;
+      };
+
+      // ── 1. caddie_card.html ──────────────────────────────────────────────
+      const caddie = lsJson(L_CADDIE);
+      if (caddie && typeof caddie === 'object') {
+        Object.keys(caddie).forEach(field => {
+          if (field === 'saved') return;
+          const val = caddie[field];
+          if (CADDIE_CLUB_MAP[field]) {
+            const id = CADDIE_CLUB_MAP[field];
+            const y = yards(val);
+            if (y !== null) { addId(id); if (carryById[id] === undefined) carryById[id] = y; }
+            return;
+          }
+          const m = /^(pw|gw|sw|lw)_(full|3q|half|qtr)$/.exec(field);
+          if (m) { addId(m[1]); fillWedge(m[1], CADDIE_SWING_MAP[m[2]], val); }
+        });
+      }
+
+      // ── 2. wedge_matrix.html ─────────────────────────────────────────────
+      const matrix = lsJson(L_WEDGE);
+      if (Array.isArray(matrix)) {
+        matrix.forEach(w => {
+          if (!w) return;
+          const id = wedgeIdFor(w.name, w.loft);
+          if (!id) return;                       // unmappable custom wedge — left alone
+          addId(id);
+          fillWedge(id, 'full',          w.full);
+          fillWedge(id, 'three_quarter', w.three_q);
+          fillWedge(id, 'half',          w.half);
+          if (!b.wedges[id]) b.wedges[id] = {};
+          if (b.wedges[id].loft   === undefined && w.loft   != null) b.wedges[id].loft   = w.loft;
+          if (b.wedges[id].bounce === undefined && w.bounce != null) b.wedges[id].bounce = w.bounce;
+        });
+      }
+
+      // ── 3. dispersion_visualiser.html (membership + order only) ──────────
+      const spBag = lsJson(L_SPBAG);
+      if (Array.isArray(spBag)) spBag.forEach(id => { if (id) addId(id); });
+
+      b.clubs = orderIds(ids).map(id => ({
+        club:  id,
+        carry: carryById[id] !== undefined ? carryById[id] : null,
+        total: totalById[id] !== undefined ? totalById[id] : null
+      }));
+
+      this.save(b);
+      return true;
+    },
+
+    /** Test hook: undo the flag so migrate() can be exercised again. */
+    _resetMigration(){ try { localStorage.removeItem(BAG_FLAG); } catch(e){} }
+  };
+
   // Expose globally
   global.ScratchProfile = Profile;
+  global.ScratchBag = Bag;
   global.SCRATCH_COUNTRY_CONFIG = COUNTRY_CONFIG;
   global.SCRATCH_SPEED_ANCHORS = SPEED_ANCHORS;
   global.SCRATCH_SPEED_BAND_LABEL = SPEED_BAND_LABEL;

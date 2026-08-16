@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<!-- version:v1.0 · 2026-08-15 · this_week.html — Standard tool: assembles the current week from data the site already holds. Reads scratch_profile (schedule set in quick_start.html, startDate/startHcp/goalHcp, primaryLeak written by sg_diagnostic.html) and, on Pro, sp_rounds from rounds_tracker.html. Programme month, phase and handicap milestones come from ScratchProfile.currentMonth/phaseForMonth/hcpAtMonth/calcMilestones — no new inputs and no new storage key. Skeleton copied from plays_like_calculator.html per reference-docs/tool_build_conventions.md §1, accent switched gold→teal for a Standard tool. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>This Week — The Scratch Project</title>
+<meta name="description" content="One page that answers what do I do this week: your programme month and phase, the days you set in Quick Start, what each session should work on given your primary leak, and the next handicap milestone.">
+<style>
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/inter-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url('fonts/inter-latin-600-normal.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/inter-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:normal;font-weight:700;font-display:swap;src:url('fonts/playfair-display-latin-700-normal.woff2') format('woff2')}
+@font-face{font-family:'Playfair Display';font-style:italic;font-weight:400;font-display:swap;src:url('fonts/playfair-display-latin-400-italic.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:400;font-display:swap;src:url('fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2')}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url('fonts/jetbrains-mono-latin-500-normal.woff2') format('woff2')}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a160a;
+  --surface:#111e11;
+  --surface2:#162416;
+  --border:rgba(160,200,80,.14);
+  --border-hi:rgba(160,200,80,.32);
+  --lime:#a0c850;
+  --lime-dim:rgba(160,200,80,.08);
+  --gold:#e0b840;
+  --gold-dim:rgba(224,184,64,.08);
+  --gold-border:rgba(224,184,64,.22);
+  --teal:#48b0a8;
+  --teal-dim:rgba(72,176,168,.08);
+  --teal-border:rgba(72,176,168,.22);
+  --rust:#d86030;
+  --rust-dim:rgba(216,96,48,.08);
+  --rust-border:rgba(216,96,48,.22);
+  --white:#e8f0d8;
+  --muted:rgba(232,240,216,.6);
+  --faint:rgba(232,240,216,.08);
+  --r:10px;
+  --r-sm:6px;
+}
+html,body{background:var(--bg);color:var(--white);font-family:'Inter',system-ui,sans-serif;min-height:100vh;}
+
+/* ── TOP NAV ── */
+.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;}
+.topbar a{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:8px;}
+.topbar a:hover{color:var(--lime);}
+.topbar-brand{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:rgba(232,240,216,.2);}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(160deg,#0f2010 0%,var(--bg) 70%);padding:32px 20px 24px;border-bottom:1px solid var(--border);}
+.hero-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,6vw,2.8rem);font-weight:700;line-height:1.1;margin-bottom:10px;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero-sub{font-size:13px;color:var(--muted);line-height:1.8;max-width:520px;margin-bottom:16px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.htag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);padding:4px 10px;border-radius:20px;}
+
+/* ── MAIN LAYOUT ── */
+.page{max-width:600px;margin:0 auto;padding:20px 16px 80px;}
+
+/* ── CARDS ── */
+.card{background:linear-gradient(145deg,var(--surface2) 0%,var(--surface) 100%);border:1px solid var(--border);border-radius:var(--r);padding:18px 16px;margin-bottom:14px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(224,184,64,.3),transparent);}
+.card-teal{border-color:var(--teal-border);}
+.card-gold{border-color:var(--gold-border);}
+.card-rust{border-color:var(--rust-border);}
+.card-lime{border-color:var(--border-hi);}
+.card-tag{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:7px;display:block;}
+.card-teal .card-tag{color:var(--teal);}
+.card-lime .card-tag{color:var(--lime);}
+.card-rust .card-tag{color:var(--rust);}
+.card h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2;}
+.card p{font-size:13px;color:var(--muted);line-height:1.75;}
+
+/* ── SECTION HEADERS ── */
+.sec-title{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:var(--white);margin-bottom:6px;}
+.sec-desc{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:16px;padding-left:10px;border-left:2px solid var(--gold);}
+.badge{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);padding:3px 9px;border-radius:20px;display:inline-block;margin-bottom:10px;}
+
+/* ── FORM INPUTS ── */
+.field{margin-bottom:14px;}
+.field label{display:block;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
+.field input[type=number]{width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);color:var(--white);font-family:'Inter',system-ui;font-size:16px;font-weight:600;padding:12px 14px;outline:none;-webkit-appearance:none;appearance:none;}
+.field input[type=number]:focus{border-color:var(--gold);box-shadow:0 0 0 2px rgba(224,184,64,.15);}
+.field input[type=number]::placeholder{color:rgba(232,240,216,.25);font-weight:400;}
+
+/* ── CHIP ROWS ── */
+.chip-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px;display:block;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+.chip{background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
+.chip:active{transform:scale(.97);}
+.chip.selected{background:var(--gold);border-color:var(--gold);color:#0a160a;font-weight:700;box-shadow:0 0 8px rgba(224,184,64,.3);}
+.chips-teal .chip.selected{background:var(--teal);border-color:var(--teal);color:#fff;box-shadow:0 0 8px rgba(72,176,168,.3);}
+
+/* ── DIRECTION GRID (wind) ── */
+.dir-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-bottom:14px;}
+.dir-btn{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:10px 4px;text-align:center;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.dir-btn .emoji{font-size:16px;display:block;margin-bottom:3px;}
+.dir-btn .dir-name{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+.dir-btn:active{transform:scale(.97);}
+.dir-btn.selected{background:var(--teal);border-color:var(--teal);box-shadow:0 0 10px rgba(72,176,168,.3);}
+.dir-btn.selected .dir-name{color:#fff;}
+
+/* ── ELEVATION TOGGLE ── */
+.elev-row{display:flex;gap:8px;margin-bottom:14px;}
+.elev-btn{flex:1;background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:12px 8px;text-align:center;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--muted);transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.elev-btn.selected{background:var(--gold);border-color:var(--gold);color:#0a160a;font-weight:700;}
+
+/* ── CALCULATE BUTTON ── */
+.calc-btn{width:100%;background:var(--gold);color:#0a160a;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border:none;border-radius:var(--r-sm);padding:16px;cursor:pointer;margin-top:4px;transition:opacity .15s;-webkit-tap-highlight-color:transparent;}
+.calc-btn:active{opacity:.85;}
+
+/* ── RESULT PANEL ── */
+.result{display:none;margin-top:20px;}
+.result.visible{display:block;}
+.result-hero{background:linear-gradient(135deg,rgba(224,184,64,.15),rgba(224,184,64,.05));border:1.5px solid var(--gold-border);border-radius:var(--r);padding:20px 18px;text-align:center;margin-bottom:14px;}
+.result-label{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;}
+.result-yardage{font-family:'Playfair Display',serif;font-size:3.5rem;font-weight:700;color:var(--white);line-height:1;margin-bottom:4px;}
+.result-yardage span{font-size:1.2rem;color:var(--muted);font-weight:400;}
+.result-delta{font-family:'JetBrains Mono',monospace;font-size:12px;margin-bottom:12px;}
+.result-delta.add{color:var(--rust);}
+.result-delta.sub{color:var(--teal);}
+.result-delta.none{color:var(--muted);}
+.result-club{background:var(--lime-dim);border:1px solid var(--border-hi);border-radius:var(--r-sm);display:inline-block;padding:8px 18px;font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:var(--lime);margin-top:4px;}
+
+/* ── BREAKDOWN TABLE ── */
+.breakdown{font-size:12px;width:100%;border-collapse:collapse;margin-top:4px;}
+.breakdown td{padding:7px 10px;border-bottom:1px solid var(--faint);color:var(--muted);line-height:1.5;vertical-align:top;}
+.breakdown td:first-child{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.08em;color:var(--white);width:55%;}
+.breakdown tr:last-child td{border-bottom:none;}
+.breakdown .val{text-align:right;font-weight:600;}
+.val-add{color:var(--rust);}
+.val-sub{color:var(--teal);}
+.val-zero{color:var(--muted);}
+
+/* ── ADVICE BOXES ── */
+.advice{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:10px;font-size:13px;color:var(--muted);line-height:1.75;}
+.advice strong{color:var(--white);display:block;margin-bottom:4px;font-size:12px;}
+.advice.tip-head::before{content:'💡 ';font-size:14px;}
+.advice.warn-head::before{content:'⚠️ ';font-size:14px;}
+
+/* ── REFERENCE TABLE ── */
+.ref-tbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px;}
+.ref-tbl th{font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);padding:7px 10px;text-align:left;border-bottom:1px solid var(--border);}
+.ref-tbl td{padding:6px 10px;color:var(--muted);border-bottom:1px solid var(--faint);vertical-align:top;}
+.ref-tbl td:first-child{color:var(--white);}
+.ref-tbl tr:last-child td{border-bottom:none;}
+
+.steps{list-style:none;display:flex;flex-direction:column;gap:10px;margin-top:10px;}
+.steps li{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--muted);line-height:1.75;}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:4px;min-width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+
+.divider{height:1px;background:var(--border);margin:20px 0;}
+
+/* ── RESET BUTTON ── */
+.reset-btn{background:transparent;border:1px solid var(--border);border-radius:var(--r-sm);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.12em;text-transform:uppercase;padding:10px 16px;cursor:pointer;width:100%;margin-top:10px;transition:border-color .15s;}
+.reset-btn:hover{border-color:var(--border-hi);color:var(--white);}
+
+/* ── TABS ── */
+.tab-bar{display:flex;gap:0;border-bottom:1px solid var(--border);margin-bottom:20px;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.tab-bar::-webkit-scrollbar{display:none;}
+.tab{background:none;border:none;border-bottom:2px solid transparent;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;padding:10px 14px;cursor:pointer;white-space:nowrap;transition:all .15s;margin-bottom:-1px;}
+.tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.tab-pane{display:none;}
+.tab-pane.active{display:block;}
+
+/* ── HOME BUTTON ── */
+.home-btn{position:fixed;bottom:20px;right:20px;z-index:9999;background:var(--lime);color:var(--bg);font-family:monospace;font-size:13px;font-weight:700;padding:10px 16px;border-radius:24px;text-decoration:none;box-shadow:0 2px 12px rgba(0,0,0,.4);}
+
+/* ── Five Pillars Logo (tsp) ── */
+.tsp-logo{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:18px;position:relative;}
+.tsp-bars{display:flex;align-items:flex-end;gap:7px;}
+.tsp-bar{border-radius:3px 3px 0 0;display:block;}
+.tsp-wordmark{text-align:center;}
+.tsp-name{display:block;font-family:'Playfair Display',serif;font-weight:700;font-size:1.0rem;letter-spacing:.14em;text-transform:uppercase;color:#ffffff;line-height:1;}
+.tsp-tier{display:block;font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.32em;text-transform:uppercase;margin-top:4px;font-weight:700;}
+.tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
+.tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
+.tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+
+/* ── This Week: Standard-tier accent (teal/lime) over the copied Pro skeleton ── */
+.hero-label{color:var(--teal);}
+.card-tag{color:var(--teal);}
+.badge{background:var(--teal-dim);border-color:var(--teal-border);color:var(--teal);}
+.field label,.chip-label{color:var(--teal);}
+.chip.selected{background:var(--teal);border-color:var(--teal);color:#fff;box-shadow:0 0 8px rgba(72,176,168,.3);}
+.calc-btn{background:var(--teal);color:#fff;}
+.tab.active{color:var(--teal);border-bottom-color:var(--teal);}
+.card-gold .card-tag{color:var(--gold);}
+.card-lime .card-tag{color:var(--lime);}
+
+/* ── Status strip ── */
+.status-strip{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.ss-item{flex:1 1 120px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;}
+.ss-label{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:4px;}
+.ss-value{display:block;font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:var(--white);line-height:1.2;}
+
+/* ── The seven days ── */
+.week-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:7px;margin:14px 0 10px;}
+/* Seven across once there is room, rather than 5+2. */
+@media(min-width:680px){.week-grid{grid-template-columns:repeat(7,1fr);}}
+/* On a phone the auto-fit grid orphans the seventh day on its own row and
+   squeezes the focus line to two words wide. One row per day reads far better. */
+@media(max-width:459px){
+  .week-grid{grid-template-columns:1fr;gap:6px;}
+  .day{display:flex;align-items:center;text-align:left;gap:10px;padding:9px 11px;}
+  .day-name{flex:0 0 64px;margin-bottom:0;}
+  .day-icon{flex:0 0 auto;font-size:17px;}
+  .day-type{flex:0 0 64px;margin-top:0;}
+  .day-focus{flex:1 1 auto;margin-top:0;}
+}
+.day{background:var(--surface2);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:10px 8px;text-align:center;min-height:44px;}
+.day-name{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.day-icon{display:block;font-size:19px;line-height:1.2;}
+.day-type{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-top:3px;}
+.day-focus{display:block;font-size:11.5px;color:var(--muted);line-height:1.45;margin-top:6px;}
+.day.d-play   .day-type{color:var(--rust);}
+.day.d-practice .day-type{color:var(--teal);}
+.day.d-gym    .day-type{color:var(--gold);}
+.day.d-rest   .day-type{color:var(--muted);}
+.day.is-today{border-color:var(--teal);background:rgba(72,176,168,.1);box-shadow:0 0 10px rgba(72,176,168,.16);}
+.day.is-today .day-name{color:var(--teal);font-weight:700;}
+.week-note{font-size:12px;color:var(--muted);line-height:1.7;margin-top:8px;}
+.week-note a{color:var(--teal);}
+.focus-link{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime);text-decoration:none;border:1px solid var(--border-hi);border-radius:20px;padding:9px 15px;min-height:44px;line-height:24px;-webkit-tap-highlight-color:transparent;}
+.focus-link:active{opacity:.85;}
+</style>
+<script>
+/* tier-init */
+const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbooks.py
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('[data-tier]').forEach(function(el) {
+      var t = el.getAttribute('data-tier');
+      if (t === 'pro'   && TIER === 'standard') { el.remove(); return; }
+      if (t === 'elite' && TIER !== 'elite')    { el.remove(); return; }
+      // Element is visible for this tier — mark it active for styling
+      el.setAttribute('data-tier-active', t);
+    });
+  });
+})();
+</script>
+<script async src="https://plausible.io/js/pa-XSwCniFb76oIDC0vR-U0K.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<!-- shared bag + profile engine (ScratchBag / ScratchProfile) -->
+<script src="scratch_profile.js"></script>
+<!-- tsp:pwa -->
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a160a">
+<script>
+(function(){
+  if (!("serviceWorker" in navigator)) return;
+  // file:// has no service-worker support at all — Pro/Elite buyers open
+  // the zip locally, so bail out quietly rather than throwing on load.
+  if (location.protocol === "file:") return;
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(e){
+      console.warn("[TSP] service worker registration failed:", e);
+    });
+  });
+})();
+</script>
+<!-- /tsp:pwa -->
+</head>
+<body>
+
+<div class="topbar">
+  <a href="index.html">&#8962; All Playbooks</a>
+  <span class="tsp-mini" aria-hidden="true"><span class="tsp-mini-bar" style="width:4px;height:9px;background:#e0a830;"></span><span class="tsp-mini-bar" style="width:4px;height:13px;background:#a0c850;"></span><span class="tsp-mini-bar" style="width:4px;height:16px;background:#4cb8c4;"></span><span class="tsp-mini-bar" style="width:4px;height:7px;background:#c8d8e8;"></span><span class="tsp-mini-bar" style="width:4px;height:11px;background:#c87830;"></span></span><span class="topbar-brand">The Scratch Project</span>
+</div>
+
+<div class="hero">
+  <div class="tsp-logo" aria-label="The Scratch Project">
+    <div class="tsp-bars">
+      <div class="tsp-bar" style="width:14px;height:30px;background:#e0a830;"></div>
+      <div class="tsp-bar" style="width:14px;height:42px;background:#a0c850;"></div>
+      <div class="tsp-bar" style="width:14px;height:50px;background:#4cb8c4;"></div>
+      <div class="tsp-bar" style="width:14px;height:24px;background:#c8d8e8;"></div>
+      <div class="tsp-bar" style="width:14px;height:36px;background:#c87830;"></div>
+    </div>
+    <div class="tsp-wordmark">
+      <span class="tsp-name">The Scratch Project</span>
+      <span class="tsp-pillars">Score · Strike · Measure · Prepare · Compete</span>
+    </div>
+  </div>
+  <p class="hero-label">Interactive Tool · Plan Pillar</p>
+  <h1>This<br><em>Week</em></h1>
+  <p class="hero-sub">Every part of the plan already exists somewhere on this site — the month you're in, the days you said you'd play, the weakness the diagnostic found, the handicap you're aiming at next. Nothing assembles them, so you end up holding the whole plan in your head. This page does the assembling.</p>
+  <div class="hero-tags">
+    <span class="htag">🗓️ Your Week</span>
+    <span class="htag">📍 Month &amp; Phase</span>
+    <span class="htag">🎯 One Priority</span>
+    <span class="htag">📉 Next Milestone</span>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ── TAB BAR ── -->
+  <div class="tab-bar">
+    <button class="tab active" onclick="switchTab('week',this)">This Week</button>
+    <button class="tab" onclick="switchTab('method',this)">How It's Built</button>
+  </div>
+
+  <!-- ══ TAB: THIS WEEK ══ -->
+  <div class="tab-pane active" id="tab-week">
+
+    <!-- No profile yet -->
+    <div id="noProfile" style="display:none;">
+      <div class="card card-teal">
+        <span class="card-tag">Nothing to show yet</span>
+        <h3>Run Quick Start first</h3>
+        <p>This page assembles your week out of the answers you give in Quick Start — your starting handicap, your start date, and which days you play, practise, train and rest. It takes about two minutes and everything stays on this device.</p>
+        <a href="quick_start.html" class="calc-btn" style="display:block;text-align:center;text-decoration:none;margin-top:14px;">⚡ Open Quick Start</a>
+      </div>
+
+      <div class="advice tip-head">
+        <strong>Already know your weak spot?</strong>
+        The <a href="sg_diagnostic.html" style="color:var(--teal);">SG Diagnostic</a> takes five minutes and tells this page which part of your game to point every session at. It works with or without Quick Start.
+      </div>
+    </div>
+
+    <!-- The week -->
+    <div id="haveProfile" style="display:none;">
+
+      <div class="status-strip" id="statusStrip"></div>
+
+      <span class="badge">Your Week</span>
+      <div class="card card-teal">
+        <span class="card-tag" id="weekRangeTag">This Week</span>
+        <h3 id="weekHeading">What This Week Is For</h3>
+        <p id="phaseLine"></p>
+        <div class="week-grid" id="weekGrid"></div>
+        <p class="week-note" id="scheduleNote"></p>
+      </div>
+
+      <span class="badge">Today</span>
+      <div class="card card-lime" id="todayCard">
+        <span class="card-tag" id="todayTag">Today</span>
+        <h3 id="todayTitle"></h3>
+        <p id="todayBody"></p>
+        <div id="todayLink" style="margin-top:12px;"></div>
+      </div>
+
+      <span class="badge">The Priority</span>
+      <div class="card">
+        <span class="card-tag" id="leakTag">Primary Leak</span>
+        <h3 id="leakTitle"></h3>
+        <p id="leakBody"></p>
+        <table class="breakdown" id="sessionTable"></table>
+        <p class="week-note" id="leakSource"></p>
+      </div>
+
+      <span class="badge">Where This Is Going</span>
+      <div class="card card-gold">
+        <span class="card-tag">Next Milestone</span>
+        <h3 id="milestoneTitle"></h3>
+        <p id="milestoneBody"></p>
+        <table class="breakdown" id="milestoneTable"></table>
+      </div>
+
+      <!-- Pro-only: rounds-driven detail. Removed from the Standard build at
+           build time by strip_gated_content(), not just hidden. -->
+      
+
+      
+
+    </div>
+  </div>
+
+  <!-- ══ TAB: METHOD ══ -->
+  <div class="tab-pane" id="tab-method">
+
+    <span class="badge">How It's Built</span>
+    <div class="card card-teal">
+      <span class="card-tag">No new data</span>
+      <h3>This Page Asks You For Nothing</h3>
+      <p>Every number here already existed somewhere on this site. The page's only job is to put them in one place so you don't have to hold the plan in your head. Nothing is sent anywhere — it is all read from this device.</p>
+      <table class="breakdown">
+        <tr><td>Your week's shape</td><td class="val">Quick Start</td></tr>
+        <tr><td>Programme month &amp; phase</td><td class="val">Your start date</td></tr>
+        <tr><td>Handicap milestones</td><td class="val">Start &amp; goal handicap</td></tr>
+        <tr><td>What to work on</td><td class="val">SG Diagnostic</td></tr>
+        <tr></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <span class="card-tag">Phases</span>
+      <h3>Why the Same Week Means Different Things</h3>
+      <p>The 24-month programme runs in five phases, and a practice day in month 2 is not a practice day in month 20. Early on the work is corrective — stop the bleeding, take the double-bogeys out. Later it is about sharpening a game that already works and holding it under pressure. The focus lines on this page shift with the phase you're in.</p>
+      <table class="breakdown">
+        <tr><td>Months 1–2 · Stop the Bleeding</td><td class="val">Remove the big numbers</td></tr>
+        <tr><td>Months 3–4 · Build the Foundation</td><td class="val">Repeatable contact</td></tr>
+        <tr><td>Months 5–12 · Build the Attack</td><td class="val">Start scoring, not surviving</td></tr>
+        <tr><td>Months 13–18 · Elite Execution</td><td class="val">Sharpen and convert</td></tr>
+        <tr><td>Months 19–24 · Defend the Standard</td><td class="val">Hold it under pressure</td></tr>
+      </table>
+    </div>
+
+    <div class="card">
+      <span class="card-tag">Honesty</span>
+      <h3>What This Page Can't Know</h3>
+      <p>It doesn't know whether you actually did Tuesday's session, whether your back hurts, or that Saturday's round got rained off. The week it shows is the week you told Quick Start you intended — treat it as a plan to argue with, not a schedule to obey. If the shape is wrong, change it in <a href="quick_start.html" style="color:var(--teal);">Quick Start</a> and it will follow.</p>
+    </div>
+
+    <div class="advice warn-head">
+      <strong>Handicap milestones are a trajectory, not a promise</strong>
+      They scale the same 24-month curve to your own start and goal. Real improvement is lumpy — plateaus and jumps are normal, and being behind the line in month 7 says very little on its own.
+    </div>
+
+  </div>
+
+</div><!-- /page -->
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   THIS WEEK — assembly only, no new inputs.
+   Reads: scratch_profile (schedule, startDate, startHcp, goalHcp, primaryLeak)
+          sp_rounds (Pro, optional)
+   Uses:  ScratchProfile.currentMonth / phaseForMonth / hcpAtMonth /
+          calcMilestones / monthToDateFull  (all pre-existing in scratch_profile.js)
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+// Day order and defaults mirror quick_start.html's own picker (_SP_DAYS/_SP_DS)
+// so the week shown here is the week that page let you set. Keep in sync.
+const TW_DAYS = ['mon','tue','wed','thu','fri','sat','sun'];
+const TW_LBL  = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const TW_DEFAULT_SCHEDULE = {mon:'rest',tue:'practice',wed:'gym',thu:'play',fri:'gym',sat:'play',sun:'practice'};
+const TW_TYPE = {
+  rest:     {icon:'😴', label:'Rest',     cls:'d-rest'},
+  practice: {icon:'🎯', label:'Practice', cls:'d-practice'},
+  play:     {icon:'⛳', label:'Round',    cls:'d-play'},
+  gym:      {icon:'🏋️', label:'Strength', cls:'d-gym'}
+};
+
+const TW_LEAK_LABEL = {
+  ott:  'Off the tee',
+  app:  'Approach play',
+  arg:  'Around the green',
+  putt: 'Putting'
+};
+
+/* What each kind of day is for, given the player's primary leak.
+   [title, body, guideHref, guideLabel] — every guide linked here ships in
+   Standard, so nothing in this table leaks a paid file into the free build. */
+const TW_FOCUS = {
+  ott: {
+    practice: ['Tee shots, measured by width',
+      'Half your balls at a defined 30-yard-wide target. Score each one in or out and write the number down. Fairways found is the metric today, not how far it went.',
+      '03_longgame_pro.html', 'Long Game Mastery'],
+    play: ['One shape, chosen before you tee it',
+      'Decide the shot shape and the club on the tee box, not over the ball. Take the club that keeps trouble outside your dispersion cone even on a poor strike.',
+      '11_shot_dispersion.html', 'Shot Dispersion Mapping'],
+    gym: ['Rotational speed and sequencing',
+      'Speed off the tee comes from the ground up. Prioritise hip-to-shoulder separation work and lower-body drive over general upper-body volume.',
+      '25_speed_training.html', 'Speed Training'],
+    rest: ['Look at the misses, not the good ones',
+      'Five minutes with your last round: which side did the bad tee shots go, and did they cost you a stroke or a hole? Patterns only show up when you look for them.',
+      '17_progress_journal.html', 'Progress Journal']
+  },
+  app: {
+    practice: ['The 100–175 yard zone',
+      'Random targets, never the same yardage twice in a row, and a real target every ball. Track proximity rather than how many you flushed.',
+      '37_approach_zone.html', 'The 100–175 Yard Zone'],
+    play: ['Aim at the middle, not the flag',
+      'Centre of the green unless the pin is genuinely accessible. Most approach strokes are lost to short-siding, not to being twenty feet away.',
+      '20_course_management.html', 'Course Management'],
+    gym: ['Stability through the strike',
+      'Approach consistency is a balance problem as much as a swing one. Single-leg and anti-rotation work transfers directly to strike quality.',
+      '06_golf_fitness.html', 'Golf Fitness'],
+    rest: ['Check your real yardages',
+      'Approach play falls apart when your carry numbers are optimistic. Ten minutes updating your bag beats an hour hitting 7-irons at nothing.',
+      '22_wedge_distances.html', 'Wedge Distances']
+  },
+  arg: {
+    practice: ['Vary the lie, not just the distance',
+      'Never hit the same chip twice. Change the lie, the landing spot and the club every ball — the skill you need on-course is choosing, not repeating.',
+      '02_shortgame_pro.html', 'Short Game Scoring'],
+    play: ['Get it on the green, every time',
+      'Take the lowest-risk shot that finishes on the putting surface. A twenty-footer is a good outcome from a bad spot; a second chip is a disaster.',
+      '02_shortgame_pro.html', 'Short Game Scoring'],
+    gym: ['Mobility over strength today',
+      'Short game demands stable positions at low speed. Prioritise hip and thoracic mobility work — this is a good day to do the boring maintenance.',
+      '13_injury_prevention.html', 'Injury Prevention'],
+    rest: ['Count your up-and-downs honestly',
+      'From your last three rounds: how many times did you get it up and down, out of how many attempts? That single percentage tells you more than any swing thought.',
+      '26_stats_interpretation.html', 'Stats Interpretation']
+  },
+  putt: {
+    practice: ['Speed first, line second',
+      'Start with long-putt distance control — lag to a three-foot circle from 30, 40 and 50 feet. Three-putts cost far more than missed six-footers.',
+      '01_putting_pro.html', 'Putting Like a Pro'],
+    play: ['A committed read beats a correct one',
+      'Read it, commit, and hit it at the pace you read it for. Second-guessing over the ball turns a good read into a bad stroke.',
+      '01_putting_pro.html', 'Putting Like a Pro'],
+    gym: ['Keep it light and keep it steady',
+      'Nothing that leaves your hands shaky or your back tight. Putting is the one part of the game a hard gym session can visibly damage the next day.',
+      '13_injury_prevention.html', 'Injury Prevention'],
+    rest: ['Putts per round, and three-putts',
+      'Two numbers from your recent rounds. If three-putts are the problem it is a speed issue; if short putts are, it is a stroke or a nerve issue. They need opposite practice.',
+      '26_stats_interpretation.html', 'Stats Interpretation']
+  }
+};
+
+/* When no leak is known, this is what a day is for by default. */
+const TW_FOCUS_GENERIC = {
+  practice: ['Build the session around one weakness',
+    'Undirected practice is why handicaps stall. Pick one thing before you leave the house and give it more than half your balls.',
+    '64_range_setup.html', 'Range Setup & Practice'],
+  play: ['Play for the score, not the swing',
+    'On-course is for scoring and decisions. Whatever you are working on technically, leave it on the range today.',
+    '20_course_management.html', 'Course Management'],
+  gym: ['Strength that transfers',
+    'Rotational power, lower-body drive and the mobility to reach real positions. General fitness helps; golf-specific work helps more.',
+    '06_golf_fitness.html', 'Golf Fitness'],
+  rest: ['Rest is part of the plan',
+    'Nothing to do today. Recovery is when the adaptation actually happens — a genuine day off beats a half-hearted session.',
+    '07_golf_nutrition.html', 'Nutrition & Recovery']
+};
+
+/* Phase-level intent, keyed by the phase ids in scratch_profile.js. */
+const TW_PHASE_INTENT = {
+  1: 'Right now the work is subtraction. Every double-bogey removed is worth more than any shot added — this phase is about the big numbers, not the good ones.',
+  2: 'Foundation phase. Repeatable contact and a swing you can trust on a bad day is the goal; scoring follows from it, not the other way round.',
+  3: 'You are building the attack now. Enough of the game works that the job shifts from surviving holes to actively scoring on them.',
+  4: 'Elite execution. The gains left are narrow and specific — converting the chances you are already creating, and stopping the small leaks.',
+  5: 'Defending the standard. The game is there; the work now is holding it under tournament pressure and through the parts of the season that used to undo it.'
+};
+
+// ── Helpers ─────────────────────────────────────────────────────────────────
+function twProfile(){
+  try { return (window.ScratchProfile && ScratchProfile.get()) || null; } catch(e){ return null; }
+}
+function twRounds(){
+  try { return JSON.parse(localStorage.getItem('sp_rounds')) || []; } catch(e){ return []; }
+}
+function twEsc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
+/* scratch_profile.js has two phase-3 rows and disambiguates the longer one as
+   'Build the Attack (main)'. That suffix is a registry detail, not something to
+   show a reader. */
+function twPhaseName(phase){ return phase ? String(phase.name).replace(/\s*\(main\)$/, '') : '—'; }
+
+/** Monday-first index for today. JS getDay() is 0=Sun. */
+function twTodayIndex(){ return (new Date().getDay() + 6) % 7; }
+
+/** Monday and Sunday of the current week, as a display string. */
+function twWeekRange(){
+  const now = new Date();
+  const mon = new Date(now); mon.setDate(now.getDate() - twTodayIndex());
+  const sun = new Date(mon);  sun.setDate(mon.getDate() + 6);
+  const M = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const a = `${mon.getDate()} ${M[mon.getMonth()]}`;
+  const b = `${sun.getDate()} ${M[sun.getMonth()]}`;
+  return `${a} – ${b}`;
+}
+
+/** The leak to plan around, and where it came from. */
+function twLeak(profile){
+  if (profile && TW_LEAK_LABEL[profile.primaryLeak]) {
+    return { key: profile.primaryLeak, source: 'diagnostic', on: profile.leakUpdated || null };
+  }
+  return { key: null, source: 'none', on: null };
+}
+
+function twFocusFor(type, leakKey){
+  const table = (leakKey && TW_FOCUS[leakKey]) ? TW_FOCUS[leakKey] : TW_FOCUS_GENERIC;
+  return table[type] || TW_FOCUS_GENERIC[type] || TW_FOCUS_GENERIC.rest;
+}
+
+// ── Render ──────────────────────────────────────────────────────────────────
+function twRender(){
+  const profile = twProfile();
+  const hasProfile = !!(profile && profile.startDate && typeof profile.startHcp === 'number');
+
+  document.getElementById('noProfile').style.display   = hasProfile ? 'none' : 'block';
+  document.getElementById('haveProfile').style.display = hasProfile ? 'block' : 'none';
+  if (!hasProfile) return;
+
+  const P = window.ScratchProfile;
+  const month = P.currentMonth(profile) || 1;
+  const phase = P.phaseForMonth(month);
+  const hcpNow = P.hcpAtMonth(month, profile);
+  const leak = twLeak(profile);
+  const schedule = Object.assign({}, TW_DEFAULT_SCHEDULE, profile.schedule || {});
+  const usingDefault = !profile.schedule;
+  const todayIdx = twTodayIndex();
+
+  // ── Status strip ──
+  const bits = [
+    ['Month', `${month} of 24`],
+    ['Phase', twPhaseName(phase)],
+    ['HCP target now', hcpNow === null ? '—' : `~${hcpNow.toFixed(1)}`],
+    ['Focus', leak.key ? TW_LEAK_LABEL[leak.key] : 'Not set']
+  ];
+  document.getElementById('statusStrip').innerHTML = bits.map(b =>
+    `<div class="ss-item"><span class="ss-label">${twEsc(b[0])}</span><span class="ss-value">${twEsc(b[1])}</span></div>`
+  ).join('');
+
+  // ── Week header ──
+  document.getElementById('weekRangeTag').textContent = twWeekRange();
+  document.getElementById('weekHeading').textContent =
+    phase ? `${twPhaseName(phase)} — week of month ${month}` : `Month ${month}`;
+  document.getElementById('phaseLine').textContent =
+    (phase && TW_PHASE_INTENT[phase.id]) || "Keep the week's shape and let the focus below drive each session.";
+
+  // ── The seven days ──
+  document.getElementById('weekGrid').innerHTML = TW_DAYS.map((d, i) => {
+    const type = TW_TYPE[schedule[d]] ? schedule[d] : 'rest';
+    const t = TW_TYPE[type];
+    const focus = twFocusFor(type, leak.key);
+    const isToday = i === todayIdx;
+    return `<div class="day ${t.cls}${isToday ? ' is-today' : ''}">
+        <span class="day-name">${TW_LBL[i]}${isToday ? ' · Today' : ''}</span>
+        <span class="day-icon">${t.icon}</span>
+        <span class="day-type">${t.label}</span>
+        <span class="day-focus">${twEsc(focus[0])}</span>
+      </div>`;
+  }).join('');
+
+  document.getElementById('scheduleNote').textContent = usingDefault
+    ? 'This is the default week — set your own days in Quick Start and this page will follow it.'
+    : 'Your week, as set in Quick Start.';
+
+  // ── Today ──
+  const todayType = TW_TYPE[schedule[TW_DAYS[todayIdx]]] ? schedule[TW_DAYS[todayIdx]] : 'rest';
+  const todayFocus = twFocusFor(todayType, leak.key);
+  document.getElementById('todayTag').textContent =
+    `${TW_LBL[todayIdx]} · ${TW_TYPE[todayType].label}`;
+  document.getElementById('todayTitle').textContent = todayFocus[0];
+  document.getElementById('todayBody').textContent = todayFocus[1];
+  document.getElementById('todayLink').innerHTML =
+    `<a class="focus-link" href="${twEsc(todayFocus[2])}">→ ${twEsc(todayFocus[3])}</a>`;
+
+  // ── The priority ──
+  document.getElementById('leakTag').textContent = leak.key ? 'Primary Leak' : 'No Diagnostic Yet';
+  document.getElementById('leakTitle').textContent = leak.key
+    ? TW_LEAK_LABEL[leak.key]
+    : 'Point the week at something specific';
+  document.getElementById('leakBody').textContent = leak.key
+    ? 'Every session below is aimed here until the next diagnostic says otherwise. One priority at a time is the whole point — a week spread across four weaknesses moves none of them.'
+    : 'Without a diagnostic this page can only give you the general version of each session. Five minutes with the SG Diagnostic makes every line below specific to your game.';
+
+  document.getElementById('sessionTable').innerHTML = ['practice','play','gym','rest'].map(type => {
+    const f = twFocusFor(type, leak.key);
+    return `<tr><td>${TW_TYPE[type].icon} ${TW_TYPE[type].label} days</td>
+              <td class="val">${twEsc(f[0])}</td></tr>`;
+  }).join('');
+
+  document.getElementById('leakSource').innerHTML = leak.key
+    ? `From your SG Diagnostic${leak.on ? ' on ' + twEsc(leak.on) : ''}. <a href="sg_diagnostic.html">Run it again</a> when your game has moved.`
+    : `<a href="sg_diagnostic.html">Run the SG Diagnostic →</a>`;
+
+  // ── Next milestone ──
+  twRenderMilestone(profile, month, hcpNow);
+
+  // ── Pro: logged rounds ──
+  twRenderRounds();
+}
+
+function twRenderMilestone(profile, month, hcpNow){
+  const P = window.ScratchProfile;
+  const milestones = P.calcMilestones(profile.startHcp, profile.goalHcp || 0);
+  const months = Object.keys(milestones).map(Number).sort((a,b) => a - b);
+  const next = months.filter(m => m > month)[0];
+
+  const title = document.getElementById('milestoneTitle');
+  const body  = document.getElementById('milestoneBody');
+  const table = document.getElementById('milestoneTable');
+
+  if (next === undefined) {
+    title.textContent = 'You are in the final stretch';
+    body.textContent = 'Month 24 is the last milestone on the curve. From here the number that matters is whether the standard holds in competition, not whether it keeps falling.';
+    table.innerHTML = `<tr><td>Goal</td><td class="val">HCP ${twEsc((profile.goalHcp || 0).toFixed ? (profile.goalHcp||0).toFixed(1) : profile.goalHcp || 0)}</td></tr>`;
+    return;
+  }
+
+  const target = milestones[next];
+  const away = next - month;
+  title.textContent = `HCP ${target.toFixed(1)} by month ${next}`;
+  body.textContent = away <= 1
+    ? 'That is next month. This week is one of roughly four that decide whether you hit it.'
+    : `${away} months away. Milestones are checkpoints on a curve, not deadlines — but they are what this week's sessions are ultimately paying into.`;
+
+  table.innerHTML = [
+    ['Where you started', `HCP ${profile.startHcp.toFixed(1)}`],
+    ['Target for now', hcpNow === null ? '—' : `HCP ${hcpNow.toFixed(1)}`],
+    ['Next milestone', `HCP ${target.toFixed(1)} · ${twEsc(P.monthToDateFull(next, profile))}`],
+    ['Goal', `HCP ${Number(profile.goalHcp || 0).toFixed(1)}`]
+  ].map(r => `<tr><td>${twEsc(r[0])}</td><td class="val">${twEsc(r[1])}</td></tr>`).join('');
+}
+
+/** Pro-only. The markup this writes into is removed at build time in Standard,
+    so guard on the elements existing rather than on TIER. */
+function twRenderRounds(){
+  const body  = document.getElementById('roundsBody');
+  const table = document.getElementById('roundsTable');
+  if (!body || !table) return;
+
+  const rounds = twRounds();
+  if (!rounds.length) {
+    body.textContent = 'No rounds logged yet. Once the Rounds Tracker has three or more, this block shows what your actual scoring is doing rather than what the plan expects.';
+    table.innerHTML = '';
+    return;
+  }
+
+  const recent = rounds.slice(-Math.min(10, rounds.length));
+  const avg = (f) => recent.reduce((s, r) => s + (f(r) || 0), 0) / recent.length;
+  const udAtt = recent.reduce((s, r) => s + (r.uda || 0), 0);
+  const udMade = recent.reduce((s, r) => s + (r.udm || 0), 0);
+
+  body.textContent = `Your last ${recent.length} logged round${recent.length === 1 ? '' : 's'}. This is the reality check on the plan above — if these numbers are not moving, the week's shape is the first thing to change.`;
+  table.innerHTML = [
+    ['Rounds logged', String(rounds.length)],
+    ['Putts per round', avg(r => r.putts).toFixed(1)],
+    ['Three-putts', avg(r => r.tp).toFixed(1)],
+    ['Greens in regulation', avg(r => r.gir).toFixed(1)],
+    ['Up-and-down %', udAtt ? Math.round((udMade / udAtt) * 100) + '%' : '—'],
+    ['Penalties', avg(r => r.pen).toFixed(1)]
+  ].map(r => `<tr><td>${twEsc(r[0])}</td><td class="val">${twEsc(r[1])}</td></tr>`).join('');
+}
+
+function switchTab(id, btn){
+  document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Expose for jsdom tests.
+if (typeof window !== 'undefined') {
+  window.TW = { render: twRender, focusFor: twFocusFor, leak: twLeak,
+                todayIndex: twTodayIndex, weekRange: twWeekRange,
+                DAYS: TW_DAYS, DEFAULT_SCHEDULE: TW_DEFAULT_SCHEDULE };
+}
+
+document.addEventListener('DOMContentLoaded', twRender);
+</script>
+
+<a href="index.html" class="home-btn">⌂ Home</a>
+
+<!-- LEGAL FOOTER -->
+<div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:18px 20px;text-align:center;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">&#8962; All Playbooks &#8212; Home</a>
+  <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+  <a href="privacy.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Privacy</a>
+  <span style="color:rgba(232,240,216,0.3);margin:0 10px;">&#183;</span>
+  <a href="terms.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(232,240,216,0.3);text-decoration:none;">Terms</a>
+</div>
+
+<!-- ONWARD NAV -->
+<div class="onward-nav" style="position:fixed;right:14px;bottom:16px;z-index:9000;display:flex;flex-direction:column;gap:8px;">
+  <button type="button" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="width:44px;height:44px;border-radius:50%;border:1px solid rgba(160,200,80,0.35);background:#111e11;color:rgba(232,240,216,0.9);font-size:18px;line-height:1;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8593;</button>
+  <a href="index.html" aria-label="All guides" style="width:44px;height:44px;border-radius:50%;border:1px solid #2d7a1c;background:#2d7a1c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;text-decoration:none;box-shadow:0 3px 12px rgba(0,0,0,0.35);">&#8962;</a>
+</div>
+<style>@media print{.onward-nav{display:none!important;}}</style>
+</body>
+</html>

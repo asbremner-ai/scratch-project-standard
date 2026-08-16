@@ -175,6 +175,12 @@ body.searching .start-here-wrap,body.searching .plan-block,body.searching .track
 .pillar-sec.active{display:block;}
 @keyframes rise{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 
+/* Semantic heading reset — .section-head and .pillar-name are real heading
+   elements now, for screen-reader and SEO structure. Those classes own the
+   type and spacing themselves, so
+   the browser's default heading margin/size/weight is neutralised here.
+   :where() keeps this at zero specificity, so every rule below still wins. */
+:where(.section-head,.pillar-name){margin:0;font-size:inherit;font-weight:inherit;line-height:inherit;}
 .pillar-header{padding:24px 0 12px;display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--border);margin-bottom:6px;}
 .pillar-icon{font-size:1.7rem;line-height:1;}
 .pillar-name{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;line-height:1.1;}
@@ -412,7 +418,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <!-- ════════ THE PLAN ════════ -->
   <div class="pillar-sec p-plan active" id="sec-plan">
 
-    <div class="section-head sh-gold">🚀 Start Here</div>
+    <h2 class="section-head sh-gold">🚀 Start Here</h2>
     <a class="guide-card" href="quick_start.html" style="margin-bottom:18px;">
       <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🚀</div>
       <div class="card-body">
@@ -425,7 +431,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     </a>
 
     
-    <div class="section-head sh-gold">⛳ New to Golf? — The Road to 24</div>
+    <h2 class="section-head sh-gold">⛳ New to Golf? — The Road to 24</h2>
     <a class="guide-card" href="b1_starting_golf.html">
       <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🧰</div>
       <div class="card-body">
@@ -487,7 +493,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <div class="card-arrow">›</div>
     </a>
 
-    <div class="section-head sh-rust">▶ Start Here</div>
+    <h2 class="section-head sh-rust">▶ Start Here</h2>
     <div class="start-here-wrap">
       <div class="start-label">System Overview — Read First</div>
       <a class="guide-card" href="04_complete_golfer.html">
@@ -507,7 +513,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       </a>
     </div>
 
-    <div class="section-head sh-gold">🏆 24 Months to Scratch</div>
+    <h2 class="section-head sh-gold">🏆 24 Months to Scratch</h2>
     <div class="plan-block">
       <div class="plan-label">Formal Scratch Project — Execute in Sequence</div>
       <a class="guide-card" href="10_scratch_plan.html">
@@ -588,7 +594,17 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     </div>
 
 
-    <div class="section-head sh-gold">🧰 Interactive Tools</div>
+    <h2 class="section-head sh-gold">🧰 Interactive Tools</h2>
+    <a class="guide-card" href="this_week.html">
+      <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🗓️</div>
+      <div class="card-body">
+        <div class="card-number">Interactive Tool</div>
+        <div class="card-title">This Week</div>
+        <div class="card-desc">Your programme month and phase, the days you set in Quick Start, what each session should work on given your primary leak, and the next handicap milestone — on one page.</div>
+        <div class="card-tags"><span class="card-tag">Free</span><span class="card-tag">Interactive</span><span class="card-tag">Planning</span></div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
     <a class="guide-card" href="sg_diagnostic.html">
       <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🔬</div>
       <div class="card-body">
@@ -666,11 +682,11 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <div class="pillar-sec p-score" id="sec-score">
     <div class="pillar-header ph-score">
       <span class="pillar-icon">⛳</span>
-      <div><div class="pillar-name">Score</div></div>
+      <div><h2 class="pillar-name">Score</h2></div>
     </div>
     <p class="pillar-tagline">What you do from tee to hole — decisions, strategy, and on-course execution. Everything needed to convert ball-striking into the lowest possible number.</p>
 
-    <div class="section-head">Scoring Fundamentals</div>
+    <h3 class="section-head">Scoring Fundamentals</h3>
     <a class="guide-card" href="01_putting_pro.html">
       <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🎯</div>
       <div class="card-body">
@@ -711,7 +727,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       </div>
       <div class="card-arrow">›</div>
     </a>
-<div class="section-head">On-Course Reference</div>
+<h3 class="section-head">On-Course Reference</h3>
     <a class="guide-card" href="31_on_course_notes.html">
       <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">🗺️</div>
       <div class="card-body">
@@ -723,7 +739,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <div class="card-arrow">›</div>
     </a>
 
-    <div class="section-head">On-Course Execution</div>
+    <h3 class="section-head">On-Course Execution</h3>
     <a class="guide-card" href="08_pro_round_prep.html">
       <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🗺️</div>
       <div class="card-body">
@@ -745,7 +761,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <div class="card-arrow">›</div>
     </a>
 
-    <div class="section-head">Conditions & Rules</div>
+    <h3 class="section-head">Conditions & Rules</h3>
     <a class="guide-card" href="23_weather_conditions.html">
       <div class="card-icon" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">🌬️</div>
       <div class="card-body">
@@ -824,11 +840,11 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <div class="pillar-sec p-strike" id="sec-strike">
     <div class="pillar-header ph-strike">
       <span class="pillar-icon">🏌️</span>
-      <div><div class="pillar-name">Strike</div></div>
+      <div><h2 class="pillar-name">Strike</h2></div>
     </div>
     <p class="pillar-tagline">The technical framework — ball-striking mechanics, club speed, shot dispersion, and the tools to understand and improve every shot shape.</p>
 
-    <div class="section-head sh-lime">Technical Framework</div>
+    <h3 class="section-head sh-lime">Technical Framework</h3>
     <a class="guide-card" href="03_longgame_pro.html">
       <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">🏌️</div>
       <div class="card-body">
@@ -881,7 +897,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <div class="card-arrow">›</div>
     </a>
 
-    <div class="section-head">Dispersion & Speed</div>
+    <h3 class="section-head">Dispersion & Speed</h3>
     <a class="guide-card" href="11_shot_dispersion.html">
       <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">📊</div>
       <div class="card-body">
@@ -903,7 +919,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <div class="card-arrow">›</div>
     </a>
 
-    <div class="section-head">Self-Coaching</div>
+    <h3 class="section-head">Self-Coaching</h3>
 <a class="guide-card" href="14_video_analysis.html">
       <div class="card-icon" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">🎥</div>
       <div class="card-body">
@@ -942,11 +958,11 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <div class="pillar-sec p-measure" id="sec-measure">
     <div class="pillar-header ph-measure">
       <span class="pillar-icon">📡</span>
-      <div><div class="pillar-name">Measure</div></div>
+      <div><h2 class="pillar-name">Measure</h2></div>
     </div>
     <p class="pillar-tagline">Data, feedback, and AI coaching — turning raw numbers into precise practice priorities. Your edge is knowing exactly where strokes are lost and gained.</p>
 
-    <div class="section-head">Strokes Gained Intelligence</div>
+    <h3 class="section-head">Strokes Gained Intelligence</h3>
     <a class="guide-card" href="26_stats_interpretation.html">
       <div class="card-icon" style="background:var(--teal-tag-bg);border-color:var(--teal-border);">🔢</div>
       <div class="card-body">
@@ -958,7 +974,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <div class="card-arrow">›</div>
     </a>
 
-    <div class="section-head">Coaching</div>
+    <h3 class="section-head">Coaching</h3>
     <a class="guide-card ai-card" href="09_golf_coach_ai.html">
       <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">🤖</div>
       <div class="card-body">
@@ -997,11 +1013,11 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <div class="pillar-sec p-prepare" id="sec-prepare">
     <div class="pillar-header ph-prepare">
       <span class="pillar-icon">💪</span>
-      <div><div class="pillar-name">Prepare</div></div>
+      <div><h2 class="pillar-name">Prepare</h2></div>
     </div>
     <p class="pillar-tagline">Body, equipment, and training tools — the 80% of improvement that has nothing to do with the range. Showing up physically and technically ready is a competitive advantage.</p>
 
-    <div class="section-head sh-rust">Body</div>
+    <h3 class="section-head sh-rust">Body</h3>
     <a class="guide-card" href="06_golf_fitness.html">
       <div class="card-icon" style="background:var(--rust-tag-bg);border-color:var(--rust-border);">💪</div>
       <div class="card-body">
@@ -1033,7 +1049,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <div class="card-arrow">›</div>
     </a>
 
-    <div class="section-head">Equipment</div>
+    <h3 class="section-head">Equipment</h3>
 <a class="guide-card" href="15_equipment_fitting.html">
       <div class="card-icon" style="background:var(--gold-tag-bg);border-color:var(--gold-border);">🔧</div>
       <div class="card-body">
@@ -1056,7 +1072,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <div class="card-arrow">›</div>
     </a>
 
-    <div class="section-head">Training Arsenal & Practice</div>
+    <h3 class="section-head">Training Arsenal & Practice</h3>
     <a class="guide-card" href="18_training_aids_2.html">
       <div class="card-icon" style="background:var(--lime-tag-bg);border-color:var(--lime-border);">🛠️</div>
       <div class="card-body">
@@ -1105,11 +1121,11 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   <div class="pillar-sec p-compete" id="sec-compete">
     <div class="pillar-header ph-compete">
       <span class="pillar-icon">🧠</span>
-      <div><div class="pillar-name">Compete</div></div>
+      <div><h2 class="pillar-name">Compete</h2></div>
     </div>
     <p class="pillar-tagline">Mental game, pressure performance, and the tracking systems that compound improvement over 24 months. The final strokes to scratch are won here.</p>
 
-    <div class="section-head sh-violet">Mental Game</div>
+    <h3 class="section-head sh-violet">Mental Game</h3>
     <a class="guide-card" href="21_mental_game.html">
       <div class="card-icon" style="background:var(--violet-tag-bg);border-color:var(--violet-border);">🧘</div>
       <div class="card-body">
@@ -1131,7 +1147,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <div class="card-arrow">›</div>
     </a>
 
-    <div class="section-head">Pressure Training</div>
+    <h3 class="section-head">Pressure Training</h3>
     <a class="guide-card" href="16_solo_pressure_round.html">
       <div class="card-icon" style="background:var(--rust-tag-bg);border-color:var(--rust-border);">🔥</div>
       <div class="card-body">
@@ -1154,7 +1170,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <div class="card-arrow">›</div>
     </a>
 
-    <div class="section-head">Tracking & Review</div>
+    <h3 class="section-head">Tracking & Review</h3>
     <a class="guide-card" href="17_progress_journal.html">
       <div class="card-icon" style="background:var(--violet-tag-bg);border-color:var(--violet-border);">📓</div>
       <div class="card-body">

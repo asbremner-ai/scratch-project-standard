@@ -211,6 +211,8 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <link rel="icon" type="image/x-icon" href="favicon.ico">
 <link rel="icon" type="image/png" sizes="192x192" href="icon192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<!-- shared bag + profile engine (ScratchBag / ScratchProfile) -->
+<script src="scratch_profile.js"></script>
 <!-- tsp:pwa -->
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -446,6 +448,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <span class="card-tag">Typical Amateur Carry Distances</span>
       <h3>Edit These to Match Your Own Gapping</h3>
       <p style="margin-bottom:12px;font-size:12px;">The calculator uses these as defaults. Cross-reference with your Arccos/Mevo data and your own wedge distances from Guide 22.</p>
+      <p id="bagNote" style="margin-bottom:12px;font-size:12px;color:var(--lime);">These save to your bag, so every yardage tool on the site uses the same numbers.</p>
       <table class="ref-tbl" id="clubTable">
         <thead><tr><th>Club</th><th>Typical Carry (yds)</th><th>Your Carry</th></tr></thead>
         <tbody>
@@ -538,6 +541,44 @@ const defaultDists = {
   'Driver':240,'3-Wood':220,'5-Wood':205,'3H':190,'4H':178,
   '5i':166,'6i':154,'7i':142,'8i':130,'9i':118,'PW':106,'GW':93,'SW':80,'LW':68
 };
+
+// ── Shared bag (scratch_bag) ─────────────────────────────────────────────────
+// This page kept its own private copy of every carry (inside tsp_wind_v1), so
+// numbers already entered on the Caddie Card had to be typed again here. The
+// Reference tab's inputs now prefill from the shared scratch_bag namespace
+// (scratch_profile.js) and write back to it. This page's own field persistence
+// is untouched and still runs.
+const BAG_ID_FOR_CLUB = {
+  'Driver':'dr', '3-Wood':'3w', '5-Wood':'5w', '3H':'3h', '4H':'4h',
+  '5i':'5i', '6i':'6i', '7i':'7i', '8i':'8i', '9i':'9i',
+  'PW':'pw', 'GW':'gw', 'SW':'sw', 'LW':'lw'
+};
+
+function bagPrefillDistances() {
+  if (typeof ScratchBag === 'undefined') return 0;
+  let n = 0;
+  document.querySelectorAll('.custom-dist').forEach(inp => {
+    const id = BAG_ID_FOR_CLUB[inp.dataset.club];
+    if (!id) return;
+    const carry = ScratchBag.carryOf(id);
+    if (carry === null || String(inp.value) === String(carry)) return;
+    inp.value = carry;
+    n++;
+  });
+  const note = document.getElementById('bagNote');
+  if (note) {
+    note.textContent = n
+      ? `${n} distance${n === 1 ? '' : 's'} loaded from your bag — edits here update it everywhere.`
+      : 'These save to your bag, so every yardage tool on the site uses the same numbers.';
+  }
+  return n;
+}
+
+function bagWriteDistance(inp) {
+  if (typeof ScratchBag === 'undefined') return;
+  const id = BAG_ID_FOR_CLUB[inp.dataset.club];
+  if (id) ScratchBag.setCarry(id, inp.value);
+}
 
 function getCarryDistances() {
   const d = {...defaultDists};
@@ -772,6 +813,19 @@ function switchTab(id, btn) {
     restore();
     document.addEventListener('input',  save, true);
     document.addEventListener('change', save, true);
+  });
+})();
+</script>
+<!-- shared bag wiring — registered AFTER the tsp:persist block above so its
+     DOMContentLoaded handler runs second: the shared bag is canonical and must
+     win over this page's older private copy of the same numbers. -->
+<script>
+(function(){
+  document.addEventListener('DOMContentLoaded', function(){
+    bagPrefillDistances();
+    document.querySelectorAll('.custom-dist').forEach(function(inp){
+      inp.addEventListener('change', function(){ bagWriteDistance(inp); });
+    });
   });
 })();
 </script>

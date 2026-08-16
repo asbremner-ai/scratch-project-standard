@@ -1,7 +1,7 @@
 {
   "name": "The Scratch Project",
   "short_name": "Scratch",
-  "description": "57 guides + 10 interactive tools. Strokes gained analytics, SG diagnostic, and a structured 24-month improvement programme. Any handicap to your goal. WHS compatible worldwide.",
+  "description": "57 guides + 11 interactive tools. Strokes gained analytics, SG diagnostic, and a structured 24-month improvement programme. Any handicap to your goal. WHS compatible worldwide.",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#0a160a",
