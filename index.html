@@ -280,6 +280,29 @@ body.searching .start-here-wrap,body.searching .plan-block,body.searching .track
 .tsp-pillars{display:block;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(240,244,232,0.38);margin-top:4px;}
 .tsp-mini{display:inline-flex;align-items:flex-end;gap:3px;height:15px;margin-right:7px;flex-shrink:0;vertical-align:middle;}
 .tsp-mini-bar{border-radius:1px 1px 0 0;display:block;}
+
+.resume-bar{display:flex;align-items:center;gap:12px;padding:14px 16px;margin:0 0 12px;
+  border-radius:var(--r);background:var(--gold-dim,rgba(224,184,64,0.09));
+  border:1px solid var(--gold-border,rgba(224,184,64,0.28));text-decoration:none;color:inherit;}
+.resume-bar[hidden]{display:none;}
+.rb-emoji{font-size:1.5rem;line-height:1;flex-shrink:0;}
+.rb-txt{display:flex;flex-direction:column;gap:2px;min-width:0;flex:1;}
+.rb-txt strong{font-size:0.95rem;}
+.rb-txt span{font-size:0.8rem;color:var(--muted);}
+.rb-go{font-family:'JetBrains Mono',monospace;font-size:0.75rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--gold);white-space:nowrap;flex-shrink:0;}
+@media(max-width:420px){ .rb-go{display:none;} }
+
+.upgrade-strip{display:flex;align-items:center;gap:14px;padding:13px 16px;margin:12px 0 0;
+  border-radius:var(--r);background:var(--pro-dim,rgba(200,146,42,0.09));
+  border:1px solid var(--pro-border,rgba(200,146,42,0.30));}
+.us-txt{display:flex;flex-direction:column;gap:3px;min-width:0;flex:1;}
+.us-txt strong{font-size:0.9rem;}
+.us-txt span{font-size:0.8rem;color:var(--muted);line-height:1.5;}
+.us-cta{flex-shrink:0;padding:9px 15px;border-radius:8px;background:var(--pro,#c8922a);
+  color:#0a160a;font-weight:700;font-size:0.82rem;text-decoration:none;white-space:nowrap;}
+@media(max-width:430px){ .upgrade-strip{flex-direction:column;align-items:stretch;}
+  .us-cta{text-align:center;} }
 </style>
 <script async src="https://plausible.io/js/pa-XSwCniFb76oIDC0vR-U0K.js"></script>
 <script>
@@ -327,10 +350,10 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <body>
 <!-- HOME NAV -->
 <div style="background:#111e11;border-bottom:1px solid rgba(160,200,80,0.2);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:200;">
-  <a href="index.html" style="font-family:'Courier New',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+  <a href="index.html" style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(232,240,216,0.55);text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
     <span style="font-size:14px;line-height:1;">&#8962;</span> All Playbooks
   </a>
-  <span style="font-family:'Courier New',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
+  <span style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(232,240,216,0.2);">The Scratch Project</span>
 </div>
 
 <div class="hero">
@@ -381,6 +404,15 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     <div class="search-count" id="searchCount"></div>
   </div>
 
+  <a class="resume-bar" id="resumeBar" href="this_week.html" hidden>
+    <span class="rb-emoji">🗓️</span>
+    <div class="rb-txt">
+      <strong id="rbTitle">Pick up where you left off</strong>
+      <span id="rbSub">Your week, built from your plan</span>
+    </div>
+    <span class="rb-go">This week →</span>
+  </a>
+
   <div class="frontdoor" id="frontdoor">
     <div class="fd-head">New here? Pick your starting point</div>
     <div class="fd-grid">
@@ -400,6 +432,16 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
         <span class="fd-desc">The full 24-month master plan with SG targets at every milestone.</span>
       </a>
     </div>
+  </div>
+
+  <!-- tsp:upgrade-strip — compact, top-third. The detailed card remains near
+       the footer for readers who scroll the whole library. -->
+  <div class="upgrade-strip">
+    <div class="us-txt">
+      <strong>Standard is free and stays free.</strong>
+      <span>Pro adds a deeper layer on practice science, expected-value decisions, ground reaction force and tournament prep.</span>
+    </div>
+    <a class="us-cta" href="https://thescratchproject.gumroad.com/l/scratch-pro">Pro &mdash; &pound;47</a>
   </div>
 
   <div class="hero-stats">
@@ -1310,6 +1352,29 @@ function showPillar(id, btn) {
     try { localStorage.setItem(KEY, '1'); } catch(e){}
   });
   window.addEventListener('appinstalled', function(){ bar.classList.remove('show'); });
+})();
+
+/* ── Returning-user strip ── */
+(function(){
+  var bar = document.getElementById('resumeBar');
+  if (!bar) return;
+  var raw = null;
+  try { raw = localStorage.getItem('scratch_profile'); } catch(e){ return; }
+  if (!raw) return;                       // no profile — leave the front door alone
+  var p;
+  try { p = JSON.parse(raw); } catch(e){ return; }
+  if (!p || p.startHcp === undefined || !p.startDate) return;
+  var months = null;
+  try {
+    var st = new Date(p.startDate + 'T00:00:00'), now = new Date();
+    months = (now.getFullYear()-st.getFullYear())*12 + (now.getMonth()-st.getMonth()) + 1;
+  } catch(e){}
+  var t = document.getElementById('rbTitle'), sub = document.getElementById('rbSub');
+  if (t)  t.textContent = 'Welcome back';
+  if (sub) sub.textContent = (months && months > 0 && months <= 24)
+      ? ('Month ' + months + ' of 24 — here is your week')
+      : 'Your week, built from your plan';
+  bar.hidden = false;
 })();
 </script>
 <!-- tsp:upgrade — the free tier had no purchase path of any kind. Across all

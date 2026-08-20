@@ -289,20 +289,20 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     <div id="historyRows" style="margin-top:10px;"></div>
   </div>
 
-  <!-- tsp:upsell — highest-intent moment in the free product -->
-  <div class="card" id="upsellCard" style="border-color:var(--pro-border,rgba(200,146,42,0.35));background:var(--pro-dim,rgba(200,146,42,0.08));">
-    <span class="card-tag" style="color:#c8922a;">Go Deeper</span>
-    <h3 id="upsellTitle">Fix This Leak Faster</h3>
+  <!-- tsp:upsell — highest-intent moment in the product. Tier-gated: this block
+       used to ship identically in all three builds and always advertised Pro, so
+       a Pro buyer was sold what they already owned and an Elite buyer (£102 in)
+       saw the same. Content is chosen at runtime from the TIER constant that
+       inject_tier() writes into every page. -->
+  <div class="card" id="upsellCard" hidden>
+    <span class="card-tag" id="upsellTag">Go Deeper</span>
+    <h3 id="upsellTitle"></h3>
     <p id="upsellText"></p>
-    <a href="https://thescratchproject.gumroad.com/l/scratch-pro" id="upsellLink"
+    <a href="#" id="upsellLink"
        style="display:inline-block;margin-top:10px;padding:11px 18px;border-radius:8px;
-              background:#c8922a;color:#0a160a;font-weight:700;text-decoration:none;
-              font-size:13px;letter-spacing:0.02em;">
-      See what Pro adds &rarr;
-    </a>
-    <p style="font-size:13px;opacity:0.62;margin-top:9px;">
-      One-time &pound;47. 84 guides, 27 of them Pro-only. No subscription.
-    </p>
+              color:#0a160a;font-weight:700;text-decoration:none;
+              font-size:13px;letter-spacing:0.02em;"></a>
+    <p id="upsellFoot" style="font-size:13px;opacity:0.62;margin-top:9px;"></p>
   </div>
 
   <button class="reset-btn" onclick="reset()">&#8634; Re-run with Updated Stats</button>
@@ -623,17 +623,59 @@ function writeLeakToProfile(leak){
   } catch(e) { /* profile not set up yet — harmless */ }
 }
 function tuneUpsell(leak){
-  const COPY = {
-    ott:  ['Ground Reaction Force and Dispersion Cone', 'Guide 39 breaks down where clubhead speed actually comes from, and the Dispersion Cone Visualiser turns your miss pattern into an aim point.'],
-    app:  ['The 125\u2013175 Yard Deep-Dive', 'Guide 48p sets proximity targets by distance band and Guide 40 turns them into shot-by-shot expected-value decisions \u2014 the zone that separates a 10 from scratch.'],
-    arg:  ['Short Game by Lie Type', 'Pro adds the full lie-by-lie short game system plus the Practice Session Planner, which reads your logged rounds and builds the session for you.'],
-    putt: ['Putting Metrics Deep-Dive', 'Guide 49p splits SG: Putting by distance bracket so you can tell a pace problem from a read problem \u2014 they need opposite practice.']
+  var card = document.getElementById('upsellCard');
+  if (!card) return;
+  var tier = (typeof TIER === 'string') ? TIER : 'standard';
+
+  // Elite owns everything — there is nothing honest left to sell.
+  if (tier === 'elite') { card.hidden = true; return; }
+
+  var LEAK_PRO = {
+    ott:  ['Ground Reaction Force and the Dispersion Cone',
+           'Guide 39 breaks down where clubhead speed actually comes from, and the Dispersion Cone Visualiser turns your miss pattern into an aim point.'],
+    app:  ['The 125\u2013175 Yard Deep-Dive',
+           'Guide 48p sets proximity targets by distance band and Guide 40 turns them into shot-by-shot expected-value decisions \u2014 the zone that separates a 10 from scratch.'],
+    arg:  ['Short Game by Lie Type',
+           'Pro adds the full lie-by-lie short game system plus the Practice Session Planner, which reads your logged rounds and builds the session for you.'],
+    putt: ['Putting Metrics Deep-Dive',
+           'Guide 49p splits SG: Putting by distance bracket so you can tell a pace problem from a read problem \u2014 they need opposite practice.']
   };
-  const c = COPY[leak]; if (!c) return;
-  const t = document.getElementById('upsellTitle');
-  const x = document.getElementById('upsellText');
-  if (t) t.textContent = c[0];
-  if (x) x.textContent = c[1];
+  var LEAK_ELITE = {
+    ott:  ['Swing Robustness Under Pressure',
+           'Guide 54e covers technical patterns that hold up in competition, and Guide 48 the speed periodisation behind them.'],
+    app:  ['Proximity Mastery and Birdie Construction',
+           'Guides EP4 and 56e take approach play past "hit more greens" into which pins are worth attacking, at what expected cost.'],
+    arg:  ['Short Game at Scratch and Beyond',
+           'Guide 49 (Advanced Game Construction) and the Pressure Index tool turn a competent short game into a scoring one.'],
+    putt: ['Sports Vision, Quiet Eye and the Yips Protocol',
+           'Guides 62e and 63e address what actually limits putting once technique is sound \u2014 gaze control and the psychological failure modes.']
+  };
+
+  var cfg = (tier === 'pro')
+    ? { copy: LEAK_ELITE, accent: '#c8d8e8', dim: 'rgba(200,216,232,0.07)', border: 'rgba(200,216,232,0.28)',
+        tag: 'Go Further', cta: 'See what Elite adds \u2192',
+        href: 'https://thescratchproject.gumroad.com/l/scratch-elite',
+        foot: 'One-time \u00a355 add-on. 34 Elite-only guides and 7 Elite tools. No subscription.' }
+    : { copy: LEAK_PRO, accent: '#c8922a', dim: 'rgba(200,146,42,0.08)', border: 'rgba(200,146,42,0.35)',
+        tag: 'Go Deeper', cta: 'See what Pro adds \u2192',
+        href: 'https://thescratchproject.gumroad.com/l/scratch-pro',
+        foot: 'One-time \u00a347. 84 guides, 27 of them Pro-only. No subscription.' };
+
+  var c = cfg.copy[leak];
+  if (!c) { card.hidden = true; return; }
+
+  card.style.borderColor = cfg.border;
+  card.style.background  = cfg.dim;
+  var tag = document.getElementById('upsellTag');
+  if (tag) { tag.textContent = cfg.tag; tag.style.color = cfg.accent; }
+  document.getElementById('upsellTitle').textContent = c[0];
+  document.getElementById('upsellText').textContent  = c[1];
+  var link = document.getElementById('upsellLink');
+  link.href = cfg.href;
+  link.textContent = cfg.cta;
+  link.style.background = cfg.accent;
+  document.getElementById('upsellFoot').textContent = cfg.foot;
+  card.hidden = false;
 }
 document.addEventListener('DOMContentLoaded', renderHistory);
 
