@@ -424,13 +424,18 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     </ul>
   </div>
 
+  <div class="info-box tip">
+    <span class="ico">⚖️</span>
+    <p><strong>A conforming driver can stop conforming.</strong> Driver faces fatigue with use, and one that measured inside the legal limit when it was built can drift outside it through nothing but being hit. This matters when buying used and if you compete where equipment is tested. See Guide 72 (Equipment Decode) for the full detail — <em>A Legal Driver Can Become Illegal</em>.</p>
+  </div>
+
   <div class="info-box warn-box">
     <span class="ico">⚠️</span>
     <p><strong>The fitting environment problem:</strong> Driver fittings done in a bay with a short net produce unreliable data — you cannot see real ball flight, and many fitters only measure launch conditions, not actual carry. Insist on an outdoor fitting or an indoor bay with Trackman or GCQuad where carry distance is calculated from actual ball data — not estimated from spin rate alone.</p>
   </div>
   <div class="info-box tip">
     <span class="ico">📏</span>
-    <p><strong>46-inch competition length rule (from January 2024):</strong> The R&A/USGA Model Local Rule now limits driver length to 46 inches in competition (previously 48 inches). Most standard drivers are 45–45.5 inches and are unaffected. However, always confirm your fitted driver length before county or national competition — request a finished club length of 46 inches or under from your fitter as a default. See Guide 12 (Rules of Golf) for the full rule detail and penalty.</p>
+    <p><strong>46-inch competition length rule (Model Local Rule G-10, in force since January 2022):</strong> The R&A/USGA Model Local Rule now limits driver length to 46 inches in competition (previously 48 inches). Most standard drivers are 45–45.5 inches and are unaffected. However, always confirm your fitted driver length before county or national competition — request a finished club length of 46 inches or under from your fitter as a default. See Guide 12 (Rules of Golf) for the full rule detail and penalty.</p>
   </div>
 </div>
 
@@ -514,6 +519,22 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     </ul>
   </div>
 
+  <span class="badge badge-rust" style="margin-top:20px;">📟 Consumer Launch Monitors</span>
+  <div class="card card-rust">
+    <span class="card-tag">Current as at August 2026 · prices move, re-check before relying on them</span>
+    <h3>Fitting Yourself on a Consumer Launch Monitor</h3>
+    <p style="margin-bottom:12px;">Launch monitors that once cost twenty thousand pounds now start under two hundred. That is a real change, and it has produced a scenario this chapter did not previously contemplate: a golfer making equipment decisions at home on their own device. It can be done. It cannot be done at every price.</p>
+    <table class="tbl"><tr><th>Price</th><th>What you actually get</th></tr>
+    <tr><td><strong>~$200</strong></td><td class="bad">Ball speed, club speed, smash factor, a modelled carry. <strong>No spin. No launch angle.</strong></td></tr>
+    <tr><td><strong>~$400</strong></td><td class="warn">Adds launch angle and apex on some units. Still <strong>no spin</strong>.</td></tr>
+    <tr><td><strong>~$500–700</strong></td><td class="warn">Spin appears — but on most units at this price it is <strong>calculated from ball flight, not measured</strong></td></tr>
+    <tr><td><strong>~$1,300+</strong></td><td class="good">Spin measured directly by radar and camera, though indoors most still need a marked or metallic-stickered ball</td></tr></table>
+    <p style="margin-bottom:12px;"><strong style="color:var(--white);">The single fact to take from this.</strong> The metric you can trust cheaply is <strong style="color:var(--white);">ball speed</strong> — typically within 1–2% at any price. The metric you cannot is <strong style="color:var(--white);">spin</strong>, where budget units indoors have been measured 20–30% out. On a driver that is a 500–900 rpm error, which is comfortably enough to reverse the conclusion of a fitting. And spin is precisely what decides driver loft, shaft selection and wedge gapping.</p>
+    <p style="margin-bottom:12px;"><strong style="color:var(--white);">Know which numbers your device measures and which it invents.</strong> The popular sub-$600 radar units directly measure ball speed, club speed and launch angle, and then <strong style="color:var(--white);">derive spin, spin axis, club path, face angle and angle of attack by algorithm</strong>. The camera-based units that genuinely measure spin generally require proprietary marked balls to do it. Neither approach is dishonest; both are frequently misread by owners who assume every number on the screen was observed.</p>
+    <p style="margin-bottom:12px;"><strong style="color:var(--white);">Indoors is the hard case.</strong> A radar needs ball flight to work with, and a net eight feet away gives it almost nothing — which is exactly why the budget spin errors blow out indoors, where most home units live.</p>
+    <p><strong style="color:var(--white);">So use one for what it is good at.</strong> These devices are excellent for tracking <em>change</em> — your own numbers session to session, gapping your own irons against each other, and above all speed training, where ball speed is the number that matters and the number you can trust. <strong style="color:var(--white);">They are not a substitute for a proper fitting on a premium unit at the point where you are about to spend real money on clubs.</strong> Measuring your own progress and choosing a shaft are different jobs.</p>
+  </div>
+
   <div class="info-box elite">
     <span class="ico">🏆</span>
     <p><strong>The independent fitting principle:</strong> Ideally, your fitter is not also the retailer selling you the clubs. Independent fitters (no commission on sales) produce more objective recommendations. If your fitter only recommends one brand and has that brand's logo on every surface in the facility, treat the recommendations with appropriate scepticism.</p>
@@ -555,6 +576,17 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     <span class="card-tag">Consistency Rule</span>
     <h3>One Ball, Every Round, Every Season</h3>
     <p>Choose one tour ball and play it exclusively for a minimum of one full season before evaluating whether to change. Every change requires recalibration of distance perception, spin feel, and putting roll characteristics. The golfers who score consistently are those whose equipment is constant — changes introduce variability that shows up in scorecards before it shows up in your awareness.</p>
+  </div>
+
+  <span class="badge badge-rust" style="margin-top:20px;">🏌️ The Rollback</span>
+  <div class="card card-rust">
+    <span class="card-tag">Current as at August 2026</span>
+    <h3>The Ball Rollback — What Is Actually Happening</h3>
+    <p style="margin-bottom:12px;">You will have heard the golf ball is being rolled back. Here is the position as at August 2026, and — more useful — why the date keeps moving.</p>
+    <p style="margin-bottom:12px;"><strong style="color:var(--white);">What was decided.</strong> In December 2023 the R&A and USGA announced revised testing conditions for conforming golf balls. The test swing speed rises from 120 mph to 125 mph while the 317-yard distance limit stays where it is, which in practice means balls must fly shorter at high speed to remain conforming. Implementation was to be phased: elite competition from January 2028, everyone else from January 2030.</p>
+    <p style="margin-bottom:12px;"><strong style="color:var(--white);">What has changed since.</strong> The phased approach drew sustained objection, largely because it would mean two equipment standards running side by side for two years. Through 2025 the governing bodies consulted on collapsing both phases into a single 2030 date. Then on <strong style="color:var(--white);">17 June 2026</strong>, at the US Open, the USGA, R&A, PGA Tour and DP World Tour issued a joint statement saying they would re-evaluate the approach entirely — assessing "a range of possible options" before determining the path forward, with 2030 as the anchor.</p>
+    <p style="margin-bottom:12px;"><strong style="color:var(--white);">What that means for you.</strong> Nothing, for several years. Your ball is legal, will remain legal for recreational play for the foreseeable future, and there is no version of any proposal on the table that makes an amateur's ball non-conforming before 2030. If you compete at elite amateur level, watch for a specific announcement rather than assuming a date.</p>
+    <p><strong style="color:var(--white);">The part worth understanding.</strong> The reason this keeps moving is not indecision, it is that the governing bodies want a single standard for the whole game and the elite tours want the shortest possible disruption to their own competition — and those two goals pull in opposite directions on timing. Expect further movement. <strong style="color:var(--white);">Do not let it affect a ball fitting decision today</strong>, because a fitting is a two-to-three year decision and any change is further away than that.</p>
   </div>
 </div>
 

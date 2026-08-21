@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- version:v2.0 · 2026-08-20 · 50_links_golf_strategy.html — absorbed guide 35 per Links_Merge_Spec.md -->
 <!-- version:v1.0 · 2026-06-13 · 50_links_golf_strategy.html -->
 <html lang="en">
 <head>
@@ -174,7 +175,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
   </div>
   <p class="hero-label">Score Playbook · Guide 50</p>
   <h1>Links Golf<br><em>Strategy</em></h1>
-  <p class="hero-sub">How to score on links and heathland courses — bump-and-run technique, a wind club selection algorithm, links green reading, firm-fast course management, and the strategic mindset that separates visitors from the scores they should be shooting.</p>
+  <p class="hero-sub">How to score on links and heathland courses — bump-and-run technique, a wind club selection algorithm, links green reading, firm-fast course management, and the strategic mindset that separates visitors from the scores they should be shooting. Now also carries the links trip material formerly in Guide 35 — reading wind off terrain, front-of-green targets and run-out, processing bad luck, and a full pre-trip preparation protocol.</p>
   <div class="hero-tags">
     <span class="htag">🌬️ Wind Algorithm</span>
     <span class="htag">🏌️ Bump &amp; Run</span>
@@ -182,6 +183,7 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     <span class="htag">⚡ Firm &amp; Fast</span>
     <span class="htag">🗺️ Course Management</span>
     <span class="htag">🌍 Global Applicability</span>
+    <span class="htag">✈️ Trip Preparation</span>
   </div>
 </div>
 
@@ -293,12 +295,49 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <tr><td>Attacking flag in crosswind</td><td class="bad">Wind pushes ball into trouble short-side of flag</td><td class="good">Aim to windward side of green; let the wind bring ball to centre</td></tr>
     </table>
   </div>
+
+  <p class="sec-desc" style="margin-top:18px;">The club-selection system above assumes the wind you can feel on the tee is the wind the ball will fly through. On a links that is frequently untrue, and the discrepancy is what produces the shots that finish thirty yards from where you intended.</p>
+  <span class="badge badge-teal" style="margin-top:24px;">💨 Wind off Terrain</span>
+  <div class="card">
+    <span class="card-tag">Terrain Wind Effects</span>
+    <h3>How the Land Changes the Wind</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Valley funnelling:</strong> Wind is accelerated and directed along valleys — holes running between dune ridges will have a wind direction aligned with the valley, regardless of the prevailing wind. A valley running east-west creates an east-west wind on that hole even when the prevailing wind is from the southwest.</div></li>
+      <li><span class="step-n">2</span><div><strong>Dune sheltering:</strong> The tee shot may be sheltered by dunes, making the wind feel manageable — then the approach shot from the fairway is fully exposed. Never judge links wind from the tee. Walk to the high point of the fairway and check the wind from there before selecting your tee club.</div></li>
+      <li><span class="step-n">3</span><div><strong>Flag and grass reading:</strong> The flag at the green is your best real-time wind indicator for approach shots. Watch the direction and intensity of its movement for 10–15 seconds — not a single glance. Throw a few blades of grass into the air at the ball position and at the green. Compare the two. On links holes, the wind at the green can differ significantly from the wind at the ball.</div></li>
+      <li><span class="step-n">4</span><div><strong>Sea breeze vs. prevailing:</strong> Coastal links courses experience a sea breeze that builds through the morning and peaks in the early afternoon — often from a different direction from the overnight wind. If you are playing 36 holes, the wind for your afternoon round may be 90 degrees different from the morning. Note the sea breeze direction on arrival and track how it develops.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Wind Club Adjustments on Links</span>
+    <h3>Amplified Effects on Firm, Fast Fairways</h3>
+    <p style="margin-bottom:12px;">The standard wind adjustment formula (1 club per 10mph) underestimates the effect of wind on links courses because the ground game amplifies wind impact on ball trajectory and run-out. A headwind does not just reduce carry — it also reduces run. A tailwind does not just increase carry — it dramatically increases run on firm fairways.</p>
+    <table class="tbl">
+      <tr><th>Wind Condition</th><th>Parkland Adjustment</th><th>Links Adjustment</th></tr>
+      <tr><td>10mph headwind</td><td class="warn">1 club more</td><td class="bad">1.5 clubs more — also aim for more landing area depth</td></tr>
+      <tr><td>20mph headwind</td><td class="bad">2 clubs more</td><td class="bad">3 clubs more — ball-below-feet stance exaggerates effect</td></tr>
+      <tr><td>10mph tailwind</td><td class="warn">Half to 1 club less</td><td class="good">1–1.5 clubs less — firm ground dramatically increases run in tailwind</td></tr>
+      <tr><td>Strong crosswind left</td><td class="warn">Aim right — standard adjustment</td><td class="warn">Aim right AND select lower trajectory — high ball in crosswind creates unpredictable landing angle on firm ground</td></tr>
+    </table>
+  </div>
 </div>
 
 <!-- BUMP AND RUN -->
 <div class="sec" id="bump">
   <h2 class="sec-title">The Bump-and-Run System</h2>
   <p class="sec-desc">The bump-and-run is the most underused scoring shot in amateur golf — and the single biggest contributor to links course scores for players who master it. From 80 yards and in, running the ball along the ground is often the highest-percentage play, even with no obstacle between ball and flag.</p>
+  <span class="badge badge-teal">🧭 The Decision, Before the Technique</span>
+  <p class="sec-desc" style="margin-top:18px;">Before the technique, the decision. Three questions settle which shot to play, and they settle it in this order.</p>
+  <div class="card card-teal">
+    <span class="card-tag">When to Use the Bump and Run</span>
+    <h3>The Links Shot Selection Hierarchy</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Default to ground game whenever the path is clear:</strong> If there is no significant obstacle between the ball and the hole (bunker, significant rough, steep bank), the bump-and-run is the first option. Only switch to a pitch when the path is genuinely blocked. This is the reverse of parkland shot selection — ground first, air second.</div></li>
+      <li><span class="step-n">2</span><div><strong>Use a pitch only when you must carry an obstacle:</strong> A bunker between ball and flag, a large bank, or deep rough requiring height. Even then, land the pitch short of the flag and use the run — not directly at the flag as you would on parkland.</div></li>
+      <li><span class="step-n">3</span><div><strong>Putt from well off the green:</strong> On links, a putt from 10 yards off the green is often more reliable than a chip. The fescue fringe is typically short and consistent. A putter used from off the green on a links course is not embarrassing — it is correct golf.</div></li>
+    </ul>
+  </div>
+
 
   <span class="badge badge-lime">🏌️ Core Technique</span>
   <div class="card">
@@ -338,6 +377,15 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <span class="ico">💡</span>
       <p><strong>Practice priority:</strong> Most players never practise the bump-and-run. One dedicated 30-minute session per week hitting 8-irons and 6-irons to greens from tight lies will be the most transferable links practice investment possible.</p>
     </div>
+  </div>
+
+  <div class="card card-gold">
+    <span class="card-tag">The Bump and Run Technique</span>
+    <h3>Calibrating Carry and Run</h3>
+    <p style="margin-bottom:12px;">The bump-and-run can be played with any iron, but most experienced links players use a 7-, 8-, or 9-iron depending on the required carry-to-run ratio. Higher iron = more loft = more carry, less run. Lower iron = less loft = less carry, more run.</p>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>The 1/3 carry to 2/3 run ratio as a starting point:</strong> For a 30-yard bump-and-run, land the ball 10 yards short of the green and allow 20 yards of roll. Adjust the ratio based on firmness — very firm ground produces more run. Check the practice green before the round for the day's carry-to-run ratio in current conditions.</div></li>
+    </ul>
   </div>
 </div>
 
@@ -397,6 +445,26 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <span class="ico">⚠️</span>
       <p><strong>The run-out trap:</strong> Players who know their carry distances precisely can still be caught out on a links in firm conditions because they don't account for run. Before the round, ask the pro or caddie: "How far is the ball rolling on fairways today?" 20–30 yards of run changes every tee shot plan. On truly firm, links conditions this can be 40+ yards.</p>
     </div>
+  </div>
+
+  <span class="badge badge-lime" style="margin-top:24px;">🏌️ Front-of-Green Targets and Run-Out</span>
+  <div class="card card-teal">
+    <span class="card-tag">Approach Strategy on Firm Links Greens</span>
+    <h3>Why Front-of-Green Targets Are Mandatory</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Every approach shot targets the front half of the green:</strong> On a firm links green, a ball landing past the flag has almost no chance of stopping near the hole — it will release through the back. Targeting the front quarter of the green and allowing the ball to release to the flag is the standard links approach strategy. This is the exact reverse of wet-condition parkland golf.</div></li>
+      <li><span class="step-n">2</span><div><strong>The crown and slope principle:</strong> Links greens are typically crowned (higher in the middle, sloping away on all sides) or terrace-cut (multiple levels). A ball landing on the top of a crown will release in the direction of the nearest slope — often sideways off the green. Land the ball on the approach ramp below the crown, not on the crown itself.</div></li>
+      <li><span class="step-n">3</span><div><strong>Use the slopes deliberately:</strong> Links course designers built slopes around greens to channel approach shots toward the flag. The classic links approach uses a bank or slope to redirect the ball to the hole. Look for the "backstop" — a bank or ridge behind the flag that will catch and redirect an overshoot — before attacking a pin position directly.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">Driver Strategy on Firm Links Fairways</span>
+    <h3>Playing for Run-Out</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Target landing areas, not landing spots:</strong> On firm links fairways, a driver carry of 240 yards may produce a total distance of 280–300 yards with run. The specific landing spot matters less than the landing area — aim for a zone of fairway where the slope and firmness will direct the ball toward the optimal position. Read the fairway contours from the tee.</div></li>
+      <li><span class="step-n">2</span><div><strong>Aim for the firm, running areas:</strong> Most links fairways have areas of maximum run — typically the lowest, most exposed sections. A ball landing slightly left of your ideal line but bouncing into a valley that runs toward the green is a better result than a perfect carry that lands on a firm rise and bounces sideways into rough. Know the fairway terrain before the round.</div></li>
+      <li><span class="step-n">3</span><div><strong>Lower ball flight = more control on firm ground:</strong> A high, soft driver shot that lands steeply produces minimal run on a normal day but unpredictable bounces on firm links ground. A lower, penetrating ball flight lands at a shallower angle — it checks once and runs in a predictable direction. Tee the ball slightly lower and increase your focus on a lower, more boring trajectory into links headwinds.</div></li>
+    </ul>
   </div>
 </div>
 
@@ -463,6 +531,17 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
       <li><span class="step-n">3</span><div><strong>Crosswind holes:</strong> Use the wind — don't fight it. Aim into the wind and let the ball drift to your target. Fighting a crosswind with a swing adjustment increases the chance of a two-way miss and produces the flattest, most boring ball flight into the strongest wind.</div></li>
     </ul>
   </div>
+
+  <span class="badge badge-gold" style="margin-top:24px;">🧠 Processing Bad Luck</span>
+  <div class="card card-gold">
+    <span class="card-tag">The Variance Acceptance Framework</span>
+    <h3>Processing Bad Luck Without Losing Composure</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Pre-commit to a higher variance budget:</strong> Before the first hole, explicitly decide: "On this course, I will receive more unjust outcomes than at home. I accept this as part of the game. My emotional response budget is adjusted accordingly." This pre-commitment prevents the anger response that depletes focus when a good shot receives a bad result.</div></li>
+      <li><span class="step-n">2</span><div><strong>Evaluate shots on execution, not outcome:</strong> On links, the decoupling between shot quality and result is significantly higher than on parkland. A ball that bounces into a pot bunker from a perfectly executed approach is still a perfectly executed approach. Evaluating shots by outcome on links produces either false confidence (lucky outcomes) or unwarranted self-criticism (unlucky outcomes). Evaluate the decision and execution. Accept the result.</div></li>
+      <li><span class="step-n">3</span><div><strong>The recovery mindset — every hole is a puzzle:</strong> Links golf rewards creative problem-solving more than technical precision. A ball in a rough lie behind a pot bunker with the pin on the far side of the green presents a puzzle. The player who enjoys solving the puzzle scores better than the player who resents being in the position. Adopt the puzzle mindset before you arrive at the course — not mid-round.</div></li>
+    </ul>
+  </div>
 </div>
 
 <!-- PRE-ROUND PREP -->
@@ -495,6 +574,36 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
     <span class="ico">💡</span>
     <p><strong>The visitor's single best decision:</strong> If the course offers caddies, take one for your first visit to any serious links. A good caddie is worth 4–6 shots from local knowledge alone — bunker positions, preferred bail-out areas, grain on key greens, local rules, and wind behaviour on specific holes. The fee is the best value investment in links golf.</p>
   </div>
+
+  <p class="sec-desc" style="margin-top:18px;">Everything above applies whether the links is an hour away or a flight. A trip is different only in that you cannot go back next weekend to apply what you learned, which raises the value of preparation considerably.</p>
+  <span class="badge badge-teal" style="margin-top:24px;">🗺️ Preparing for a Links Trip</span>
+  <div class="card card-teal">
+    <span class="card-tag">6 Weeks Before — Technical Preparation</span>
+    <h3>What to Practise Before a Links Trip</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Bump and run practice — 20 minutes per session:</strong> Dedicate one practice session per week entirely to bump-and-run from various distances (10, 20, 30, 40 yards) with various clubs (7, 8, 9-iron). Build your personal distance table — how far does a 7-iron bump-and-run travel from your 20-yard landing spot? This data becomes your links short game reference.</div></li>
+      <li><span class="step-n">2</span><div><strong>Low trajectory driver and iron shots:</strong> Practise the stinger — ball back, hands forward, abbreviated finish (see Guide 02 Scrambling tab for technique). Links play requires the ability to keep the ball under the wind on command. One session per week on trajectory control is sufficient preparation.</div></li>
+      <li><span class="step-n">3</span><div><strong>Putting on faster greens:</strong> If your home course has slow greens and your destination course has fast links greens (stimp 12+), practise at a local links or fast-green course before departure. Pace recalibration takes 4–5 holes — if your trip is only 18–36 holes, you cannot afford to lose the first 4 holes to pace adjustment.</div></li>
+    </ul>
+  </div>
+  <div class="card">
+    <span class="card-tag">On Arrival — The Pre-Round Links Recon</span>
+    <h3>The 90-Minute Preparation Protocol</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>Walk the first 3 holes before teeing off:</strong> If the schedule allows, walk the opening holes without clubs to read the terrain, identify the wind direction and its terrain effects, and locate hazards that the course planner may not have drawn accurately on the scorecard. This is standard practice for serious links players.</div></li>
+      <li><span class="step-n">2</span><div><strong>Putting green speed calibration — extended:</strong> Spend 20 minutes on the putting green — not just hitting putts, but specifically calibrating bump-and-run landing distances for the day's green speed. A firm, fast links green accepts a much shorter landing spot than a soft parkland green.</div></li>
+      <li><span class="step-n">3</span><div><strong>Ask a local:</strong> The greenkeeper, the starter, or any club member can tell you: the current wind pattern, which holes are most exposed, which greens are running fastest, and whether there are any temporary conditions (GUR, course repairs) to be aware of. This 3-minute conversation is worth more than 30 minutes of preparation at home.</div></li>
+    </ul>
+  </div>
+  <div class="card card-gold">
+    <span class="card-tag">Equipment Adjustments for Links</span>
+    <h3>What to Consider Bringing or Changing</h3>
+    <ul class="steps">
+      <li><span class="step-n">1</span><div><strong>A lower-spin ball if playing in strong wind:</strong> High-spin balls amplify the effects of sidespin and backspin — already pronounced in strong wind. If your normal ball is a Pro V1x or similar high-spin urethane, consider a Pro V1 or TP5 (both slightly lower spin) for links play in strong wind. The difference is measurable in 20mph+ crosswinds.</div></li>
+      <li><span class="step-n">2</span><div><strong>Extra gloves:</strong> Links golf in Scotland or Ireland often means wet conditions. Wet gloves grip poorly — bring 3 gloves minimum and rotate them. A rain glove (designed to grip better when wet) is worth considering if the forecast includes rain.</div></li>
+      <li><span class="step-n">3</span><div><strong>Waterproofs regardless of forecast:</strong> Links weather changes faster than any forecast can track. Arriving at a Scottish links without full waterproofs because the morning was clear is a beginner's mistake. Pack full waterproofs, waterproof shoes, and a dry towel in a plastic bag.</div></li>
+    </ul>
+  </div>
 </div>
 
 <div class="footer">LINKS GOLF STRATEGY · GUIDE 50 · THE SCRATCH PROJECT · SCORE · STRIKE · MEASURE · PREPARE · COMPETE · © 2026 The Scratch Project</div>
@@ -510,10 +619,6 @@ const TIER = 'standard'; // 'standard' | 'pro' | 'elite' — set by patch_playbo
 <div style="background:#0d180d;border-top:1px solid rgba(160,200,80,0.15);padding:28px 20px 36px;position:relative;z-index:1;">
   <p style="font-family:'Courier New',monospace;font-size:12px;letter-spacing:0.25em;text-transform:uppercase;color:rgba(160,200,80,0.75);margin-bottom:16px;">Related Playbooks</p>
   <div style="display:flex;flex-wrap:wrap;gap:10px;">
-    <a href="35_links_travel_golf.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
-      <span style="font-size:1.3rem;flex-shrink:0;">🌊</span>
-      <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Course Types & Travel Golf</span>
-    </a>
     <a href="23_weather_conditions.html" style="display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:12px 14px;text-decoration:none;color:inherit;transition:border-color 0.2s;flex:1;min-width:150px;max-width:230px;">
       <span style="font-size:1.3rem;flex-shrink:0;">🌬️</span>
       <span style="font-family:'Inter',sans-serif;font-size:12.5px;font-weight:600;color:#e8f0d8;line-height:1.35;">Weather & Conditions</span>
